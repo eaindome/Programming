@@ -1,8 +1,9 @@
 # Caesar Cipher 1
 
 # Don't change the code below
-letters = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z']
+alphabet = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z']
 
+direction = input("Type 'encode' to encrypt, type 'decode' to decrypt: \n")
 text = input("Type your message: \n")
 shift = int(input("Type the shift number: \n"))
 # Don't change the code above
@@ -20,12 +21,13 @@ def encrypt(text, shift):
     # print output: "The encoded text is mjqqt"
     encrypt_word = ""
     for let in range(len(text)):
-        for letter in range(len(letters)):
-            if text[let] == letters[letter]:
+        for letter in range(len(alphabet)):
+            if text[let] == alphabet[letter]:
                 letter += shift
-                encrypt_word += letters[letter]
-    print(encrypt_word)
+                encrypt_word += alphabet[letter]
+    print(f"The encoded text is : {encrypt_word}")
 
 # TODO-3: 
 # Call the encrypt function and pass in the user inputs. You should
 # be able to test the code and encrypt a message
+encrypt(text="hello", shift=5)
