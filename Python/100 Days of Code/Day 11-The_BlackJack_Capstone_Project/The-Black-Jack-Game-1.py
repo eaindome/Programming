@@ -13,11 +13,11 @@ def blackjack(user_cards, computer_cards):
 
     if user_score == 21:
         if Ace in user_cards:
-           print('User has blackjack. User Wins!!!')
+           print('Win with a Blackjack 😎')
            return True
     elif computer_score == 21:
         if Ace in computer_cards:
-            print("Computer has blackjack. Computer Wins!!!")
+            print("Lose, opponent has Blackjack 😱")
             return True
     return False
     
@@ -92,14 +92,14 @@ def BlackJack():
         print(f"Computer Cards: {computer_cards}\nComputer Score: {computer_score}\n")
 
         if computer_score > 21:
-            print("Computer Loses. User Wins !!!")
+            print("Opponent went over. You win 😁")
         else:
             if user_score > computer_score:
-                print("Computer Loses. User Wins !!!")
+                print("You win 😃")
             elif user_score < computer_score:
-                print("User Loses. Computer Wins !!!")
+                print("You lose 😤")
             else:
-                print("Its draw!!!")
+                print("Draw 🙃")
 
     while True:
         play_again = input("Do you want to play again? Enter 'yes' or 'no':\n")
