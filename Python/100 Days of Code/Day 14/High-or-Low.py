@@ -27,9 +27,9 @@ def high_low():
             celeb_B = randint(0, num_celebrity)
         
         # comparing one celebrity to the other statements
-        print(f"Compare A: {data[celeb_A]['name']}, {data[celeb_A]['description']}, {data[celeb_A]['country']}") 
+        print(f"Compare A: {data[celeb_A]['name']}, a {data[celeb_A]['description']}, from {data[celeb_A]['country']}") 
         print(vs)
-        print(f"Against B: {data[celeb_B]['name']}, {data[celeb_B]['description']}, {data[celeb_B]['country']}") 
+        print(f"Against B: {data[celeb_B]['name']}, a {data[celeb_B]['description']}, from {data[celeb_B]['country']}") 
 
         # retrieve the scores for both numbers
         score_A = data[celeb_A]['follower_count']
