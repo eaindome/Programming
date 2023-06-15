@@ -1,5 +1,5 @@
 const userLogin = 'SELECT * FROM "User" WHERE "email" = $1 AND "password" = $2';        // User login
-const userProfile = 'SELECT "name", "email", "role" FROM "User" WHERE "UserID" = $1';   //  User profile
+const userProfile = 'SELECT "name", "email", "role" FROM "User" WHERE "userid" = $1';   //  User profile
 /*
 const upcomingClass = 'SELECT "Timetable"."starttime", "Timetable"."endtime", "Course"."title",'
                       '"LectureRoom"."roomname" FROM "Timetable"'
