@@ -1,8 +1,9 @@
 const { Router } = require('express');
-const bookClass = require('./bookClass')
+const classController = require('./controller');
 
 const router = Router();
 
-router.post('/book', bookClass.bookClass);
+router.post('/:timetableId', classController.bookClass);
 
 module.exports = router;
+
