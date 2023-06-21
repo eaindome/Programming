@@ -1,15 +1,21 @@
 const express = require("express");
 const bodyParser = require('body-parser');
 const session = require('express-session');
+
+
+// routes needed
 const userRoutes = require('./src/user/routes');
 //const classRoutes = require('./src/classes/routes');
 //const classStatus = require('./src/classes/classStatus/routes');
 //const upcomingClasses = require('./src/classes/upcomingClasses/routes');
 const updateClassStatus = require('./src/classes/updateClassStatus/routes');
-//const bookClass = require('./src/classes/bookClass/routes');
+const bookClass = require('./src/classes/bookClass/routes');
+const displayTimetable = require('./src/timetable/routes');
 
 const app = express();
 const port = 3000;
+const http = require('http').createServer(app);
+const io = require('socket.io')(http);
 
 app.use(bodyParser.json());
 
@@ -22,13 +28,30 @@ app.use(
     })
 );
 
+// Configure Socket.IO
+io.on('connection', (socket) => {
+    console.log('A user connected.');
+
+    // Emit a custom event to the client
+    socket.emit('customEvent', 'Hello from the server!');
+
+    // Handle client disconnect
+    socket.on('disconnect', () => {
+        console.log('A user disconnected.');
+    });
+});
+
+
+
+
 // Mount userRoutes and classRoutes
 app.use("/api/v1/src/user", userRoutes);
-app.use("/api/v1/src/classes", classRoutes);
+//app.use("/api/v1/src/classes", classRoutes);
 //app.use("/api/v1/src/classes/classStatus", classStatus);
 //app.use("/api/v1/src/classes/upcomingClasses", upcomingClasses);
 app.use("/api/v1/src/classes/updateClassStatus", updateClassStatus);
-//app.use("/api/v1/src/classes/bookClass", bookClass);
+app.use("/api/v1/src/classes/bookClass", bookClass);
+app.use("/api/v1/src/timetable", displayTimetable);
 
 
 // Start the server
