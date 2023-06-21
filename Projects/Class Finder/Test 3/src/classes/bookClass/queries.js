@@ -13,9 +13,16 @@ const updateClassStatus = `
   UPDATE Rooms SET status = $1 WHERE room_id = $2;
 `;
 
+// Inserting information on booking
+const bookClass = `
+                    INSERT INTO BookedClasses (user_id, room_id)
+                    VALUES ($1, $2)
+                    RETURNING id;
+`;
 
 module.exports = {
     getUserRole,
     getClassStatus,
     updateClassStatus,
+    bookClass,
 };
