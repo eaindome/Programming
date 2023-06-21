@@ -94,3 +94,6 @@ CREATE TABLE BookedClasses (
   room_id INTEGER REFERENCES Rooms (room_id),
   booking_time TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
+
+ALTER TABLE Users
+ALTER COLUMN notification_preference SET DEFAULT false;
