@@ -86,3 +86,11 @@ CREATE INDEX idx_timetables_course_id ON Timetables (course_id);
 CREATE INDEX idx_timetables_lecturer_id ON Timetables (lecturer_id);
 CREATE INDEX idx_timetables_room_id ON Timetables (room_id);
 CREATE INDEX idx_timetables_day_id ON Timetables (day_id);
+
+-- Create the BookedClasses table
+CREATE TABLE BookedClasses (
+  id SERIAL PRIMARY KEY,
+  user_id INTEGER REFERENCES Users (user_id),
+  room_id INTEGER REFERENCES Rooms (room_id),
+  booking_time TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
