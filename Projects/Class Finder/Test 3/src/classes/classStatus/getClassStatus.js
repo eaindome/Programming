@@ -1,5 +1,5 @@
 const pool = require('../../../database');
-const queries = require('../queries');
+const queries = require('./queries');
 
 // Endpoint: Get Class Status
 const getClassStatus = (req, res) => {
