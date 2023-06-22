@@ -1,5 +1,5 @@
 const pool = require('../../../database');
-const queries = require('../queries');
+const queries = require('./queries');
 
 // Endpoint: Upcoming Classes
 const upcomingClasses = (req, res) => {
