@@ -81,7 +81,7 @@ const bookClass = (req, res) => {
                 manuallyUpdatedRoomIds.push(roomId);
               }
             });
-          }, 5 * 60 * 1000); // 5 minutes (converted to milliseconds)
+          }, 2 * 60 * 1000); // 5 minutes (converted to milliseconds)
 
           // Return a success response with booking information
           res.status(200).json({ message: 'Class booked successfully.', bookingTime });
@@ -181,16 +181,17 @@ const cancelRoomBooking = (req, res) => {
 
 // Automatically reset manually updated rooms after 2 hours
 const resetManuallyUpdatedRooms = () => {
-  manuallyUdatedRoomIds = [];  // Reset the array of manually updated room IDs
+  manuallyUpdatedRoomIds = [];  // Reset the array of manually updated room IDs
 };
 
 // Set a timer to reset the manually updated rooms after 2 hours (2 hours = 2 * 60 * 60 * 1000 milliseconds)
-setTimeout(resetManuallyUpdatedRooms, 2 * 60 * 60 * 1000);
+setTimeout(resetManuallyUpdatedRooms, 1 * 60 * 60 * 1000);
 
 module.exports = {
   bookClass,
   updateRoomStatusManually,
   cancelRoomBooking,
+  manuallyUpdatedRoomIds,
 };
 
 
