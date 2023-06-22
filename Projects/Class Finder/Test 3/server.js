@@ -3,14 +3,17 @@ const bodyParser = require('body-parser');
 const session = require('express-session');
 
 
-// routes needed
+// Import routes
 const userRoutes = require('./src/user/routes');
 //const classRoutes = require('./src/classes/routes');
-//const classStatus = require('./src/classes/classStatus/routes');
-//const upcomingClasses = require('./src/classes/upcomingClasses/routes');
+const classStatus = require('./src/classes/classStatus/routes');
+const upcomingClasses = require('./src/classes/upcomingClasses/routes');
 const updateClassStatus = require('./src/classes/updateClassStatus/routes');
 const bookClass = require('./src/classes/bookClass/routes');
 const displayTimetable = require('./src/timetable/routes');
+const ongoingSessions = require('./src/classes/ongoingClasses/routes');
+const availableLectureRooms = require('./src/classes/availableClasses/routes');
+const searchLectureRooms = require('./src/classes/searchClasses/routes');
 
 const app = express();
 const port = 3000;
@@ -47,12 +50,14 @@ io.on('connection', (socket) => {
 // Mount userRoutes and classRoutes
 app.use("/api/v1/src/user", userRoutes);
 //app.use("/api/v1/src/classes", classRoutes);
-//app.use("/api/v1/src/classes/classStatus", classStatus);
-//app.use("/api/v1/src/classes/upcomingClasses", upcomingClasses);
+app.use("/api/v1/src/classes/classStatus", classStatus);
+app.use("/api/v1/src/classes/upcomingClasses", upcomingClasses);
 app.use("/api/v1/src/classes/updateClassStatus", updateClassStatus);
 app.use("/api/v1/src/classes/bookClass", bookClass);
 app.use("/api/v1/src/timetable", displayTimetable);
-
+app.use("/api/v1/src/classes/ongoingClasses", ongoingSessions);
+app.use("/api/v1/src/classes/availableClasses", availableLectureRooms);
+app.use("/api/v1/src/classes/searchClasses", searchLectureRooms);
 
 // Start the server
 app.listen(port, () => {
