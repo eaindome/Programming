@@ -1,5 +1,6 @@
 const pool = require('../../../database');
 const queries = require('./queries');
+const { manuallyUpdatedRoomIds } = require('../bookClass/controller'); // Import the manuallyUpdatedRoomIds array
 
 // Update class status for multiple rooms
 const updateClassStatus = async (status, roomIds) => {
@@ -29,7 +30,7 @@ const updateRoomStatuses = async () => {
 
   if (ongoingTimetableIds.length > 0) {
     // Set the class status to "Ongoing" for the ongoing timetables
-    await updateClassStatus('Ongoing', ongoingTimetableIds);
+    await updateClassStatus('Ongoing', ongoingTimetableIds.filter(id => !manuallyUpdatedRoomIds.includes(id)));
   }
 
   // Get the non-ongoing timetables
@@ -38,7 +39,7 @@ const updateRoomStatuses = async () => {
 
   if (nonOngoingTimetableIds.length > 0) {
     // Set the class status to "Empty" for the non-ongoing timetables
-    await updateClassStatus('Available', nonOngoingTimetableIds);
+    await updateClassStatus('Available', nonOngoingTimetableIds.filter(id => !manuallyUpdatedRoomIds.includes(id)));
   }
 
   // Log the updated class statuses
@@ -48,7 +49,7 @@ const updateRoomStatuses = async () => {
 // Automatically update room statuses at regular intervals
 const interval = setInterval(async () => {
   await updateRoomStatuses();
-}, 6 * 60 * 1000); // Update every 5 minutes or if you want for 1 minute (60000)
+}, 4 * 60 * 1000); // Update every 5 minutes or if you want for 1 minute (60000)
 
 // Stop updating room statuses when the application exits
 process.on('SIGINT', () => {
