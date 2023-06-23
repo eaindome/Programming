@@ -1,11 +1,12 @@
 const express = require("express");
 const bodyParser = require('body-parser');
 const session = require('express-session');
+const pgSession =  require('connect-pg-simple')(session);
+const pool = require('./database');
 
 
 // Import routes
 const userRoutes = require('./src/user/routes');
-//const classRoutes = require('./src/classes/routes');
 const classStatus = require('./src/classes/classStatus/routes');
 const upcomingClasses = require('./src/classes/upcomingClasses/routes');
 const updateClassStatus = require('./src/classes/updateClassStatus/routes');
@@ -28,6 +29,10 @@ app.use(
         secret: 'your-secret-session',
         resave: false,
         saveUninitialized: false,
+        store: new pgSession({
+            pool: pool,
+            tableName: 'session',   // Name of the table to store sessions
+        }),
     })
 );
 
@@ -49,7 +54,6 @@ io.on('connection', (socket) => {
 
 // Mount userRoutes and classRoutes
 app.use("/api/v1/src/user", userRoutes);
-//app.use("/api/v1/src/classes", classRoutes);
 app.use("/api/v1/src/classes/classStatus", classStatus);
 app.use("/api/v1/src/classes/upcomingClasses", upcomingClasses);
 app.use("/api/v1/src/classes/updateClassStatus", updateClassStatus);
