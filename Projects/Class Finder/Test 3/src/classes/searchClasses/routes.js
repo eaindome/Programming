@@ -1,9 +1,9 @@
 const express = require('express');
-const { searchLectureRooms } = require('./controller');
+const { searchRooms } = require('./controller');
 
 const router = express.Router();
 
 // Route to search for lecture rooms
-router.get('/search', searchLectureRooms);
+router.get('/search', searchRooms);
 
 module.exports = router;

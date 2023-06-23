@@ -1,18 +1,17 @@
 const pool = require('../../../database');
 
 // Search for lecture rooms based on the provided query
-const searchLectureRoomsQuery = async (query) => {
+const searchLectureRooms = async (query) => {
   try {
     const searchQuery = `
       SELECT
-        room_id,
         room_name,
         room_capacity,
         status
       FROM
         rooms
       WHERE
-        room_name ILIKE $1;
+        status = 'Available' AND room_name ILIKE $1;
     `;
     const searchParam = `%${query}%`;
     const { rows } = await pool.query(searchQuery, [searchParam]);
@@ -22,7 +21,28 @@ const searchLectureRoomsQuery = async (query) => {
   }
 };
 
-module.exports = {
-  searchLectureRoomsQuery,
+const getAllAvailableLectureRooms = async () => {
+  try {
+    const searchQuery = `
+      SELECT
+        room_name,
+        room_capacity,
+        status
+      FROM
+        rooms
+      WHERE
+        status = 'Available';
+    `;
+    const { rows } = await pool.query(searchQuery);
+    return rows;
+  } catch (error) {
+    throw error;
+  }
 };
+
+module.exports = {
+  searchLectureRooms,
+  getAllAvailableLectureRooms,
+};
+
 
