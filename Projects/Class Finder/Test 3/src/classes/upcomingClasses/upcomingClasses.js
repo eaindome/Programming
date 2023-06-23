@@ -1,45 +1,50 @@
+const moment = require('moment');
 const pool = require('../../../database');
 const queries = require('./queries');
 
-// Endpoint: Upcoming Classes
-const upcomingClasses = (req, res) => {
-  // Assume the user information is stored in the request object after successful login
-  // Check if the user is authenticated (session validation)
-  if (!req.session.userid) {
-    return res.status(401).json({ error: 'User not logged in' });
-  }
-
-  const userId = req.session.userid;
-
-  // Get the current day of the week (0 = Sunday, 1 = Monday, etc.)
-  const currentDay = new Date().getDay();
-
-  // Check if it's Sunday (0) or Saturday (6)
-  if (currentDay === 0 || currentDay === 6) {
-    // If it's Sunday or Saturday, return an empty response
-    return res.status(204).json();
-  }
-
-  // Query the database to get the upcoming classes for the user
-  pool.query(queries.upcomingClasses, [userId], (error, results) => {
-    if (error) {
-      console.error('Error executing query: ', error);
-      return res.status(500).json({ error: 'Internal Server Error' });
+// Endpoint: Get Upcoming Class
+const getUpcomingClass = async (req, res) => {
+  try {
+    // Check if the user is authenticated (session validation)
+    if (!req.session.userid) {
+      return res.status(401).json({ error: 'User not logged in' });
     }
 
-    const upcomingClasses = results.rows;
+    const userId = req.session.userid;
 
-    // Check if there are no upcoming classes for the current day
-    if (upcomingClasses.length === 0) {
-      // Return an empty response
-      return res.status(204).json();
+    // Get the current date and time in GMT
+    const currentDate = moment().utc().format('YYYY-MM-DD');
+    const currentTime = moment().utc().format('HH:mm');
+
+    // Query the database to get the upcoming class for the user
+    const upcomingClass = await pool.query(queries.upcomingClass, [userId, currentDate, currentTime]);
+
+    if (upcomingClass.rowCount === 0) {
+      return res.send('You are done for the day');
     }
 
-    // Return the upcoming classes as a response
-    res.status(200).json(upcomingClasses);
-  });
+    const classItem = upcomingClass.rows[0];
+
+    // Check if the class is ongoing
+    const isOngoing = moment(currentTime, 'HH:mm').isBetween(
+      moment(classItem.start_time, 'HH:mm'),
+      moment(classItem.end_time, 'HH:mm')
+    );
+
+    const status = isOngoing ? 'Ongoing' : 'Upcoming';
+
+    return res.json({
+      status,
+      class: classItem.course_name,
+      time: classItem.start_time,
+    });
+  } catch (error) {
+    console.error('Error executing query: ', error);
+    return res.status(500).json({ error: 'Internal Server Error' });
+  }
 };
 
 module.exports = {
-  upcomingClasses,
+  getUpcomingClass,
 };
+
