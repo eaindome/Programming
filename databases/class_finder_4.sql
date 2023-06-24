@@ -97,3 +97,17 @@ CREATE TABLE BookedClasses (
 
 ALTER TABLE Users
 ALTER COLUMN notification_preference SET DEFAULT false;
+
+ALTER TABLE Users ADD CONSTRAINT users_email_unique UNIQUE (email);
+
+CREATE TABLE session (
+  sid VARCHAR NOT NULL COLLATE "default",
+  sess JSON NOT NULL,
+  expire TIMESTAMP(6) NOT NULL
+);
+
+ALTER TABLE session ADD CONSTRAINT session_sid_unique UNIQUE (sid);
+
+ALTER TABLE Users ADD device_token character varying(255);
+
+ALTER TABLE Users ALTER COLUMN notification_preference SET DEFAULT false;
