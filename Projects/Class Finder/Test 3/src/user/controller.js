@@ -1,4 +1,4 @@
-//const bcrypt = require('bcrypt');
+const bcrypt = require('bcrypt');
 const pool = require('../../database');
 const queries = require('./queries');
 
@@ -62,8 +62,82 @@ const userLogout = (req, res) => {
     });
 };
 
+// Endpoint: User Sign Up
+const userSignUp = async (req, res) => {
+    const { firstname, surname, password, email, program, year } = req.body;
+  
+    try {
+      // Check if the user already exists in the database
+      const userExists = await pool.query(queries.checkUserExists, [email]);
+      if (userExists.rowCount > 0) {
+        return res.status(409).json({ error: 'User already exists' });
+      }
+  
+      // Generate the hashed password
+      const hashedPassword = await bcrypt.hash(password, 10);
+  
+      // Insert the user into the Users table
+      const programYearId = await getProgramYearId(program, year);
+      
+      
+      const user = await pool.query(queries.userSignUp, [
+        `${firstname} ${surname}`,
+        hashedPassword,
+        email,
+        'Student',
+        programYearId,
+      ]);
+  
+      res.status(201).json({ message: 'User created successfully' });
+    } catch (error) {
+      console.error('Error executing query: ', error);
+      res.status(500).json({ error: 'Internal Server Error' });
+    }
+};
+  
+// Helper function to get program_year_id
+const getProgramYearId = async (program, year) => {
+    try {
+      // Get the program_id
+      const programData = await pool.query(queries.getProgram, [program]);
+  
+      if (programData.rowCount === 0) {
+        throw new Error(`Program '${program}' not found`);
+      }
+      const programId = programData.rows[0].program_id;
+  
+      // Get the year_id
+      const yearData = await pool.query(queries.getYear, [year]);
+  
+      if (yearData.rowCount === 0) {
+        throw new Error(`Year '${year}' not found`);
+      }
+      const yearId = yearData.rows[0].year_id;
+  
+      // Check if a program_year entry already exists
+      const programYearData = await pool.query(queries.getProgramYear, [programId, yearId]);
+  
+      if (programYearData.rowCount > 0) {
+        return programYearData.rows[0].program_year_id;
+      }
+  
+      // Insert a new entry into ProgramYears table
+      const newProgramYearData = await pool.query(queries.insertProgramYear, [
+        programId,
+        yearId
+      ]);
+  
+      return newProgramYearData.rows[0].program_year_id;
+    } catch (error) {
+      throw error;
+    }
+  };
+  
+
+
 module.exports = {
     userLogin,
     userProfile,
     userLogout,
+    userSignUp,
 };
