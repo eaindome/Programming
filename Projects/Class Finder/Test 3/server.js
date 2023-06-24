@@ -1,8 +1,10 @@
 const express = require("express");
 const bodyParser = require('body-parser');
 const session = require('express-session');
+const cron = require('node-cron');
 const pgSession =  require('connect-pg-simple')(session);
 const pool = require('./database');
+const admin = require('./src/Firebase Database/firebase');
 
 
 // Import routes
@@ -15,6 +17,9 @@ const displayTimetable = require('./src/timetable/routes');
 const ongoingSessions = require('./src/classes/ongoingClasses/routes');
 const availableLectureRooms = require('./src/classes/availableClasses/routes');
 const searchLectureRooms = require('./src/classes/searchClasses/routes');
+const notificationRoutes = require('./src/notifications/routes');
+const { sendNotificationsForUpcomingClasses } = require('./src/notifications/controller');
+
 
 const app = express();
 const port = 3000;
@@ -52,7 +57,7 @@ io.on('connection', (socket) => {
 
 
 
-// Mount userRoutes and classRoutes
+// Mount routes
 app.use("/api/v1/src/user", userRoutes);
 app.use("/api/v1/src/classes/classStatus", classStatus);
 app.use("/api/v1/src/classes/upcomingClasses", upcomingClasses);
@@ -62,6 +67,10 @@ app.use("/api/v1/src/timetable", displayTimetable);
 app.use("/api/v1/src/classes/ongoingClasses", ongoingSessions);
 app.use("/api/v1/src/classes/availableClasses", availableLectureRooms);
 app.use("/api/v1/src/classes/searchClasses", searchLectureRooms);
+app.use('/api/v1/src/notifications', notificationRoutes);
+
+// Set up the scheduled task
+cron.schedule('* * * * *', sendNotificationsForUpcomingClasses);
 
 // Start the server
 app.listen(port, () => {
