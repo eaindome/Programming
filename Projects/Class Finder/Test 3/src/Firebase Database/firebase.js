@@ -1,7 +1,7 @@
 const admin = require('firebase-admin');
 
 // Replace 'path/to/serviceAccountKey.json' with the actual path to your service account key JSON file
-const serviceAccount = require('./class-finder-1-firebase-adminsdk-b9u4e-1ba89e7f8c.json');
+const serviceAccount = require('//path/to/serviceAccountKey.json');
 
 admin.initializeApp({
   credential: admin.credential.cert(serviceAccount),
