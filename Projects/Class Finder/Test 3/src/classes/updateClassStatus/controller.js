@@ -38,7 +38,7 @@ const updateRoomStatuses = async () => {
   const nonOngoingTimetableIds = nonOngoingTimetables.rows.map((timetable) => timetable.timetable_id);
 
   if (nonOngoingTimetableIds.length > 0) {
-    // Set the class status to "Empty" for the non-ongoing timetables
+    // Set the class status to "Available" for the non-ongoing timetables
     await updateClassStatus('Available', nonOngoingTimetableIds.filter(id => !manuallyUpdatedRoomIds.includes(id)));
   }
 
@@ -49,7 +49,7 @@ const updateRoomStatuses = async () => {
 // Automatically update room statuses at regular intervals
 const interval = setInterval(async () => {
   await updateRoomStatuses();
-}, 4 * 60 * 1000); // Update every 5 minutes or if you want for 1 minute (60000)
+}, 5 * 60 * 1000); // Update every 5 minutes or if you want for 1 minute (60000)
 
 // Stop updating room statuses when the application exits
 process.on('SIGINT', () => {
