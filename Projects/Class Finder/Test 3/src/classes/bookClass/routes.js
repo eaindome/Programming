@@ -1,10 +1,10 @@
-const { Router } = require('express');
-const classController = require('./controller');
+const express = require('express');
+const { bookClass, cancelRoomBooking } = require('./controller');
 
-const router = Router();
+const router = express.Router();
 
-router.post('/:roomId', classController.bookClass);
-router.put('/:roomId', classController.updateRoomStatusManually);
-router.delete('/:roomId', classController.cancelRoomBooking);
+router.post('/book/:roomId', bookClass);
+router.put('/cancel/:roomId', cancelRoomBooking);
 
 module.exports = router;
+

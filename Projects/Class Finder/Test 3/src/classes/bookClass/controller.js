@@ -53,7 +53,7 @@ const bookClass = async (req, res) => {
         // Add the manually updated room ID to the array
         manuallyUpdatedRoomIds.push(roomId);
       }
-    }, 5 * 60 * 1000); // 5 minutes (converted to milliseconds)
+    }, 2 * 60 * 1000); // 5 minutes (converted to milliseconds)
 
     res.status(200).json({
       message: 'Class booked successfully.',
@@ -68,6 +68,7 @@ const bookClass = async (req, res) => {
     res.status(500).json({ error: 'Internal Server Error' });
   }
 };
+
 
 // Endpoint: Cancel a room booking by the class representative
 const cancelRoomBooking = async (req, res) => {
@@ -113,7 +114,7 @@ const cancelRoomBooking = async (req, res) => {
   }
 };
 
-module.exports = { bookClass, cancelRoomBooking };
+module.exports = { bookClass, cancelRoomBooking, manuallyUpdatedRoomIds };
 
 
 
