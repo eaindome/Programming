@@ -1,15 +1,21 @@
 const { getOngoingSessions } = require('./queries');
+const { getCurrentDay, getCurrentTime } = require('./utils'); // Add this line to import utility functions
 
 // Get all ongoing sessions
 const getAllOngoingSessions = async (req, res) => {
   try {
-    const ongoingSessions = await getOngoingSessions();
+    const currentDay = getCurrentDay();
+    const currentTime = getCurrentTime();
+    const ongoingSessions = await getOngoingSessions(currentDay, currentTime);
     res.json(ongoingSessions);
   } catch (error) {
+    console.error(error); // Log the error
     res.status(500).json({ error: 'An error occurred while fetching ongoing sessions.' });
   }
 };
 
+
 module.exports = {
   getAllOngoingSessions,
 };
+
