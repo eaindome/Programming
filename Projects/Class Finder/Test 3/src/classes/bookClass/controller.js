@@ -4,10 +4,11 @@ const queries = require('./queries');
 let manuallyUpdatedRoomIds = [];
 
 // Endpoint: Book a Class
+// Endpoint: Book a class/lecture room
 const bookClass = async (req, res) => {
   try {
     const { roomId } = req.params;
-    const { day = 'Today', course, duration = 1 } = req.body;
+    const { day, course, duration } = req.body;
     const userId = req.session.userid;
 
     // Check if the user is authenticated (session validation)
@@ -22,38 +23,38 @@ const bookClass = async (req, res) => {
     if (userRole !== 'Class Rep') {
       return res.status(403).json({ error: 'Access denied. Only Class Reps can book classes.' });
     }
-
+    
+    /*
     // Check if the room is available
-    const classStatusQuery = await pool.query(queries.getClassStatus, [roomId]);
-    const classStatus = classStatusQuery.rows[0].status;
+    const classExists = await queries.getClassByRoomAndDay(roomId, day);
 
-    if (classStatus !== 'Available') {
-      return res.status(409).json({ error: 'The class is not available for booking.' });
-    }
+    if (classExists) {
+      return res.status(409).json({ error: 'The room is not available for booking.' });
+    }*/
 
-    // Update the class status to "Booked" and save the booking time
-    await pool.query(queries.updateClassStatus, ['Booked', roomId]);
+    // Update the room status to "Booked"
+    await pool.query(queries.updateRoomStatus, ['Booked', roomId]);
 
     // Add the manually updated room ID to the array
     manuallyUpdatedRoomIds.push(roomId);
 
     // Insert booking information into the BookedClasses table
-    const bookingQuery = await pool.query(queries.bookClass, [userId, roomId]);
-    const bookingId = bookingQuery.rows[0].id;
+    const bookingQuery = await pool.query(queries.bookClass, [userId, roomId, course, day, duration]);
+    const bookingId = bookingQuery.rows[0].booking_id;
 
-    // Set a timer to automatically change the class status to "Ongoing" after 5 minutes
+    // Set a timer to automatically change the room status to "Ongoing" after 5 minutes
     setTimeout(async () => {
-      // Check if the class status is still "Booked" before updating it to "Ongoing"
-      const currentStatusQuery = await pool.query(queries.getClassStatus, [roomId]);
+      // Check if the room status is still "Booked" before updating it to "Ongoing"
+      const currentStatusQuery = await pool.query(queries.getRoomStatus, [roomId]);
       const currentStatus = currentStatusQuery.rows[0].status;
 
       if (currentStatus === 'Booked') {
-        await pool.query(queries.updateClassStatus, ['Ongoing', roomId]);
+        await pool.query(queries.updateRoomStatus, ['Ongoing', roomId]);
 
         // Add the manually updated room ID to the array
         manuallyUpdatedRoomIds.push(roomId);
       }
-    }, 2 * 60 * 1000); // 5 minutes (converted to milliseconds)
+    }, 1 * 60 * 1000); // 5 minutes (converted to milliseconds)
 
     res.status(200).json({
       message: 'Class booked successfully.',
@@ -65,6 +66,7 @@ const bookClass = async (req, res) => {
     });
   } catch (error) {
     console.error('Error executing query: ', error);
+    console.error(error); // Log the error
     res.status(500).json({ error: 'Internal Server Error' });
   }
 };
