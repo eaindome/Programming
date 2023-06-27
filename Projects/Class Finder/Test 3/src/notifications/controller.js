@@ -46,9 +46,9 @@ async function sendNotificationsForUpcomingClasses() {
         classStartTime.setHours(timetable.start_time.getHours(), timetable.start_time.getMinutes(), 0, 0);
 
         // Send notification 15 minutes before the class start time
-        const notificationTime = new Date(classStartTime.getTime() - 15 * 60000);
+        const notificationTime = new Date(classStartTime.getTime() - 30 * 60000);
         if (currentDate < notificationTime) {
-          sendPushNotification(user.deviceToken, 'Upcoming Class', 'Your class will start in 15 minutes.');
+          sendPushNotification(user.deviceToken, 'Upcoming Class', 'Your class will start in 30 minutes.');
         }
 
         // Send notification 5 minutes before the class start time if the room is unavailable
