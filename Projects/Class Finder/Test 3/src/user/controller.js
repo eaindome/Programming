@@ -51,6 +51,11 @@ const userProfile = (req, res) => {
 
 // Endpoint: User Logout
 const userLogout = (req, res) => {
+    // check if the user is authenticated
+    if (!req.session.userid) {
+        return res.status(401).json({ error: 'User not logged in '});
+    }
+
     // Destroy the session
     req.session.destroy((error) => {
       if (error) {
