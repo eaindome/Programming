@@ -1,39 +1,6 @@
 const pool = require('../../../database');
 
-/*
-const getOngoingSessions = async () => {
-  try {
-    const query = `
-      SELECT
-        r.room_name,
-        c.course_name,
-        t.start_time,
-        t.end_time
-      FROM
-        timetables AS t
-        JOIN rooms AS r ON r.room_id = t.room_id
-        JOIN courses AS c ON c.course_id = t.course_id
-      WHERE
-        r.status = 'Ongoing'
-        OR EXISTS (
-          SELECT 1
-          FROM bookedclasses AS b
-          WHERE b.room_id = r.room_id
-            AND b.day_name = (SELECT day_name FROM daysofweek WHERE day_id = extract(DOW FROM now())::integer)
-            AND now() >= b.booking_time
-            AND now() <= b.booking_time + b.duration
-        );
-    `;
-    const { rows } = await pool.query(query);
-    return rows;
-  } catch (error) {
-    console.error(error); // Log the error
-    throw error;
-  }
-};*/
-
-/*
-const getOngoingSessions = async () => {
+const getOngoingSessions = async (currentDay, currentTime) => {
   try {
     const query = `
       SELECT
@@ -49,86 +16,38 @@ const getOngoingSessions = async () => {
             t.start_time,
             t.end_time
           FROM
-            timetables AS t
-            JOIN rooms AS r ON r.room_id = t.room_id
-            JOIN courses AS c ON c.course_id = t.course_id
+            Timetables AS t
+            JOIN Rooms AS r ON r.room_id = t.room_id
+            JOIN Courses AS c ON c.course_id = t.course_id
+            JOIN DaysOfWeek AS d ON d.day_id = t.day_id
           WHERE
             r.status = 'Ongoing'
+            AND d.day_name = $1
         ) AS timetable_sessions
       UNION
       SELECT
         r.room_name,
-        bc.course_name,
-        bc.booking_time AS start_time,
-        bc.booking_time + bc.duration AS end_time
+        b.course_name,
+        b.booking_time::time AS start_time,
+        (b.booking_time + b.duration)::time AS end_time
       FROM
-        rooms AS r
-        JOIN bookedclasses AS bc ON r.room_id = bc.room_id
+        Rooms AS r
+        JOIN BookedClasses AS b ON r.room_id = b.room_id
       WHERE
         r.status = 'Ongoing'
-        OR (
-          now() >= bc.booking_time
-          AND now() <= bc.booking_time + bc.duration
+        AND (
+          date(b.booking_time) = date(current_timestamp)
+          AND (b.booking_time::time) <= $2
+          AND (b.booking_time::time) + b.duration::interval >= $2
         );
     `;
-    catch (error) {
-    console.error(error); // Log the error
-    throw error;
-  }
-};
-*/
-
-const getOngoingSessions = async () => {
-  try {
-    const query = `
-      SELECT
-        room_name,
-        course_name,
-        start_time,
-        end_time
-      FROM
-        (
-          SELECT
-            r.room_name,
-            c.course_name,
-            t.start_time,
-            t.end_time
-          FROM
-            timetables AS t
-            JOIN rooms AS r ON r.room_id = t.room_id
-            JOIN courses AS c ON c.course_id = t.course_id
-          WHERE
-            r.status = 'Ongoing'
-        ) AS timetable_sessions
-      UNION
-      SELECT
-        r.room_name,
-        bc.course_name,
-        bc.booking_time AS start_time,
-        bc.booking_time + bc.duration AS end_time
-      FROM
-        rooms AS r
-        JOIN bookedclasses AS bc ON r.room_id = bc.room_id
-      WHERE
-        r.status = 'Ongoing'
-        OR (
-          now() >= bc.booking_time
-          AND now() <= bc.booking_time + bc.duration
-        );
-    `;
-    const { rows } = await pool.query(query);
+    const { rows } = await pool.query(query, [currentDay, currentTime]);
     return rows;
   } catch (error) {
     console.error(error); // Log the error
     throw error;
   }
 };
-
-
-
-
-
-
 
 module.exports = {
   getOngoingSessions,
