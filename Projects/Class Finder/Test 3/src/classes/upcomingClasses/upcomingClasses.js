@@ -48,3 +48,9 @@ module.exports = {
   getUpcomingClass,
 };
 
+/**
+ * this check "
+    if (upcomingClass.rowCount === 0) {
+      return res.send('You are done for the day');
+    }" returns a statement that's doesn't really work, can you add a check to that checks if its 
+ */
