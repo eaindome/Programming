@@ -10,14 +10,16 @@ const updateAllClassStatus = `
 
 // Get ongoing timetables based on current day and time
 const getOngoingTimetables = `
-  SELECT timetable_id FROM Timetables
-  WHERE day_id = $1 AND start_time <= $2 AND end_time >= $2;
+  SELECT timetable_id FROM Timetables t
+  JOIN DaysOfWeek AS d ON d.day_id = t.day_id
+  WHERE d.day_name = $1 AND start_time <= $2 AND end_time >= $2;
 `;
 
 // Get non-ongoing timetables based on current day and time
 const getNonOngoingTimetables = `
-  SELECT timetable_id FROM Timetables
-  WHERE day_id = $1 AND (start_time > $2 OR end_time < $2);
+  SELECT timetable_id FROM Timetables t
+  JOIN DaysOfWeek AS d ON d.day_id = t.day_id
+  WHERE d.day_name = $1 AND (start_time > $2 OR end_time < $2);
 `;
 
 module.exports = {

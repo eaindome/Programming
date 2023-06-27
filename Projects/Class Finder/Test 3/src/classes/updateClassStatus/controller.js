@@ -1,6 +1,7 @@
 const pool = require('../../../database');
 const queries = require('./queries');
 const { manuallyUpdatedRoomIds } = require('../bookClass/controller'); // Import the manuallyUpdatedRoomIds array
+const { getCurrentDay, getCurrentTime } = require('../ongoingClasses/utils');
 
 // Update class status for multiple rooms
 const updateClassStatus = async (status, roomIds) => {
@@ -14,11 +15,13 @@ const updateAllClassStatus = async (status) => {
 
 // Update room statuses based on timetable data
 const updateRoomStatuses = async () => {
-  const currentDay = new Date().getDay();
-  const currentTime = new Date().toLocaleTimeString('en-US', { hour12: false });
+  const currentDay = getCurrentDay();//new Date().getDay();
+  console.log(currentDay);
+  const currentTime = getCurrentTime();//new Date().toLocaleTimeString('en-US', { timeZone: 'GMT', hour12: false });
+  console.log(currentTime);
 
   // Check if it's Sunday (0) or Saturday (6)
-  if (currentDay === 0 || currentDay === 6) {
+  if (currentDay === 'Sunday' || currentDay === 'Saturday') {
     // If it's Sunday or Saturday, set the class status to "Empty" for all rooms
     await updateAllClassStatus('Available');
     return;
@@ -49,7 +52,7 @@ const updateRoomStatuses = async () => {
 // Automatically update room statuses at regular intervals
 const interval = setInterval(async () => {
   await updateRoomStatuses();
-}, 5 * 60 * 1000); // Update every 5 minutes or if you want for 1 minute (60000)
+}, 1 * 60 * 1000); // Update every 5 minutes or if you want for 1 minute (60000)
 
 // Stop updating room statuses when the application exits
 process.on('SIGINT', () => {
