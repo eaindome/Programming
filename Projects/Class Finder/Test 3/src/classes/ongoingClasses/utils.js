@@ -1,23 +1,25 @@
-// Get the current day (e.g., 'Monday', 'Tuesday', etc.)
+// Get the current day
 const getCurrentDay = () => {
     const currentDate = new Date();
-    console.log(currentDate);
-    const currentDayIndex = currentDate.getUTCDay();
-    const daysOfWeek = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
-    return daysOfWeek[currentDayIndex];
+    currentDate.setUTCHours(currentDate.getUTCHours() - 12);
+    const options = { weekday: 'long', timeZone: 'Etc/GMT' };
+    return currentDate.toLocaleDateString('en-US', options);
 };
   
 // Get the current time in 'HH:MM' format
 const getCurrentTime = () => {
     const currentDate = new Date();
-    const currentHour = currentDate.getUTCHours().toString().padStart(2, '0');
-    const currentMinute = currentDate.getUTCMinutes().toString().padStart(2, '0');
-    return `${currentHour}:${currentMinute}`;
+    currentDate.setUTCHours(currentDate.getUTCHours() - 12);
+    const options = { hour: '2-digit', minute: '2-digit', hour12: false, timeZone: 'Etc/GMT' };
+    return currentDate.toLocaleString('en-US', options);
 };
-
-getCurrentDay();
+  
+console.log(getCurrentDay());
+console.log(getCurrentTime());
 
 module.exports = {
-    getCurrentDay,
-    getCurrentTime,
+  getCurrentDay,
+  getCurrentTime,
 };
+  
+
