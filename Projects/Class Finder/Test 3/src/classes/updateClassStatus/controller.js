@@ -16,9 +16,9 @@ const updateAllClassStatus = async (status) => {
 // Update room statuses based on timetable data
 const updateRoomStatuses = async () => {
   const currentDay = getCurrentDay();//new Date().getDay();
-  console.log(currentDay);
+  //console.log(currentDay);
   const currentTime = getCurrentTime();//new Date().toLocaleTimeString('en-US', { timeZone: 'GMT', hour12: false });
-  console.log(currentTime);
+  //console.log(currentTime);
 
   // Check if it's Sunday (0) or Saturday (6)
   if (currentDay === 'Sunday' || currentDay === 'Saturday') {
