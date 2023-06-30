@@ -1,7 +1,8 @@
-const favoriteRoom = 'UPDATE Rooms SET user_id = $1 WHERE room_id = $2';
-const bookmarkRoom = 'UPDATE Rooms SET user_id = $1 WHERE room_id = $2';
+const addFavorite = 'INSERT INTO Favorites (user_id, room_id) VALUES ($1, $2)';
+const addBookmark = 'INSERT INTO Bookmarks (user_id, room_id) VALUES ($1, $2)';
 
 module.exports = {
-  favoriteRoom,
-  bookmarkRoom,
+  addFavorite,
+  addBookmark,
 };
+
