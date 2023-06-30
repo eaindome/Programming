@@ -33,6 +33,18 @@ const updateRoomStatus = `
   WHERE room_id = $2
 `;
 
+// Query: Getting timetable by room and day
+const getTimetableByRoomAndDay = `
+  SELECT *
+  FROM Timetables
+  WHERE room_id = $1 AND day_id = (
+    SELECT day_id
+    FROM DaysOfWeek
+    WHERE day_name = $2
+  )
+  ORDER BY start_time;
+`;
+
 module.exports = {
   getUserRole,
   getRoomStatus,
@@ -41,4 +53,5 @@ module.exports = {
   getClassByRoomAndDay,
   bookClass,
   updateRoomStatus,
+  getTimetableByRoomAndDay,
 };
