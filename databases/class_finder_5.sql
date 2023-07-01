@@ -112,3 +112,14 @@ ALTER TABLE session ADD CONSTRAINT session_sid_unique UNIQUE (sid);
 ALTER TABLE Users ADD device_token character varying(255);
 
 ALTER TABLE Users ALTER COLUMN notification_preference SET DEFAULT false;
+
+
+-- Create ResetTokens table
+CREATE TABLE ResetTokens (
+  id SERIAL PRIMARY KEY,
+  user_id INT NOT NULL,
+  token VARCHAR(255) NOT NULL,
+  expiration TIMESTAMP NOT NULL,
+  FOREIGN KEY (user_id) REFERENCES Users (user_id)
+);
+
