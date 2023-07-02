@@ -4,22 +4,29 @@ const queries = require('./queries');
 
 
 // Endpoint: User Login
-const userLogin = (req, res) => {
-    const { email, password } = req.body;
+const userLogin = async (req, res) => {
+  const { email, password } = req.body;
 
-    pool.query(queries.userLogin, [email, password], (error, results) => {
-        if (error) {
-            console.error('Error executing query: ', error);
-            res.status(500).json({ eroor: 'Internal Server Error' });
-        } else if (results.rowCount === 0) {
-            res.status(401).json({ error: 'Invalid credentials' });
-        } else {
-            const user = results.rows[0];
-            // store the user's ID in the session
-            req.session.userid = user.user_id;
-            res.status(200).json({ message: 'Login successful' });
-        }
-    });
+  try {
+    // Check if the user exists in the database
+    const user = await pool.query(queries.userLogin, [email]);
+    if (user.rowCount === 0) {
+      return res.status(401).json({ error: 'Invalid credentials' });
+    }
+
+    // Compare the provided password with the stored hashed password
+    const isPasswordValid = await bcrypt.compare(password, user.rows[0].password);
+    if (!isPasswordValid) {
+      return res.status(401).json({ error: 'Invalid credentials' });
+    }
+
+    // Store the user's ID in the session
+    req.session.userid = user.rows[0].user_id;
+    res.status(200).json({ message: 'Login successful' });
+  } catch (error) {
+    console.error('Error executing query: ', error);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
 };
 
 
