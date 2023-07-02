@@ -37,9 +37,17 @@ async function getRoomStatus(roomId) {
   return result.rows[0].status;
 }
 
+// Update the device token for a user
+async function updateDeviceToken(userId, deviceToken) {
+  const query = 'UPDATE Users SET device_token = $1 WHERE user_id = $2';
+  const values = [deviceToken, userId];
+  await db.query(query, values);
+}
+
 module.exports = {
   updateNotificationPreference,
   getUsersWithNotificationPreference,
   getNextClassTimetable,
   getRoomStatus,
+  updateDeviceToken,
 };

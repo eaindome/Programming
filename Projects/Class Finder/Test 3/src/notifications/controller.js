@@ -66,8 +66,28 @@ async function sendNotificationsForUpcomingClasses() {
   }
 }
 
+// Endpoint for receiving the device token
+async function receiveDeviceToken(req, res) {
+  // Check if the user is authenticated (session validation)
+  if (!req.session.userid) {
+    return res.status(401).json({ error: 'User not logged in' });
+  }
+
+  const { deviceToken } = req.body;
+  const userId = req.session.userid;
+
+  try {
+    await queries.updateDeviceToken(userId, deviceToken);
+    res.status(200).json({ message: 'Device token received and stored successfully' });
+  } catch (error) {
+    console.error('Error storing device token:', error);
+    res.status(500).json({ error: 'An error occurred while storing the device token' });
+  }
+}
+
 module.exports = {
   updateNotificationPreference,
   sendNotificationsForUpcomingClasses,
+  receiveDeviceToken,
 };
 
