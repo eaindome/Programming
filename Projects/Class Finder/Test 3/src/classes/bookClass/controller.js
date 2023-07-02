@@ -130,7 +130,6 @@ const getAvailableTimes = async (req, res) => {
   }
 };
 
-
 // Function: Calculate Available Times
 const calculateAvailableTimes = async (roomId, day) => {
   try {
@@ -196,61 +195,8 @@ const getAvailableTimesCurrent = async (req, res) => {
   }
 };
 
-/*
 // Function: Calculate Available Times
-const calculateAvailableTimes = async (roomId, day, time) => {
-  try {
-    const timetableQuery = await pool.query(queries.getTimetableByRoomAndDay, [roomId, day]);
-    const timetable = timetableQuery.rows;
-    timetable.sort((a, b) => a.start_time.localeCompare(b.start_time));
-
-    const availableTimes = [];
-
-    // Calculate available times based on timetable gaps
-    for (let i = 0; i < timetable.length - 1; i++) {
-      const currentClass = timetable[i];
-      const nextClass = timetable[i + 1];
-
-      const endTime = currentClass.end_time;
-      const startTime = nextClass.start_time;
-
-      if (endTime < startTime) {
-        availableTimes.push({ start_time: endTime, end_time: startTime });
-      }
-    }
-
-    // Add static start and end times for the beginning and end of the day
-    if (timetable.length > 0) {
-      const firstClass = timetable[0];
-      const lastClass = timetable[timetable.length - 1];
-
-      const firstStartTime = '08:01'; // Static start time
-      const lastEndTime = '19:59'; // Static end time
-
-      if (firstStartTime < firstClass.start_time) {
-        availableTimes.unshift({ start_time: firstStartTime, end_time: firstClass.start_time });
-      }
-
-      if (lastClass.end_time < lastEndTime) {
-        availableTimes.push({ start_time: lastClass.end_time, end_time: lastEndTime });
-      }
-    } else {
-      // If no classes in the timetable, add the full available time range
-      const fullStartTime = '08:01'; // Static start time
-      const fullEndTime = '19:59'; // Static end time
-
-      availableTimes.push({ start_time: fullStartTime, end_time: fullEndTime });
-    }
-
-    return availableTimes;
-  } catch (error) {
-    throw new Error('Error calculating available times');
-  }
-};*/
-
-
-// Function: Calculate Available Times
-const calculateAvailableTimesCurrent = async (roomId, day, currentTime = null, isCurrentEndpoint = false) => {
+const calculateAvailableTimesCurrent = async (roomId, day, currentTime, isCurrentEndpoint = false) => {
   try {
     const timetableQuery = await pool.query(queries.getTimetableByRoomAndDay, [roomId, day]);
     const timetable = timetableQuery.rows;
@@ -259,33 +205,31 @@ const calculateAvailableTimesCurrent = async (roomId, day, currentTime = null, i
     timetable.sort((a, b) => a.start_time.localeCompare(b.start_time));
 
     const availableTimes = [];
-
-    // Calculate available times based on timetable gaps
-    for (let i = 0; i < timetable.length - 1; i++) {
-      const currentClass = timetable[i];
-      const nextClass = timetable[i + 1];
-
-      const endTime = currentClass.end_time;
-      const startTime = nextClass.start_time;
-
-      if (endTime < startTime) {
-        availableTimes.push({ start_time: endTime, end_time: startTime });
-      }
-    }
-
-    if (isCurrentEndpoint && currentTime) {
-      const firstClass = timetable[0];
-      const lastClass = timetable[timetable.length - 1];
-
-      const startTime = firstClass.start_time;
-      const endTime = lastClass.end_time;
-
-      if (endTime < '19:59:00') {
-        availableTimes.push({ start_time: endTime, end_time: '19:59:00' });
-      }
-
-      if (currentTime < startTime || currentTime > '19:59:00') {
-        return 'Rooms are closed for the day.';
+    
+    if (timetable.length === 0) {
+      // If no classes are scheduled, consider the time from currentTime to '19:59:00' as available
+      if (isCurrentEndpoint && currentTime) {
+        if (currentTime < '19:59:00') {
+          availableTimes.push({ start_time: currentTime, end_time: '19:59:00' });
+        } else {
+          return 'Rooms are closed for the day.';
+        }
+      } 
+    } else {
+      if (isCurrentEndpoint && currentTime) {
+        const firstClass = timetable[0];
+        const lastClass = timetable[timetable.length - 1];
+  
+        const startTime = firstClass.start_time;
+        const endTime = lastClass.end_time;
+  
+        if (endTime < '19:59:00') {
+          availableTimes.push({ start_time: endTime, end_time: '19:59:00' });
+        }
+  
+        if (currentTime < startTime || currentTime > '19:59:00') {
+          return 'Rooms are closed for the day.';
+        }
       }
     }
 
@@ -294,7 +238,6 @@ const calculateAvailableTimesCurrent = async (roomId, day, currentTime = null, i
     throw new Error('Error calculating available times');
   }
 };
-
 
 module.exports = {
   bookClass,
