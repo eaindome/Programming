@@ -5,6 +5,7 @@ const cron = require('node-cron');
 const pgSession =  require('connect-pg-simple')(session);
 const pool = require('./database');
 const admin = require('./src/Firebase Database/firebase');
+const path = require('path');
 
 
 // Import routes
@@ -56,7 +57,11 @@ io.on('connection', (socket) => {
     });
 });
 
+// Set the views directory
+app.set('views', path.join(__dirname, 'views'));
 
+// Set the view engine to use EJS
+app.set('view engine', 'ejs');
 
 
 // Mount routes
