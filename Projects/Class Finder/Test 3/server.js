@@ -58,7 +58,7 @@ io.on('connection', (socket) => {
 });
 
 // Set the views directory
-app.set('views', path.join(__dirname, 'views'));
+app.set('views', path.join(__dirname, './views'));
 
 // Set the view engine to use EJS
 app.set('view engine', 'ejs');
