@@ -45,6 +45,15 @@ const getTimetableByRoomAndDay = `
   ORDER BY start_time;
 `;
 
+// Query: Get all booked rooms
+const getBookedRooms = 'SELECT * FROM rooms WHERE status = $1';
+
+// Query: Check if the room is already booked for the specified day
+const isRoomBooked = 'SELECT EXISTS (SELECT 1 FROM BookedClasses WHERE room_id = $1 AND day = $2)';
+
+// Query: Check if the room is already booked for the specified day and time
+const isRoomBookedForTime = 'SELECT EXISTS (SELECT 1 FROM BookedClasses WHERE room_id = $1 AND day = $2 AND start_time = $3)';
+
 module.exports = {
   getUserRole,
   getRoomStatus,
@@ -54,4 +63,7 @@ module.exports = {
   bookClass,
   updateRoomStatus,
   getTimetableByRoomAndDay,
+  getBookedRooms,
+  isRoomBooked,
+  isRoomBookedForTIme,
 };

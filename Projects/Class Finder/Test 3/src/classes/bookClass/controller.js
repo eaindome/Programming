@@ -1,11 +1,14 @@
 const pool = require('../../../database');
 const queries = require('./queries');
 const { getCurrentDay, getCurrentTime } = require('../ongoingClasses/utils');
+const axios = require('axios');
+const moment = require('moment');
+
 
 let manuallyUpdatedRoomIds = [];
 
 // Endpoint: Book a class/lecture room
-const bookClass = async (req, res) => {
+const bookClassNow = async (req, res) => {
   try {
     const { roomId } = req.params;
     const { day, course, duration } = req.body;
@@ -239,13 +242,253 @@ const calculateAvailableTimesCurrent = async (roomId, day, currentTime, isCurren
   }
 };
 
+// Endpoint: Book a class/lecture room for a future event
+const bookClassLater = async (req, res) => {
+  try {
+    const { roomId } = req.params;
+    const { day, course, duration, startTime } = req.body;
+    const userId = req.session.userid;
+
+    // Check if the user is authenticated (session validation)
+    if (!userId) {
+      return res.status(401).json({ error: 'User not logged in' });
+    }
+
+    // Verify the user's role is "Class Rep"
+    const userRoleQuery = await pool.query(queries.getUserRole, [userId]);
+    const userRole = userRoleQuery.rows[0].role;
+
+    if (userRole !== 'Class Rep') {
+      return res.status(403).json({ error: 'Access denied. Only Class Reps can book classes.' });
+    }
+
+    // Get the available times for the specified room and day
+    const availableTimesResponse = await axios.get(`http://localhost:3000/api/v1/src/classes/bookClass/availableTimes/${roomId}/${day}`);
+    const availableTimes = availableTimesResponse.data.availableTimes;
+    console.log(availableTimes);
+
+    // Check if the specified start time falls within any of the available time slots
+    const isTimeAvailable = availableTimes.some((time) => {
+      const startTimeMoment = moment(startTime, 'HH:mm:ss');
+      console.log('startTimeMoment: ', startTimeMoment);
+      const availableStartTimeMoment = moment(time.start_time, 'HH:mm:ss');
+      console.log('availableStartTimeMoment: ', availableStartTimeMoment);
+      const availableEndTimeMoment = moment(time.end_time, 'HH:mm:ss');
+      console.log('availableEndTimeMoment: ', availableEndTimeMoment);
+      console.log('string: ', startTimeMoment.isBetween(availableStartTimeMoment, availableEndTimeMoment, null, '[)'));
+      
+      return startTimeMoment.isBetween(availableStartTimeMoment, availableEndTimeMoment, null, '[)');
+    });
+    console.log(isTimeAvailable);
+    if (!isTimeAvailable) {
+      return res.status(409).json({ error: 'The room is not available for booking at the specified time.' });
+    }
+
+
+    const currentDay = getCurrentDay();
+    const currentTime = getCurrentTime();
+
+    // Check if the current day and time match the booking day and time
+    if (currentDay === day && currentTime >= startTime) {
+      return res.status(409).json({ error: 'The room cannot be booked for the current day and time.' });
+    }
+
+    // Update the room status to "Booked" on the specified day and time
+    setTimeout(async () => {
+      // Check if the room status is still "Booked" before updating it to "Ongoing"
+      const currentStatusQuery = await pool.query(queries.getRoomStatus, [roomId]);
+      const currentStatus = currentStatusQuery.rows[0].status;
+
+      if (currentStatus === 'Booked') {
+        await pool.query(queries.updateRoomStatus, ['Ongoing', roomId]);
+
+        // Add the manually updated room ID to the array
+        manuallyUpdatedRoomIds.push(roomId);
+      }
+    }, calculateTimeout(currentDay, day, currentTime, startTime));
+
+    res.status(200).json({
+      message: 'Class booked successfully.',
+      selectedRoom: `Room ${roomId}`,
+      day,
+      course,
+      duration,
+    });
+  } catch (error) {
+    console.error('Error executing query: ', error);
+    console.error(error); // Log the error
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+};
+
+// Endpoint: Book a class/lecture room for a future event on the current day
+const bookClassLaterDay = async (req, res) => {
+  try {
+    const { roomId } = req.params;
+    const { course, duration, startTime } = req.body;
+    const userId = req.session.userid;
+
+    // Check if the user is authenticated (session validation)
+    if (!userId) {
+      return res.status(401).json({ error: 'User not logged in' });
+    }
+
+    // Verify the user's role is "Class Rep"
+    const userRoleQuery = await pool.query(queries.getUserRole, [userId]);
+    const userRole = userRoleQuery.rows[0].role;
+
+    if (userRole !== 'Class Rep') {
+      return res.status(403).json({ error: 'Access denied. Only Class Reps can book classes.' });
+    }
+
+    // Get the available times for the specified room and the current day
+    const availableTimesResponse = await axios.get(`http://localhost:3000/api/v1/src/classes/bookClass/getAvailableTimesCurrent/${roomId}`);
+    const availableTimes = availableTimesResponse.data.availableTimes;
+    console.log('Available Times: ', availableTimes);
+
+    // Check if the specified start time falls within any of the available time slots
+    const isTimeAvailable = availableTimes.some((time) => {
+      const startTimeMoment = moment(startTime, 'HH:mm:ss');
+      console.log('startTimeMoment: ', startTimeMoment);
+      const availableStartTimeMoment = moment(time.start_time, 'HH:mm:ss');
+      console.log('availableStartTimeMoment: ', availableStartTimeMoment);
+      const availableEndTimeMoment = moment(time.end_time, 'HH:mm:ss');
+      console.log('availableEndTimeMoment: ', availableEndTimeMoment);
+      console.log('string: ', startTimeMoment.isBetween(availableStartTimeMoment, availableEndTimeMoment, null, '[)'));
+
+      return startTimeMoment.isBetween(availableStartTimeMoment, availableEndTimeMoment, null, '[)');
+    });
+    console.log('Time Available: ', isTimeAvailable);
+
+    if (!isTimeAvailable) {
+      return res.status(409).json({ error: 'The room is not available for booking at the specified time Here.' });
+    }
+
+    const currentDay = getCurrentDay();
+    const currentTime = getCurrentTime();
+
+    // Check if the current day and time match the booking day and time
+    if (currentTime >= startTime) {
+      console.log('Current time: ', currentTime);
+      console.log('startTime: ', startTime);
+      return res.status(409).json({ error: 'The room cannot be booked for the current day and time here!.' });
+    }
+
+    // Calculate the timeout in milliseconds
+    const timeout = calculateTimeout(currentDay, currentDay, currentTime, startTime);
+
+    // Update the room status to "Booked" 10 minutes before the start time
+    setTimeout(async () => {
+      const currentStatusQuery = await pool.query(queries.getRoomStatus, [roomId]);
+      const currentStatus = currentStatusQuery.rows[0].status;
+
+      if (currentStatus !== 'Cancelled'|| currentStatus !== 'Ongoing' ) {
+        await pool.query(queries.updateRoomStatus, ['Booked', roomId]);
+
+        // Add the manually updated room ID to the array
+        manuallyUpdatedRoomIds.push(roomId);
+      }
+    }, timeout - 10 * 60 * 1000); // 10 minutes (converted to milliseconds)
+
+    // Update the room status to "Ongoing" after the start time
+    setTimeout(async () => {
+      const currentStatusQuery = await pool.query(queries.getRoomStatus, [roomId]);
+      const currentStatus = currentStatusQuery.rows[0].status;
+
+      if (currentStatus !== 'Cancelled') {
+        await pool.query(queries.updateRoomStatus, ['Ongoing', roomId]);
+      }
+    }, timeout);
+
+    res.status(200).json({
+      message: 'Class booked successfully.',
+      selectedRoom: `Room ${roomId}`,
+      day: currentDay,
+      course,
+      duration,
+    });
+  } catch (error) {
+    console.error('Error executing query: ', error);
+    console.error(error); // Log the error
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+};
+
+// Endpoint: Get all booked rooms
+const getBookedRooms = async (req, res) => {
+  try {
+    const bookedRoomsQuery = await pool.query(queries.getBookedRooms);
+    const bookedRooms = bookedRoomsQuery.rows;
+
+    res.status(200).json({ bookedRooms });
+  } catch (error) {
+    console.error('Error executing query: ', error);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+};
+
+
+
+// Function: Calculate the timeout in milliseconds
+const calculateTimeout = (currentDay, bookingDay, currentTime, bookingTime) => {
+  const daysDiff = calculateDayDifference(currentDay, bookingDay);
+  const timeDiff = calculateTimeDifference(currentTime, bookingTime);
+
+  return daysDiff * 24 * 60 * 60 * 1000 + timeDiff;
+};
+
+// Function: Calculate the difference in days
+const calculateDayDifference = (currentDay, bookingDay) => {
+  const daysOfWeek = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+  const currentDayIndex = daysOfWeek.indexOf(currentDay);
+  const bookingDayIndex = daysOfWeek.indexOf(bookingDay);
+
+  if (currentDayIndex === -1 || bookingDayIndex === -1) {
+    throw new Error('Invalid day');
+  }
+
+  if (currentDayIndex <= bookingDayIndex) {
+    return bookingDayIndex - currentDayIndex;
+  }
+
+  return 7 - currentDayIndex + bookingDayIndex;
+};
+
+// Function: Calculate the difference in time
+const calculateTimeDifference = (currentTime, bookingTime) => {
+  const [currentHour, currentMinute] = currentTime.split(':').map(Number);
+  const [bookingHour, bookingMinute] = bookingTime.split(':').map(Number);
+
+  const currentTotalMinutes = currentHour * 60 + currentMinute;
+  const bookingTotalMinutes = bookingHour * 60 + bookingMinute;
+
+  if (currentTotalMinutes <= bookingTotalMinutes) {
+    return (bookingTotalMinutes - currentTotalMinutes) * 60 * 1000;
+  }
+
+  return (24 * 60 - currentTotalMinutes + bookingTotalMinutes) * 60 * 1000;
+};
+
+// Update the module.exports object to include the new endpoint
 module.exports = {
-  bookClass,
+  bookClassNow, 
+  bookClassLater,
+  bookClassLaterDay,
+  getBookedRooms,
   cancelRoomBooking,
   manuallyUpdatedRoomIds,
   getAvailableTimes,
   getAvailableTimesCurrent,
 };
+
+/*
+module.exports = {
+  bookClassNow,
+  cancelRoomBooking,
+  manuallyUpdatedRoomIds,
+  getAvailableTimes,
+  getAvailableTimesCurrent,
+};*/
 
 
 

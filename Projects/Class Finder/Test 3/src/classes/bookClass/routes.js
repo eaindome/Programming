@@ -1,9 +1,12 @@
 const express = require('express');
-const { bookClass, cancelRoomBooking, getAvailableTimes, getAvailableTimesCurrent } = require('./controller');
+const { cancelRoomBooking, getAvailableTimes, getAvailableTimesCurrent, bookClassNow, bookClassLater, bookClassLaterDay, getBookedRooms } = require('./controller');
 
 const router = express.Router();
 
-router.post('/book/:roomId', bookClass);
+router.get('/getBookedRooms', getBookedRooms);
+router.post('/bookNow/:roomId', bookClassNow);
+router.post('/bookLater/:roomId', bookClassLater);
+router.post('/bookLaterDay/:roomId', bookClassLaterDay);
 router.put('/cancel/:roomId', cancelRoomBooking);
 router.get('/availableTimes/:roomId/:day', getAvailableTimes);
 router.get('/getAvailableTimesCurrent/:roomId', getAvailableTimesCurrent);
