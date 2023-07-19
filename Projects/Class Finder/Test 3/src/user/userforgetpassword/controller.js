@@ -4,6 +4,11 @@ const nodemailer = require('nodemailer');
 const bcrypt = require('bcrypt');
 const { generateResetToken } = require('./utils');
 const path = require('path');
+const { renderResetPasswordPage } = require('../../../render');
+
+/*
+let email = '';
+let resetToken = '';*/
 
 const forgotPassword = async (req, res) => {
   const { email } = req.body;
@@ -15,18 +20,24 @@ const forgotPassword = async (req, res) => {
     }
 
     const resetToken = generateResetToken();
+    console.log('Email:', email);
+    console.log('Token:', resetToken);
 
     await saveResetToken(user.rows[0].user_id, resetToken);
 
+    // Send the email with the reset instructions
     sendResetEmail(email, resetToken);
 
-    res.status(200).json({ message: 'Password reset instructions sent' });
-    //res.redirect(`/reset-password/${encodeURIComponent(email)}`);
+    // Render the reset password page with the email and reset token values
+    renderResetPasswordPage(req, res, email, resetToken);
+
+    //res.status(200).json({ message: 'Password reset instructions sent' });
   } catch (error) {
     console.error('Error executing query:', error);
-    res.status(500).json({ error: 'Internal Server Error' });
+    return res.status(500).json({ error: 'Internal Server Error' });
   }
 };
+
 
 const confirmResetToken = async (req, res) => {
   const { email, token } = req.params;
@@ -104,7 +115,7 @@ const sendResetEmail = (email, resetToken) => {
     secure: true,
   });
 
-  const resetPasswordUrl = `https://eaindome.github.io/Reset-webpage/reset-password.html`;
+  const resetPasswordUrl = `https://eaindome.github.io/Reset-webpage/reset-password.ejs?email=${email}&token=${resetToken}`;
 
   const mailOptions = {
     from: 'eaindome@gmail.com',
