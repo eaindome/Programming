@@ -14,11 +14,23 @@ const userLogin = async (req, res) => {
       return res.status(401).json({ error: 'Invalid credentials' });
     }
 
-    // Compare the provided password with the stored hashed password
-    const isPasswordValid = await bcrypt.compare(password, user.rows[0].password);
+    // Compare the provided password with the stored password
+    const isPasswordValid = await comparePasswords(password, user.rows[0].password);
     if (!isPasswordValid) {
-      return res.status(401).json({ error: 'Invalid credentials' });
+      return res.status(401).json({ error: 'Incorrect password' });
     }
+
+    // Function: Compare hashed and unhashed passwords
+    async function comparePasswords(password, hashedPassword) {
+      // Check if the password is already hashed
+      if (hashedPassword.startsWith('$2')) {
+        // Compare the hashed password with the provided password
+        return await bcrypt.compare(password, hashedPassword);
+      } else {
+        // Compare the unhashed password directly
+        return password === hashedPassword;
+      }
+    };
 
     // Store the user's ID in the session
     req.session.userid = user.rows[0].user_id;
