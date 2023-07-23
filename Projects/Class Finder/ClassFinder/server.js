@@ -21,7 +21,7 @@ const searchLectureRooms = require('./src/classes/searchClasses/routes');
 const notificationRoutes = require('./src/notifications/routes');
 const { sendNotificationsForUpcomingClasses } = require('./src/notifications/controller');
 const favorites = require('./src/favourites/routes');
-const forgotPassword = require('./src/user/userforgetpassword/routes');
+//const forgotPassword = require('./src/user/userforgetpassword/routes');
 
 
 const app = express();
@@ -76,7 +76,7 @@ app.use("/api/v1/src/classes/availableClasses", availableLectureRooms);
 app.use("/api/v1/src/classes/searchClasses", searchLectureRooms);
 app.use('/api/v1/src/notifications', notificationRoutes);
 app.use("/api/v1/src/favourites", favorites);
-app.use("/api/v1/src/user/userforgotpassword", forgotPassword);
+//app.use("/api/v1/src/user/userforgotpassword", forgotPassword);
 
 // Set up the scheduled task
 cron.schedule('* * * * *', sendNotificationsForUpcomingClasses);

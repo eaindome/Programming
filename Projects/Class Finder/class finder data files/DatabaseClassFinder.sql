@@ -23,14 +23,11 @@ CREATE TABLE Courses (
   course_code VARCHAR(255) NOT NULL
 );
 
--- Create ProgramCourses table (Junction table)
-CREATE TABLE ProgramCourses (
-  program_course_id SERIAL PRIMARY KEY,
-  program_id INT NOT NULL,
-  course_id INT NOT NULL,
-  UNIQUE (program_id, course_id),
-  FOREIGN KEY (program_id) REFERENCES Programs (program_id),
-  FOREIGN KEY (course_id) REFERENCES Courses (course_id)
+-- Create Lecturers table
+CREATE TABLE Lecturers (
+  lecturer_id SERIAL PRIMARY KEY,
+  lecturer_name VARCHAR(255) NOT NULL,
+  lecturer_email VARCHAR(255) NOT NULL UNIQUE
 );
 
 -- Create ProgramYears table
@@ -43,7 +40,17 @@ CREATE TABLE ProgramYears (
   FOREIGN KEY (year_id) REFERENCES Years (year_id)
 );
 
--- Create LecturerCourses table (Junction table to associate lecturers with courses)
+-- Create ProgramCourses table (Junction table)
+CREATE TABLE ProgramCourses (
+  program_course_id SERIAL PRIMARY KEY,
+  program_id INT NOT NULL,
+  course_id INT NOT NULL,
+  UNIQUE (program_id, course_id),
+  FOREIGN KEY (program_id) REFERENCES Programs (program_id),
+  FOREIGN KEY (course_id) REFERENCES Courses (course_id)
+);
+
+-- Create LecturerCourses table (Junction table)
 CREATE TABLE LecturerCourses (
   lecturer_course_id SERIAL PRIMARY KEY,
   lecturer_id INT NOT NULL,
@@ -60,17 +67,10 @@ CREATE TABLE Users (
   username VARCHAR(255) NOT NULL,
   password VARCHAR(255) NOT NULL,
   email VARCHAR(255) NOT NULL UNIQUE,
-  role VARCHAR(255) NOT NULL,
+  role VARCHAR(255) NOT NULL DEFAULT 'Student',
   notification_preference BOOLEAN NOT NULL,
   program_year_id INT,
   FOREIGN KEY (program_year_id) REFERENCES ProgramYears (program_year_id)
-);
-
--- Create Lecturers table
-CREATE TABLE Lecturers (
-  lecturer_id SERIAL PRIMARY KEY,
-  lecturer_name VARCHAR(255) NOT NULL,
-  lecturer_email VARCHAR(255) NOT NULL UNIQUE
 );
 
 -- Create Rooms table
@@ -87,23 +87,23 @@ CREATE TABLE Rooms (
 CREATE TABLE Timetables (
   timetable_id SERIAL PRIMARY KEY,
   program_year_id INT NOT NULL,
-  course_id INT NOT NULL,
-  lecturer_id INT NOT NULL,
+  program_course_id INT NOT NULL,
+  lecturer_course_id INT NOT NULL,
   room_id INT NOT NULL,
   start_time TIME NOT NULL,
   end_time TIME NOT NULL,
   day_id INT NOT NULL,
   FOREIGN KEY (program_year_id) REFERENCES ProgramYears (program_year_id),
-  FOREIGN KEY (course_id) REFERENCES Courses (course_id),
-  FOREIGN KEY (lecturer_id) REFERENCES Lecturers (lecturer_id),
+  FOREIGN KEY (program_course_id) REFERENCES ProgramCourses (program_course_id),
+  FOREIGN KEY (lecturer_course_id) REFERENCES LecturerCourses (lecturer_course_id),
   FOREIGN KEY (room_id) REFERENCES Rooms (room_id),
   FOREIGN KEY (day_id) REFERENCES DaysOfWeek (day_id)
 );
 
 -- Create index on frequently queried columns
 CREATE INDEX idx_timetables_program_year_id ON Timetables (program_year_id);
-CREATE INDEX idx_timetables_course_id ON Timetables (course_id);
-CREATE INDEX idx_timetables_lecturer_id ON Timetables (lecturer_id);
+CREATE INDEX idx_timetables_program_course_id ON Timetables (program_course_id);
+CREATE INDEX idx_timetables_lecturer_course_id ON Timetables (lecturer_course_id);
 CREATE INDEX idx_timetables_room_id ON Timetables (room_id);
 CREATE INDEX idx_timetables_day_id ON Timetables (day_id);
 
@@ -129,6 +129,6 @@ CREATE TABLE session (
 
 ALTER TABLE session ADD CONSTRAINT session_sid_unique UNIQUE (sid);
 
-ALTER TABLE Users ADD device_token character varying(255);
+ALTER TABLE Users ADD device_token character varying(255) SET DEFAULT '';
 
 ALTER TABLE Users ALTER COLUMN notification_preference SET DEFAULT false;

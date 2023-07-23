@@ -10,7 +10,7 @@ let manuallyUpdatedRoomIds = [];
 // Endpoint: Book a class/lecture room
 const bookClassNow = async (req, res) => {
   try {
-    const { roomId } = req.params;
+    const { roomName } = req.params;
     const { day, course, duration } = req.body;
     const userId = req.session.userid;
 
@@ -26,6 +26,10 @@ const bookClassNow = async (req, res) => {
     if (userRole !== 'Class Rep') {
       return res.status(403).json({ error: 'Access denied. Only Class Reps can book classes.' });
     }
+
+    // Find the roomId based on the provided roomName
+    const roomQuery = await pool.query(queries.getRoomIdFromName, [roomName]);
+    const roomId = roomQuery.rows[0].room_id;
     
     /*
     // Check if the room is available
@@ -62,7 +66,7 @@ const bookClassNow = async (req, res) => {
     res.status(200).json({
       message: 'Class booked successfully.',
       bookingId,
-      selectedRoom: `Room ${roomId}`,
+      selectedRoom: `Room ${roomName}`,
       day,
       course,
       duration,
@@ -77,7 +81,7 @@ const bookClassNow = async (req, res) => {
 // Endpoint: Cancel a room booking by the class representative
 const cancelRoomBooking = async (req, res) => {
   try {
-    const { roomId } = req.params;
+    const { roomName } = req.params;
     const userId = req.session.userid;
 
     // Check if the user is authenticated (session validation)
@@ -89,6 +93,10 @@ const cancelRoomBooking = async (req, res) => {
     const userRoleQuery = await pool.query(queries.getUserRole, [userId]);
     const userRole = userRoleQuery.rows[0].role;
 
+    // Find the roomId based on the provided roomName
+    const roomQuery = await pool.query(queries.getRoomIdFromName, [roomName]);
+    const roomId = roomQuery.rows[0].room_id; 
+
     if (userRole !== 'Class Rep') {
       return res.status(403).json({ error: 'Access denied. Only Class Reps can cancel class bookings.' });
     }
@@ -99,11 +107,11 @@ const cancelRoomBooking = async (req, res) => {
     }
 
     // Check if the class status is "Booked" or "Ongoing" before cancelling the booking
-    const classStatusQuery = await pool.query(queries.getClassStatus, [roomId]);
+    const classStatusQuery = await pool.query(queries.getRoomStatus, [roomId]);
     const classStatus = classStatusQuery.rows[0].status;
 
     if (classStatus === 'Booked' || classStatus === 'Ongoing') {
-      await pool.query(queries.updateClassStatus, ['Cancelled', roomId]);
+      await pool.query(queries.updateRoomStatus, ['Cancelled', roomId]);
 
       // Remove the manually updated room ID from the array
       manuallyUpdatedRoomIds = manuallyUpdatedRoomIds.filter((id) => id !== roomId);
@@ -121,7 +129,11 @@ const cancelRoomBooking = async (req, res) => {
 // Endpoint: Get Available Times of a Lecture Room
 const getAvailableTimes = async (req, res) => {
   try {
-    const { roomId, day } = req.params;
+    const { roomName, day } = req.params;
+
+    // Find the roomId based on the provided roomName
+    const roomQuery = await pool.query(queries.getRoomIdFromName, [roomName]);
+    const roomId = roomQuery.rows[0].room_id;
 
     const availableTimes = await calculateAvailableTimes(roomId, day);
     //console.log("availableTimes", availableTimes);
@@ -185,9 +197,13 @@ const calculateAvailableTimes = async (roomId, day) => {
 // Endpoint: Get Available Times of a Lecture Room
 const getAvailableTimesCurrent = async (req, res) => {
   try {
-    const { roomId } = req.params;
+    const { roomName } = req.params;
     const currentDay = getCurrentDay();
     const currentTime = getCurrentTime();
+
+    // Find the roomId based on the provided roomName
+    const roomQuery = await pool.query(queries.getRoomIdFromName, [roomName]);
+    const roomId = roomQuery.rows[0].room_id;
 
     const availableTimes = await calculateAvailableTimesCurrent(roomId, currentDay, currentTime, true);
 
@@ -245,9 +261,13 @@ const calculateAvailableTimesCurrent = async (roomId, day, currentTime, isCurren
 // Endpoint: Book a class/lecture room for a future event
 const bookClassLater = async (req, res) => {
   try {
-    const { roomId } = req.params;
+    const { roomName } = req.params;
     const { day, course, duration, startTime } = req.body;
     const userId = req.session.userid;
+
+    // Find the roomId based on the provided roomName
+    const roomQuery = await pool.query(queries.getRoomIdFromName, [roomName]);
+    const roomId = roomQuery.rows[0].room_id;
 
     // Check if the user is authenticated (session validation)
     if (!userId) {
@@ -263,7 +283,7 @@ const bookClassLater = async (req, res) => {
     }
 
     // Get the available times for the specified room and day
-    const availableTimesResponse = await axios.get(`http://localhost:3000/api/v1/src/classes/bookClass/availableTimes/${roomId}/${day}`);
+    const availableTimesResponse = await axios.get(`http://localhost:3000/api/v1/src/classes/bookClass/availableTimes/${roomName}/${day}`);
     const availableTimes = availableTimesResponse.data.availableTimes;
     console.log(availableTimes);
 
@@ -324,7 +344,7 @@ const bookClassLater = async (req, res) => {
 // Endpoint: Book a class/lecture room for a future event on the current day
 const bookClassLaterDay = async (req, res) => {
   try {
-    const { roomId } = req.params;
+    const { roomName } = req.params;
     const { course, duration, startTime } = req.body;
     const userId = req.session.userid;
 
@@ -332,6 +352,10 @@ const bookClassLaterDay = async (req, res) => {
     if (!userId) {
       return res.status(401).json({ error: 'User not logged in' });
     }
+
+    // Find the roomId based on the provided roomName
+    const roomQuery = await pool.query(queries.getRoomIdFromName, [roomName]);
+    const roomId = roomQuery.rows[0].room_id;
 
     // Verify the user's role is "Class Rep"
     const userRoleQuery = await pool.query(queries.getUserRole, [userId]);
@@ -342,7 +366,7 @@ const bookClassLaterDay = async (req, res) => {
     }
 
     // Get the available times for the specified room and the current day
-    const availableTimesResponse = await axios.get(`http://localhost:3000/api/v1/src/classes/bookClass/getAvailableTimesCurrent/${roomId}`);
+    const availableTimesResponse = await axios.get(`http://localhost:3000/api/v1/src/classes/bookClass/getAvailableTimesCurrent/${roomName}`);
     const availableTimes = availableTimesResponse.data.availableTimes;
     console.log('Available Times: ', availableTimes);
 
@@ -402,7 +426,7 @@ const bookClassLaterDay = async (req, res) => {
 
     res.status(200).json({
       message: 'Class booked successfully.',
-      selectedRoom: `Room ${roomId}`,
+      selectedRoom: `Room ${roomName}`,
       day: currentDay,
       course,
       duration,

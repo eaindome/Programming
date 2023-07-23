@@ -5,12 +5,15 @@ const getAvailableLectureRooms = async () => {
   try {
     const query = `
       SELECT
-        r.room_name,
+        room_name,
+        room_capacity,
+        status,
+        location,
         CURRENT_TIMESTAMP AS current_time
       FROM
-        rooms AS r
+        Rooms AS r
       WHERE
-        r.status = 'Available';
+        status = 'Available';
     `;
     const { rows } = await pool.query(query);
     return rows;

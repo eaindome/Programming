@@ -7,9 +7,10 @@ const searchLectureRooms = async (query) => {
       SELECT
         room_name,
         room_capacity,
-        status
+        status,
+        location
       FROM
-        rooms
+        Rooms
       WHERE
         status = 'Available' AND room_name ILIKE $1;
     `;
@@ -27,9 +28,10 @@ const getAllAvailableLectureRooms = async () => {
       SELECT
         room_name,
         room_capacity,
-        status
+        status,
+        location
       FROM
-        rooms
+        Rooms
       WHERE
         status = 'Available';
     `;

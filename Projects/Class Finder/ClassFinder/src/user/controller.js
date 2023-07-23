@@ -5,11 +5,11 @@ const queries = require('./queries');
 
 // Endpoint: User Login
 const userLogin = async (req, res) => {
-  const { email, password } = req.body;
+  const { reference_number, password } = req.body;
 
   try {
     // Check if the user exists in the database
-    const user = await pool.query(queries.userLogin, [email]);
+    const user = await pool.query(queries.userLogin, [reference_number]);
     if (user.rowCount === 0) {
       return res.status(401).json({ error: 'Invalid credentials' });
     }
@@ -88,7 +88,7 @@ const userLogout = (req, res) => {
 
 // Endpoint: User Sign Up
 const userSignUp = async (req, res) => {
-    const { firstname, surname, password, email, program, year } = req.body;
+    const { reference_number, firstname, surname, password, email, program, year } = req.body;
   
     try {
       // Check if the user already exists in the database
@@ -105,6 +105,7 @@ const userSignUp = async (req, res) => {
       
       
       const user = await pool.query(queries.userSignUp, [
+        reference_number,
         `${firstname} ${surname}`,
         hashedPassword,
         email,
