@@ -1,0 +1,117 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap');
+*{
+    font-family: 'Poppins', sans serif;
+}
+body{
+    background-image: url("high-angle-pill-foils-plastic-containers.jpg");
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-attachment: fixed;
+}
+.container{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    height: 500px;
+    width: 400px;
+    background: rgba(255, 255, 255, 0.452);
+    border-radius: 10px;
+    box-shadow: 10px 10px 15px rgba(0,0,0,0.05);
+}
+
+.container span{
+    color: #0a0a0a96;
+    font-size: medium;
+    display: flex;
+    justify-content: center;
+    padding: 10px 0 5px 0;
+}
+
+.container header{
+    color: #0f0f0fa6;
+    font-size: 30px;
+    font-weight: 500;
+    display: flex;
+    justify-content: center;
+    padding: 5px 5px 5px 5px;
+}
+
+.container form{
+    padding: 0 40px;
+    box-sizing: border-box;
+}
+
+form .input-field {
+    position: relative;
+    top: 45px;
+    margin-bottom: 15px;
+}
+
+form .submit {
+    padding: 0 42px;
+}
+
+.input-field .input{
+    height: 45px;
+    width: 87%;
+    border: none;
+    outline: none;
+    border-radius: 30px;
+    color: #fff;
+    padding: 0 0 0 42px;
+    background: rgba(14, 1, 1, 0.349);
+}
+
+i{
+    position: relative;
+    top: -34.5px;
+    left: 17px;
+    color: #fff;
+}
+::-webkit-input-placeholder{
+    color: #fff;
+}
+
+.input-field label{
+    position: absolute;
+    top: -17%;
+    left: 30px;
+    color: #11111186;
+    transform: translateY(-50%);
+    font-size: 16px;
+    pointer-events: none;
+    transition: .5s;
+}
+.submit{
+    border: none;
+    border-radius: 30px;
+    font-size: 15px;
+    font-weight: 400;
+    height: 45px;
+    outline: none;
+    width: 100%;
+    background: rgba(255, 255, 255, 0.671);
+    cursor: pointer;
+    transition: .3s;
+}
+.submit:hover{
+    box-shadow: 1px 5px 7px 1px rgba(0, 0, 0, 0.2);
+}
+.bottom{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    font-size: medium;
+    color: #ffffff;
+    margin-top: 100px;
+    margin-bottom: 15px;
+}
+.left{
+    display: flex;
+}
+label a{
+    color: #fff;
+    text-decoration: none;
+}
