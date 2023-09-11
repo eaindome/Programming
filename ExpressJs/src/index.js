@@ -1,4 +1,5 @@
 const express = require('express');
+const cookieParser = require('cookie-parser');
 const groceriesRoute = require('./routes/groceries');
 const marketRoute = require('./routes/markets');
 
@@ -7,6 +8,7 @@ const PORT = 3001;
 
 // Middleware
 app.use(express.json());
+app.use(cookieParser());        // adding the installed cookie parser package to be used
 
 // global middleware function for requests
 app.use((req, res, next) => {

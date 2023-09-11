@@ -17,6 +17,9 @@ const groceryList = [
 
 // GET method
 router.get('/', (request, response) => {
+    response.cookie('visited', true, {      // adding a cookie
+        maxAge: 10000,
+    });
     response.send(groceryList);
 });
 
@@ -45,6 +48,7 @@ router.get('/deliveries',
 // adding route parameters
 router.get('/:item', (request, response) => {
     //console.log(request.params.item);
+    console.log(request.cookies);
     const { item } = request.params;
     const groceryItem = groceryList.find((g) => g.item === item);
     response.send(groceryItem);
