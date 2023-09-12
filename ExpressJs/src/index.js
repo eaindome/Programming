@@ -2,6 +2,7 @@ const express = require('express');
 const cookieParser = require('cookie-parser');
 const groceriesRoute = require('./routes/groceries');
 const marketRoute = require('./routes/markets');
+const session = require('express-session');
 
 const app = express();
 const PORT = 3001;
@@ -9,6 +10,11 @@ const PORT = 3001;
 // Middleware
 app.use(express.json());
 app.use(cookieParser());        // adding the installed cookie parser package to be used
+app.use(session({
+    secret: 'Aai@4148216',
+    resave: false,
+    saveUninitialized: false
+}));
 
 // global middleware function for requests
 app.use((req, res, next) => {
