@@ -1,5 +1,15 @@
 const BACKEND_ROOT_URL = "http://127.0.0.1:8000"
 
+
+export function enable_element(element){
+    element.setAttribute("disable", "true")
+}
+
+export function disable_element(element){
+    element.removeAttribute("disable", "true")
+}
+
+
 export function redirect_to_admin_login() {
     window.location.href = "/admin/login.html"
 }

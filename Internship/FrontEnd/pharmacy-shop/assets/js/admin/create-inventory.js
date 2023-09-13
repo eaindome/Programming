@@ -1,20 +1,44 @@
+import { disable_element, enable_element, get_admin_token, get_current_admin } from "../modules"
+
 const BACKEND_ROOT_URL = "http://127.0.0.1:8000"
 
-const login_form = document.querySelector("form")
+const add_to_inventory_form = document.querySelector("form")
 
-login_form.addEventListener("submit", async (event) => {
+const save_and_add_another = document.querySelector("#save-and-add-another")
+
+
+
+document.addEventListener("DOMContentLoaded", async (event) => {
+    await get_current_admin()
+})
+
+add_to_inventory_form.addEventListener("submit", async (event) => {
     event.preventDefault()
     event.stopPropagation()
 
-    const form_data = new FormData(login_form);
+    const name = document.querySelector("#name")
+    const price = document.querySelector("#price")
+    const quantity = document.querySelector("#quantity")
+
+    disable_element(name_element)
+    disable_element(price_element)
+    disable_element(quantity_element)
+
+    const form_data = new FormData(add_to_inventory_form);
     const encoded_data = new URLSearchParams(form_data).toString()
 
-    const result = await fetch(`${BACKEND_ROOT_URL}/admins/authenticate`, {
+    const admin_token = get_admin_token()
+    const result = await fetch(`${BACKEND_ROOT_URL}/inventory`, {
         method: "POST",
         headers: {
-            "Content-Type": "application/x-www-form-urlencoded"
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${admin_token}`
         },
-        body: encoded_data
+        body: JSON.stringify({
+            name: name_element.value, 
+            price: price_element.value, 
+            quantity: quantity_element.value
+        })
     })
 
     if (result.ok) {
@@ -39,6 +63,10 @@ login_form.addEventListener("submit", async (event) => {
         }
         const error_message = await result.json()
         appendAlert(error_message.detail, 'danger')
+
+        enable_element(name)
+        enable_element(price)
+        enable_element(quantity)
     }
     else {
         console.log("An error occurred!")
