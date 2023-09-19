@@ -1,2 +1,0 @@
-getCurrentDay();
-getCurrentTime();
