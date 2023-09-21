@@ -107,8 +107,7 @@ async def get_user_orders(Authorize: AuthJWT=Depends()):
 
 # get a specific order
 @order_router.get(
-    '/user/orders/{order_id}', 
-    response_model=OrderModel, 
+    '/user/orders/{order_id}',
     status_code=status.HTTP_200_OK
 )
 async def get_specific_order(order_id: int, Authorize: AuthJWT=Depends()):
@@ -120,7 +119,7 @@ async def get_specific_order(order_id: int, Authorize: AuthJWT=Depends()):
 
     for order in orders:
         if order.id == order_id:
-            return order
+            return jsonable_encoder(order)
     raise HTTPException(
         status_code=status.HTTP_400_BAD_REQUEST,
         detail="Order does not exist."
