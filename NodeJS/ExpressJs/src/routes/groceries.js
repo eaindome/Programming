@@ -14,12 +14,18 @@ const groceryList = [
     }
 ];
 
+router.use((req, res, next) => {
+    if (req.session.user) next();
+    else {
+        res.send(401);
+    }
+});
 
 // GET method
 router.get('/', (request, response) => {
-    response.cookie('visited', true, {      // adding a cookie
+    /* response.cookie('visited', true, {      // adding a cookie
         maxAge: 10000,
-    });
+    });*/
     response.send(groceryList);
 });
 
@@ -48,27 +54,10 @@ router.get('/deliveries',
 // adding route parameters
 router.get('/:item', (request, response) => {
     //console.log(request.params.item);
-    console.log(request.cookies);
+    //console.log(request.cookies);
     const { item } = request.params;
     const groceryItem = groceryList.find((g) => g.item === item);
     response.send(groceryItem);
-});
-
-router.post('/shopping/cart/item', (request, response) => {
-    const { item, quantity } = request.body;
-    const cartItem = { item, quantity };
-    // console.log(cartItem);
-    // response.send(request.sessionID);
-    const { cart } = request.session;
-    if (request.session.cart) {
-        const { items } = cart;
-        request.session.cart.items.push(cartItem);
-    } else {
-        request.session.cart = {
-            items: [cartItem]
-        };
-    }
-    response.send(201);
 });
 
 router.get('/shopping/cart', (request, response) => {
@@ -80,6 +69,22 @@ router.get('/shopping/cart', (request, response) => {
     }
 });
 
+router.post('/shopping/cart/item', (request, response) => {
+    const { item, quantity } = request.body;
+    const cartItem = { item, quantity };
+    /* console.log(cartItem);
+    // response.send(request.sessionID);*/
+    const { cart } = request.session;
+    if ( cart ) {
+        //const { items } = cart;
+        request.session.cart.items.push(cartItem);
+    } else {
+        request.session.cart = {
+            items: [cartItem]
+        };
+    }
+    response.send(201);
+});
 
 
 module.exports = router;
