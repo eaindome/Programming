@@ -30,6 +30,13 @@ const supermarkets = [
     }
 ];
 
+router.use((req, res, next) => {
+    if (req.session.user) next();
+    else {
+        res.send(401);
+    }
+});
+
 router.get('/', (request, response) => {
     response.send(supermarkets);
 });
