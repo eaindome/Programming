@@ -12,6 +12,7 @@ const UserSchema = new mongoose.Schema({
     email: {
         type: mongoose.SchemaTypes.String,
         required: true,
+        unique: true
     },
     created_at: {
         type: mongoose.SchemaTypes.Date,
