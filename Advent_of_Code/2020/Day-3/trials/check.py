@@ -1,0 +1,57 @@
+def encounters(geological_map):
+    # characters
+    tree = "#"
+    open_square = "."
+
+    # slope parameters
+    slopes = {
+        "slope_1": "1-1",
+        "slope_2": "3-1",
+        "slope_3": "5-1",
+        "slope_4": "7-1",
+        "slope_5": "1-2"
+    }
+
+    # store total trees encountered with each different slope
+    trees_encountered_list = []
+    trees_encountered = 1
+
+    for slope in slopes:
+        rig, dow = slopes[slope].split("-")
+        right = int(rig)
+        down = int(dow)
+
+        # encounter
+        encounter = 0
+
+        # current position
+        current_row = 0
+        current_col = 0
+
+        # traverse the map row by row
+        while current_row < len(geological_map):
+            # check for a tree
+            if geological_map[current_row][current_col] == tree:
+                encounter += 1
+            
+            # move right
+            current_col = (current_col+right) % len(geological_map[0])
+
+            # move down 
+            current_row += down
+        trees_encountered_list.append(encounter)
+        trees_encountered *= encounter
+    
+    return trees_encountered, trees_encountered_list
+
+def main():
+    with open("./input.txt", "r") as file:
+        map = [line.strip() for line in file]
+    
+    trees_encounter, tree_encounters_list = encounters(map)
+
+    print(f"List of trees encountered in each slope: {tree_encounters_list}\n"
+          f"Total number of trees encountered: {trees_encounter}")
+
+if __name__ == "__main__": 
+    main()
