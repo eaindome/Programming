@@ -1,7 +1,6 @@
 /* Program to illustrate the working of public
 and private in C++ class
 */
-
 #include <iostream>
 using namespace std;
 
@@ -41,8 +40,3 @@ int main(){
 
     return 0;
 }
-
-
-
-
-
