@@ -81,3 +81,58 @@ does not have a return type, and
 is public.
 
 
+
+
+C++ Encapsulation
+It involves the bundling of data members and functions inside a single class
+
+In general, encapsulation is a process of wrapping similar code in one place.
+
+In C++, we can bundle data members and functions that operate together inside a single class. For example,
+
+class Rectangle {
+  public:
+    int length;
+    int breadth;
+
+    int getArea() {
+      return length * breadth;
+    }
+};
+In the above program, the function getArea() calculates the area of a rectangle. To calculate the area, it needs length and breadth.
+
+Hence, the data members (length and breadth) and the function getArea() are kept together in the Rectangle class.
+
+Note: People often consider encapsulation as data hiding, but that's not entirely true.
+Encapsulation refers to the bundling of related fields and methods together. This can be used to achieve data hiding. Encapsulation in itself is not data hiding.
+
+Why Encapsulation?
+In C++, encapsulation helps us keep related data and functions together, which makes our code cleaner and easy to read.
+It helps to control the modification of our data members.
+
+Consider a situation where we want the length field in a class to be non-negative. Here we can make the length variable private and apply the logic inside the method setAge(). For example,
+
+class Rectangle {
+  private:
+    int age;
+
+  public:
+    void setLength(int len) {
+      if (len >= 0)
+        length = len;
+    }
+};
+The getter and setter functions provide read-only or write-only access to our class members. For example,
+
+getLength()  // provides read-only access
+setLength()  // provides write-only access
+It helps to decouple components of a system. For example, we can encapsulate code into multiple bundles.
+
+These decoupled components (bundles) can be developed, tested, and debugged independently and concurrently. And any changes in a particular component do not have any effect on other components.
+We can also achieve data hiding using encapsulation. In Example 1, if we change the length and breadth variables into private or protected, then the access to these fields is restricted.
+
+And, they are kept hidden from outer classes. This is called data hiding.
+Data Hiding
+Data hiding is a way of restricting the access of our data members by hiding the implementation details. Encapsulation also provides a way for data hiding.
+
+We can use access modifiers to achieve data hiding in C++. 
