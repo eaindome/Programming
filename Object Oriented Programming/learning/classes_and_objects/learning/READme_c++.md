@@ -136,3 +136,94 @@ Data Hiding
 Data hiding is a way of restricting the access of our data members by hiding the implementation details. Encapsulation also provides a way for data hiding.
 
 We can use access modifiers to achieve data hiding in C++. 
+
+
+
+
+
+C++ Operator Overloading
+In C++, we can change the way operators work for user-defined types like objects and structures. This is known as operator overloading. For example,
+
+Suppose we have created three objects c1, c2 and result from a class named Complex that represents complex numbers.
+
+Since operator overloading allows us to change how operators work, we can redefine how the + operator works and use it to add the complex numbers of c1 and c2 by writing the following code:
+
+result = c1 + c2;
+instead of something like
+
+result = c1.addNumbers(c2);
+This makes our code intuitive and easy to understand.
+
+Note: We cannot use operator overloading for fundamental data types like int, float, char and so on.
+
+Syntax for C++ Operator Overloading
+To overload an operator, we use a special operator function. We define the function inside the class or structure whose objects/variables we want the overloaded operator to work with.
+
+class className {
+    ... .. ...
+    public
+       returnType operator symbol (arguments) {
+           ... .. ...
+       } 
+    ... .. ...
+};
+Here,
+
+returnType is the return type of the function.
+operator is a keyword.
+symbol is the operator we want to overload. Like: +, <, -, ++, etc.
+arguments is the arguments passed to the function.
+Operator Overloading in Unary Operators
+Unary operators operate on only one operand. The increment operator ++ and decrement operator -- are examples of unary operators.
+
+Note: When we overload operators, we can use it to work in any way we like. For example, we could have used ++ to increase value by 100.
+
+However, this makes our code confusing and difficult to understand. It's our job as a programmer to use operator overloading properly and in a consistent and intuitive way. The above example works only when ++ is used as a prefix. To make ++ work as a postfix we use this syntax.
+
+void operator ++ (int) {
+    // code
+}
+Notice the int inside the parentheses. It's the syntax used for using unary operators as postfix; it's not a function parameter.
+
+Operator Overloading in Binary Operators
+Binary operators work on two operands. For example,
+
+result = num + 9;
+Here, + is a binary operator that works on the operands num and 9.
+
+When we overload the binary operator for user-defined types by using the code:
+
+obj3 = obj1 + obj2;
+The operator function is called using the obj1 object and obj2 is passed as an argument to the function.
+
+Output
+
+Enter first complex number:
+Enter real and imaginary parts respectively: 9 5
+Enter second complex number:
+Enter real and imaginary parts respectively: 7 6
+Output Complex number: 16+11i
+In this program, the operator function is:
+
+Complex operator + (const Complex& obj) {
+    // code
+}
+Instead of this, we also could have written this function like:
+
+Complex operator + (Complex obj) {
+    // code
+}
+However,
+
+using & makes our code efficient by referencing the complex2 object instead of making a duplicate object inside the operator function.
+using const is considered a good practice because it prevents the operator function from modifying complex2.
+C++ Binary Operator Overloading
+Overloading binary operators in C++
+Things to Remember in C++ Operator Overloading
+Two operators = and & are already overloaded by default in C++. For example, to copy objects of the same class, we can directly use the = operator. We do not need to create an operator function.
+Operator overloading cannot change the precedence and associativity of operators. However, if we want to change the order of evaluation, parentheses should be used.
+There are 4 operators that cannot be overloaded in C++. They are:
+:: (scope resolution)
+. (member selection)
+.* (member selection through pointer to function)
+?: (ternary operator)
