@@ -34,6 +34,7 @@ class Tile:
                     other_tile.rotate_clockwise()
                 other_tile.flip_horizontal()
             other_tile.flip_vertical()
+        return False
 
     def remove_border(self):
         self.tile_data = self.tile_data[1:-1]
