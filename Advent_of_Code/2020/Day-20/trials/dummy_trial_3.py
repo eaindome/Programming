@@ -63,3 +63,5 @@ for tile_id, tile in tiles.items():
 # Multiply the IDs of the four corner tiles
 result = math.prod(corner_tile_ids)
 print("Result:", result)
+
+print(f"Corner tile ids: {corner_tile_ids}")
