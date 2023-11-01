@@ -140,7 +140,8 @@ Tile 3079:
 ..#.......
 ..#.###...
 
-By rotating, flipping, and rearranging them, you can find a square arrangement that causes
+By rotating, flipping, and rearranging them, 
+you can find a square arrangement that causes
 all adjacent borders to line up:
 
 #...##.#.. ..###..### #.#.#####.
