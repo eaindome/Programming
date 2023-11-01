@@ -129,11 +129,11 @@ def count_sea_monsters(image):
                 sea_monster_count += 1
     return sea_monster_count
 
-print(f"Full image: {full_image}\n"
+"""print(f"Full image: {full_image}\n"
       f"\nLength of image: {len(full_image)}")
 
 print(f"image: {full_image[8][7]}")
-print(f"sea monster: {sea_monster[1][5]}")
+print(f"sea monster: {sea_monster[1][5]}")"""
 
 # Try all possible orientations (rotations and flips) of the image
 for _ in range(4):
@@ -157,12 +157,12 @@ print("Water Roughness:", roughness)
 roughness = sum(row.count("#") for row in full_image) - sea_monster_count * sum(row.count("#") for row in sea_monster)
 
 # Print the coordinates of # characters in the full_image
-for i in range(len(full_image)):
+"""for i in range(len(full_image)):
     for j in range(len(full_image[i])):
         if full_image[i][j] == "#":
             print(f"# at ({i}, {j})")
 
-print("Water Roughness:", roughness)
+print("Water Roughness:", roughness)"""
 
 
 
