@@ -1,156 +1,159 @@
-import re
+import math
 
-# Function to rotate a tile 90 degrees clockwise
-def rotate_tile(tile):
-    return [''.join(row) for row in zip(*reversed(tile))]
+# Define a Tile class to store tile ID and image data
+class Tile:
+    def __init__(self, tile_id, tile_data):
+        self.tile_id = tile_id
+        self.tile_data = tile_data
 
-# Function to flip a tile horizontally
-def flip_tile_horizontally(tile):
-    return [''.join(reversed(row)) for row in tile]
+    def rotate_clockwise(self):
+        self.tile_data = [''.join(row) for row in zip(*self.tile_data[::-1])]
 
-# Function to flip a tile vertically
-def flip_tile_vertically(tile):
-    return list(reversed(tile))
+    def flip_horizontal(self):
+        self.tile_data = [row[::-1] for row in self.tile_data]
 
-# Function to find the border of a tile (top, right, bottom, left)
-def get_borders(tile):
-    top = tile[0]
-    right = ''.join(row[-1] for row in tile)
-    bottom = tile[-1]
-    left = ''.join(row[0] for row in tile)
-    return top, right, bottom, left
+    def flip_vertical(self):
+        self.tile_data = self.tile_data[::-1]
 
-# Function to match two tiles based on a specified border
-def match_tiles(tile1, tile2, border):
-    for _ in range(4):
-        if get_borders(tile1)[0] == border:
-            return tile1
-        tile1 = rotate_tile(tile1)
-    tile1 = flip_tile_horizontally(tile1)
-    for _ in range(4):
-        if get_borders(tile1)[0] == border:
-            return tile1
-        tile1 = rotate_tile(tile1)
-    return None
+    def get_border(self, side):
+        if side == "top":
+            return self.tile_data[0]
+        elif side == "right":
+            return ''.join(row[-1] for row in self.tile_data)
+        elif side == "bottom":
+            return self.tile_data[-1]
+        elif side == "left":
+            return ''.join(row[0] for row in self.tile_data)
 
-# Read the input tiles
-with open('input.txt', 'r') as f:
-    data = f.read().strip().split('\n\n')
+    def match_borders(self, other_tile):
+        for side in ["top", "right", "bottom", "left"]:
+            for flip in [False, True]:
+                for _ in range(4):
+                    if self.get_border(side) == other_tile.get_border("bottom"):
+                        return True
+                    other_tile.rotate_clockwise()
+                other_tile.flip_horizontal()
+            other_tile.flip_vertical()
 
+    def remove_border(self):
+        self.tile_data = self.tile_data[1:-1]
+        self.tile_data = [row[1:-1] for row in self.tile_data]
+
+# Read the input tiles and store them in a dictionary
 tiles = {}
-for tile_data in data:
-    tile_lines = tile_data.split('\n')
-    tile_id = int(re.search(r'\d+', tile_lines[0]).group())
-    tile = tile_lines[1:]
-    tiles[tile_id] = tile
+with open("input.txt", "r") as file:
+    tile_data = file.read().strip().split('\n\n')
+    for tile_info in tile_data:
+        tile_info = tile_info.split('\n')
+        tile_id = int(tile_info[0][5:-1])
+        tile_rows = tile_info[1:]
+        tiles[tile_id] = Tile(tile_id, tile_rows)
 
-# Find the size of the puzzle
-puzzle_size = int(len(tiles) ** 0.5)
+# Print the first tile data for testing
+# print(tiles[2311].tile_data)
 
-# Initialize the puzzle grid
-grid = [[None for _ in range(puzzle_size)] for _ in range(puzzle_size)]
-
-# Find the corners by looking for tiles with only two matching borders
-corner_tiles = []
+# Find the corner tiles by checking each tile against all others
+corner_tile_ids = []
 for tile_id, tile in tiles.items():
-    matching_borders = 0
-    borders = get_borders(tile)
+    matching_count = 0
     for other_tile_id, other_tile in tiles.items():
-        if tile_id != other_tile_id:
-            for border in borders:
-                if border in get_borders(other_tile):
-                    matching_borders += 1
-                    break
-    if matching_borders == 2:
-        corner_tiles.append(tile_id)
+        if tile_id != other_tile_id and tile.match_borders(other_tile):
+            matching_count += 1
+    if matching_count == 2:
+        corner_tile_ids.append(tile_id)
 
-# Start by placing one of the corner tiles in the top-left corner
-grid[0][0] = corner_tiles[0]
+# Multiply the IDs of the four corner tiles
+result = math.prod(corner_tile_ids)
+print("Corner Tile IDs:", corner_tile_ids)
+print("Result:", result)
 
-# Place the rest of the corner tiles and determine their orientation
-for i in range(1, 4):
-    current_tile = tiles[grid[0][i - 1]]
-    next_tile_id = [tile_id for tile_id in tiles if tile_id != grid[0][i - 1] and len(set(get_borders(current_tile)).intersection(get_borders(tiles[tile_id]))) == 1][0]
-    next_tile = tiles[next_tile_id]
-    while get_borders(current_tile)[1] != get_borders(next_tile)[3]:
-        next_tile = rotate_tile(next_tile)
-    tiles[next_tile_id] = next_tile
-    grid[0][i] = next_tile_id
+# Adjust the grid dimensions based on the number of tiles
+grid_size = int(len(tiles) ** 0.5)
 
-# Fill in the top row
-for i in range(4, puzzle_size):
-    current_tile = tiles[grid[0][i - 1]]
-    for tile_id, tile in tiles.items():
-        if tile_id != grid[0][i - 1] and len(set(get_borders(current_tile)).intersection(get_borders(tile))) == 1:
-            next_tile_id = tile_id
-            next_tile = tile
-            break
-    while get_borders(current_tile)[1] != get_borders(next_tile)[3]:
-        next_tile = rotate_tile(next_tile)
-    tiles[next_tile_id] = next_tile
-    grid[0][i] = next_tile_id
+# Extract tile IDs from the input data
+tile_ids = list(tiles.keys())
 
-# Fill in the remaining rows
-for i in range(1, puzzle_size):
-    for j in range(puzzle_size):
-        current_tile = tiles[grid[i - 1][j]]
-        for tile_id, tile in tiles.items():
-            if tile_id != grid[i - 1][j] and len(set(get_borders(current_tile)).intersection(get_borders(tile))) == 1:
-                next_tile_id = tile_id
-                next_tile = tile
-                break
-        while get_borders(current_tile)[2] != get_borders(next_tile)[0]:
-            next_tile = rotate_tile(next_tile)
-        tiles[next_tile_id] = next_tile
-        grid[i][j] = next_tile_id
+# Remove borders from all tiles
+for tile in tiles.values():
+    tile.remove_border()
 
-# Assemble the final image by removing borders
-image = [['' for _ in range(puzzle_size)] for _ in range(puzzle_size)]
+# Create the full image
+full_image = []
+full_image_tile_ids = []
+for row in range(grid_size):
+    for col in range(grid_size):
+        tile_id = tile_ids[row * grid_size + col]  # Extract the tile ID from the list
+        tile = tiles[tile_id]
+        for i, line in enumerate(tile.tile_data):
+            if col == 0:
+                full_image.append(line)
+                full_image_tile_ids.append([])
+            else:
+                full_image[i] += line
+            full_image_tile_ids[i].append(tile_id)
 
-for i in range(puzzle_size):
-    for j in range(puzzle_size):
-        tile = tiles[grid[i][j]]
-        tile = [row[1:-1] for row in tile[1:-1]]
-        image[i][j] = tile
+# Find the maximum length of a line in the full_image
+max_line_length = max(len(line) for line in full_image)
 
-# Merge the image into a single grid
-final_image = []
-for row in image:
-    for i in range(len(row[0])):
-        final_image.append(''.join(row[j][i] for j in range(puzzle_size)))
+# Pad shorter lines with spaces to make them the same length as the longest line
+full_image = [line.ljust(max_line_length) for line in full_image]
 
-# Define the monster pattern
-monster = [
+# Print the assembled image tile IDs in the desired format
+print("Assembled Image Tile IDs:")
+for row in full_image_tile_ids:
+    print("    ".join(str(tile_id) for tile_id in row))
+
+# Define sea monster pattern
+sea_monster = [
     "                  # ",
     "#    ##    ##    ###",
-    " #  #  #  #  #  #   ",
+    " #  #  #  #  #  #   "
 ]
 
-# Count the number of monsters in the image
-monster_count = 0
+def count_sea_monsters(image):
+    sea_monster_count = 0
+    sea_monster_height = len(sea_monster)
+    sea_monster_width = len(sea_monster[0])
+    image_height = len(image)
+    image_width = len(image[0])
+
+    for r in range(image_height - sea_monster_height + 1):
+        for c in range(image_width - sea_monster_width + 1):
+            is_sea_monster = True
+            for i in range(sea_monster_height):
+                for j in range(sea_monster_width):
+                    try:
+                        if sea_monster[i][j] == "#" and image[r + i][c + j] != "#":
+                            is_sea_monster = False
+                            break
+                    except IndexError:
+                        print("Error: r =", r, "c =", c, "i =", i, "j =", j)
+                        print("image[r+i]:", image[r + i])
+                        print("image[r+i][c+j]:", image[r + i][c + j])
+                        print("sea_monster[i][j]:", sea_monster[i][j])
+                if not is_sea_monster:
+                    break
+            if is_sea_monster:
+                sea_monster_count += 1
+    return sea_monster_count
+
+# Try all possible orientations (rotations and flips) of the image
 for _ in range(4):
-    final_image = rotate_tile(final_image)
-    monster_count += sum(
-        all(final_image[i + x][j + y] == "#" for y, value in enumerate(row) for x, char in enumerate(value) if char == "#")
-        for i, row in enumerate(monster)
-        for j, _ in enumerate(row)
-    )
-final_image = flip_tile_horizontally(final_image)
-for _ in range(4):
-    final_image = rotate_tile(final_image)
-    monster_count += sum(
-        all(final_image[i + x][j + y] == "#" for y, value in enumerate(row) for x, char in enumerate(value) if char == "#")
-        for i, row in enumerate(monster)
-        for j, _ in enumerate(row)
-    )
+    sea_monster_count = count_sea_monsters(full_image)
+    if sea_monster_count > 0:
+        break
+    full_image = [''.join(row) for row in zip(*full_image[::-1])]  # Rotate 90 degrees
+else:
+    full_image = full_image[::-1]  # Flip horizontally
+    for _ in range(4):
+        sea_monster_count = count_sea_monsters(full_image)
+        if sea_monster_count > 0:
+            break
+        full_image = [''.join(row) for row in zip(*full_image[::-1])]  # Rotate 90 degrees
 
-# Calculate the roughness of the sea
-total_roughness = sum(row.count("#") for row in final_image)
-roughness_without_monsters = total_roughness - monster_count * sum(row.count("#") for row in monster)
+# Calculate the water roughness
+roughness = sum(row.count("#") for row in full_image) - sea_monster_count * sum(row.count("#") for row in sea_monster)
+print("Water Roughness:", roughness)
 
-print("The product of the IDs of the four corner tiles is:", corner_tiles[0] * corner_tiles[1] * corner_tiles[2] * corner_tiles[3])
-print("The roughness of the sea is:", roughness_without_monsters)
 
-# Print the IDs of the four corner tiles
-print("The IDs of the four corner tiles are:", corner_tiles)
 
