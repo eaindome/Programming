@@ -1,5 +1,5 @@
 #include <iostream>
-#include "loading_page.h"
+#include "./pages/loading_page.h"
 
 int main() {
     loadingPage();
