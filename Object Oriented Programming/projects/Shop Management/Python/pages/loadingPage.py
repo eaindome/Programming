@@ -1,10 +1,6 @@
 from .ascii_art import landingPageArt, loadingPageArt
-from .customerPage import customer_login
+from .customerPage import customer_login, sign_up_customer
 from utilities.utils import clearConsole, loadingBar, exit_program
-
-
-
-# simple functionalities
 
 # user functionalities
 # worker login function
@@ -12,8 +8,10 @@ def worker_login():
     # worker login functionality
     pass
 
+# sign up
+def sign_up():
+    sign_up_customer()
 
-# main functionalities
 # function to display the loading page with ASCII art
 def loadingPage():
     clearConsole()
@@ -33,7 +31,8 @@ def landingPage():
     choice_actions = {
         1: worker_login,
         2: customer_login,
-        3: exit_program
+        3: sign_up,
+        4: exit_program
     }
 
     while True:
@@ -45,7 +44,8 @@ def landingPage():
         print("\n\n\n\n\t\t\t\t\t Login As : ")
         print("\n\n\n\t\t\t\t\t 1. Worker ")
         print("\n\n\t\t\t\t\t 2. Customer")
-        print("\n\n\t\t\t\t\t 3. Exit")
+        print("\n\n\t\t\t\t\t 3. Sign Up")
+        print("\n\n\t\t\t\t\t 4. Exit")
         choice = input("\n\n\n\t\t\t\t\t Enter your choice: ")
 
         #choice = input()
