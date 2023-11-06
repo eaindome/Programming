@@ -1,6 +1,6 @@
 import os
 import time
-# from pages.loadingPage import landingPage
+
 BAR_WIDTH = 40
 SLEEP_MS = 0.2
 
@@ -31,6 +31,6 @@ def exit_program():
         print(".", end=' ')
     exit(0)
 
-def startOver():
-    #landingPage()
+def startOver(landing_page_callback):
+    #landing_page_callback()
     pass
