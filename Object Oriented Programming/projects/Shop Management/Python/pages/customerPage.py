@@ -1,4 +1,4 @@
-from data.customer import customer_data
+from data.customerData import customer_data
 from .loadingPage import landingPage, exit_program, clearConsole
 from user.customer import Customer
 from utilities.utils import clearConsole, exit_program, startOver
