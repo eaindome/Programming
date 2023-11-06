@@ -1,13 +1,13 @@
-#from data.customer import customer_data
-#from .loadingPage import landingPage, exit_program, clearConsole
+from data.customer import customer_data
+from .loadingPage import landingPage, exit_program, clearConsole
 from user.customer import Customer
 from utilities.utils import clearConsole, exit_program, startOver
 
 # Sample customer data stored in a dictionary (replace with your actual data)
-customer_data = {
+"""customer_data = {
     "user1": {"password": "password1", "name": "John Doe", "email": "john@example.com"},
     "user2": {"password": "password2", "name": "Jane Smith", "email": "jane@example.com"},
-}
+}"""
 
 # function to go to shopping landing page
 def go_shopping():
@@ -46,8 +46,6 @@ def sign_up_customer():
             if initial_password == confirm_password:
                 customer_password = initial_password
 
-
-
             # generate customer_id
             customer_id = Customer.generate_customer_id()
 
@@ -63,10 +61,12 @@ def sign_up_customer():
             # store the customer object in the customer_data
             customer_data[customer_username] = new_customer
 
+            landing_page_callback = landingPage()
+
+            startOver(landing_page_callback)
             print("Registration successful!")
             input("\nPress Enter to continue")
             startOver()
-            #landingPage()
         except ValueError:
             print("Invalid input. Please enter a valid number.")
         
