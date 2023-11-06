@@ -1,4 +1,5 @@
 from pages.loadingPage import landingPage, loadingPage, clearConsole, exit_program
+from utilities.utils import startOver
 
 def main():
     try:
@@ -15,5 +16,6 @@ def main():
         exit_program()
 
 if __name__ == "__main__":
-    main()
+    main_callback = lambda: main()
+    startOver(main_callback)
 
