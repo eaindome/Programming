@@ -32,5 +32,5 @@ def exit_program():
     exit(0)
 
 def startOver(landing_page_callback):
-    #landing_page_callback()
+    landing_page_callback()
     pass
