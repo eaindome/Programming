@@ -94,6 +94,12 @@ def count_sea_monsters(grid):
 
 # Function to count the number of '#' that are not part of a sea monster
 def count_roughness(grid, num_sea_monsters):
+    sea_monster_pattern = [
+        "                  # ",
+        "#    ##    ##    ###",
+        " #  #  #  #  #  #   "
+    ]
+    
     total_hashes = sum(row.count('#') for row in grid)
     sea_monster_hashes = num_sea_monsters * sum(row.count('#') for row in sea_monster_pattern)
     return total_hashes - sea_monster_hashes
