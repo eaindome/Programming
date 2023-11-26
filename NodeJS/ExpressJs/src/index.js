@@ -51,3 +51,6 @@ app.use('/api/v1/markets', marketsRoute);
 app.use('/api/v1/auth', authRoute);
 
 app.listen(PORT, () => console.log(`Running Express Server on Port ${PORT}`));
+
+
+// http://localhost:3001/api/v1/auth/discord/redirect
