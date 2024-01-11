@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Vendor PCs Table</title>
+    <link rel="stylesheet" href="">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="./table.js"></script>
+</head>
+<body>
+    <h1>Vendor PCs Table</h1>
+    <input type="text" id="search-input" placeholder="Search">
+    <button type="button" id="search-btn">Search</button>
+    <table id="vendor-pc-table">
+        <thead>
+            <tr>
+                <th>Book ID</th>
+                <th>Company Name</th>
+                <th>Phone Number</th>
+                <th>Email</th>
+                <th>District</th>
+                <th>PC Brand</th>
+                <th>PC Serial Number</th>
+                <th>Complaint</th>
+                <th>Date IN</th>
+                <th>Sign IN</th>
+                <th>Date OUT</th>
+                <th>Sign OUT</th>
+                <th>Username</th>
+                <th>Timestamp</th>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- Rows will be added here dynamically -->
+        </tbody>
+    </table>
+
+    <table id="results-table" style="display: none;">
+        <thead>
+            <tr>
+                <th>Book ID</th>
+                <th>Company Name</th>
+                <th>Phone Number</th>
+                <th>Email</th>
+                <th>District</th>
+                <th>PC Brand</th>
+                <th>PC Serial Number</th>
+                <th>Complaint</th>
+                <th>Date IN</th>
+                <th>Sign IN</th>
+                <th>Date OUT</th>
+                <th>Sign OUT</th>
+                <th>Username</th>
+                <th>Timestamp</th>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- Search results will be inserted here -->
+        </tbody>    
+    </table>
+    <button type="button" id="back-btn">Back</button>
+
+    <button type="button" id="add-btn">Add</button>
+    <button type="button" id="update-btn">Update</button>
+    <button type="button" id="delete-btn">Delete</button>
+</body>
+</html>
