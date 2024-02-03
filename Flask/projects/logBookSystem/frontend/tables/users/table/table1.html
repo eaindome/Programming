@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>FortiClient Table</title>
+    <link rel="stylesheet" href="">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="./forticlient.js"></script>
+</head>
+<body>
+    <h1>FortiClient Table</h1>
+    <input type="text" id="search-input" placeholder="Search">
+    <button type="button" id="search-btn">Search</button>
+    <table id="forticlient-table">
+        <thead>
+            <tr>
+                <th>VPN ID</th>
+                <th>Company Name</th>
+                <th>Owner's Name</th>
+                <th>Initial Phone</th>
+                <th>Current Phone</th>
+                <th>Email</th>
+                <th>New Phone</th>
+                <th>Date Requested</th>
+                <th>Sign</th>
+                <th>Username</th>
+                <th>Timestamp</th>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- Rows will be added here dynamically -->
+        </tbody>
+    </table>
+
+    <table id="results-table" style="display: none;">
+        <thead>
+            <tr>
+                <th>Company Name</th>
+                <th>Current Phone</th>
+                <th>Date Requested</th>
+                <th>Email</th>
+                <th>Initial Phone</th>
+                <th>New Phone</th>
+                <th>Owner's Name</th>
+                <th>Sign</th>
+                <th>Timestamp</th>
+                <th>Username</th>
+                <th>VPN ID</th>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- Search results will be inserted here -->
+        </tbody>    
+    </table>
+    <button type="button" id="back-btn">Back</button>
+
+    <button type="button" id="add-btn">Add</button>
+    <button type="button" id="update-btn">Update</button>
+    <button type="button" id="delete-btn">Delete</button>
+</body>
+</html>
