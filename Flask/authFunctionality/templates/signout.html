@@ -1,0 +1,17 @@
+<!-- templates/signout.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign Out</title>
+</head>
+<body>
+    <h1>Sign Out</h1>
+    <form method="POST" action="{{ url_for('sign_out', ticket_id=ticket.id) }}">
+        <p>Company: {{ ticket.company_name }}</p>
+        <p>Complaint: {{ ticket.complaint }}</p>
+        <input type="submit" value="Sign Out">
+    </form>
+</body>
+</html>

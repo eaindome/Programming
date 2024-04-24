@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Home Page</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <!-- CSS -->
+        <!-- <link href="" rel="stylesheet"> -->
+        <link href="./home.css" rel="stylesheet">
+
+        <!-- JS -->
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <script src="./home.js"></script>
+    </head>
+    <body>
+        <div id="welcome-section">
+            <h1>Welcome <span id="welcome-username"></span></h1>
+        </div>
+        <div id="user-info">
+            <h2>User Profile</h2>
+            <p>Username: <span id="profile-username"></span></p>
+            <p>Role: <span id="role"></span></p>
+            <p>Start Date: <span id="start-date"></span></p>
+            <p>End Date: <span id="end-date"></span></p>
+            <button id="update-info-button">Update Info</button>
+        </div>
+        <div id="recent-logs">
+            <h2>Recent Logs</h2>
+            <table id="logs-table">
+                <thead>
+                    <tr>
+                        <th>Username</th>
+                        <th>Action</th>
+                        <th>Table Name</th>
+                        <th>Timestamp</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Logs will be appended here by JavaScript -->
+                </tbody>
+            </table>
+            <div id="log-buttons">
+                <button id="recent-logs-button">Recent Logs</button>
+                <button id="current-year-logs-button">Current Year Logs</button>
+                <button id="total-logs-button">Total Logs</button>
+            </div>
+            <div id="statistics">
+                <h2>Log Statistics</h2>
+                <p id="total-logs-count"></p>
+                <p id="last-week-logs-count"></p>
+                <p id="most-common-issue-type"></p>
+                <div id="table-percentages-for-day"></div>
+                <div id="table-percentages-for-week"></div>
+                <div id="table-percentages-for-month"></div>
+                <div id="table-percentages-for-year"></div>
+            </div>
+            <div id="forti">
+                <button id="forti">Forticlient table</button>
+            </div>
+        </div>
+    </body>
+</html>

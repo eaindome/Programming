@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Update Info Page</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        
+        <!-- CSS -->
+        <!-- <link href="" rel="stylesheet"> -->
+        <link href="./updateInfo.css" rel="stylesheet">
+        
+        <!-- JS -->
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <script src="./updateInfo.js"></script>
+    </head>
+    <body>
+        <div id="update-info-form">
+            <h2>Update Info</h2>
+            <form id="update-form">
+                <label for="username">Username:</label><br>
+                <input type="text" id="username" name="username"><br>
+                <label for="user_role">Role:</label><br>
+                <input type="text" id="user_role" name="user_role"><br>
+                <label for="user_password">Password:</label><br>
+                <input type="password" id="user_password" name="user_password"><br>
+                <label for="start_date">Start Date:</label><br>
+                <input type="date" id="start_date" name="start_date"><br>
+                <label for="end_date">End Date:</label><br>
+                <input type="date" id="end_date" name="end_date"><br>
+                <input type="hidden" id="current-username" name="current-username">
+                <input type="submit" value="Save">
+            </form>
+        </div>
+        <div id="message"></div>
+    </body>
+</html>

@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Forticlient Form</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="./form.js"></script>
+</head>
+<body>
+    <form id="forticlient-form">
+        <label for="company-name-input">Company Name:</label>
+        <input type="text" id="company-name-input" required>
+    
+        <label for="owners-name-input">Owner's Name:</label>
+        <input type="text" id="owners-name-input" required>
+    
+        <label for="initial-phone-input">Initial Phone:</label>
+        <input type="text" id="initial-phone-input" required>
+    
+        <label for="current-phone-input">Current Phone:</label>
+        <input type="text" id="current-phone-input" required>
+    
+        <label for="email-input">Email:</label>
+        <input type="email" id="email-input" required>
+    
+        <label for="new-phone-input">New Phone:</label>
+        <select id="new-phone-input" required>
+            <option value="">Select an option</option>
+            <option value="Yes">Yes</option>
+            <option value="No">No</option>
+        </select>
+    
+        <label for="date-requested-input">Date Requested:</label>
+        <input type="date" id="date-requested-input" required>
+    
+        <button type="button" id="save-btn">Save</button>
+        <button type="button" id="cancel-btn">Cancel</button>
+        <button type="button" id="send-link-btn">Send-Link</button>
+    </form>
+</body>
+</html>

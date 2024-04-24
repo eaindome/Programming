@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Home Page</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <!-- CSS -->
+        <link href="../../../sidebar/it-support/style.css" rel="stylesheet">
+        <link href="./home.css" rel="stylesheet"><link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+
+        <!-- JS -->
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <script src="./forticlient.js"></script>
+        <script src="../../../sidebar/it-support/script2.js"></script>
+    </head>
+    <body>
+        <!-- Sidebar from index.html goes here -->
+        <div class="sidebar">
+            <div class="logo_details">
+              <i class="bx bxl-audible icon"></i>
+              <div class="logo_name">IT Support</div>
+              <i class="bx bx-menu" id="btn"></i>
+            </div>
+            <ul class="nav-list">
+              <!--Search-->
+              <li>
+                <i class="bx bx-search"></i>
+                <input type="text" placeholder="Search...">
+                 <span class="tooltip">Search</span>
+              </li>
+              <!--Dashboard-->
+              <li>
+                <a href="../../../home/home.html">
+                  <i class="bx bx-grid-alt"></i>
+                  <span class="link_name">Dashboard</span>
+                </a>
+                <span class="tooltip">Dashboard</span>
+              </li>
+              <!--Users-->
+              <li>
+                <a href="#">
+                  <i class="bx bx-user"></i>
+                  <span class="link_name">Users</span>
+                </a>
+                <span class="tooltip">Users</span>
+              </li>
+              <!--Tables-->
+              <!--FortiClient-->
+              <li>
+                <a href="./table.html">
+                    <i class='bx bx-shield' ></i>
+                    <span class="link_name">FortiClient VPN</span>
+                </a>
+                <span class="tooltip">FortiClient VPN</span>
+              </li>
+              <!--Password Reset-->
+              <li>
+                <a href="../../password/table/table.html">
+                    <i class='bx bx-lock-open' ></i>
+                    <span class="link_name">Password Reset</span>
+                </a>
+                <span class="tooltip">Password Reset</span>
+              </li>
+              <!--Staff PCs-->
+              <li>
+                <a href="../../staff/table/table.html">
+                    <i class='bx bx-group' ></i>
+                    <span class="link_name">Staff PCs</span>
+                </a>
+                <span class="tooltip">Staff PCs</span>
+              </li>
+              <!--Vendor PCs-->
+              <li>
+                <a href="../../vendor/table/table.html">
+                    <i class='bx bx-building' ></i>
+                    <span class="link_name">Vendor PCs</span>
+                </a>
+                <span class="tooltip">Vendor PCs</span>
+              </li>
+              <!--LogOut-->
+              <li>
+                <a href="#">
+                  <i class="bx bx-log-out"></i>
+                  <span class="link_name">Log out</span>
+                </a>
+                <span class="tooltip">Log Out</span>
+              </li>
+            </ul>
+        </div>
+        <section class="home-section">
+            <div class="text">FortiClient VPN</div>
+
+            <!--from table1.html-->
+            <h1>FortiClient Table</h1>
+            <input type="text" id="search-input" placeholder="Search">
+            <button type="button" id="search-btn">Search</button>
+            <table id="forticlient-table">
+                <thead>
+                    <tr>
+                        <th>VPN ID</th>
+                        <th>Company Name</th>
+                        <th>Owner's Name</th>
+                        <th>Initial Phone</th>
+                        <th>Current Phone</th>
+                        <th>Email</th>
+                        <th>New Phone</th>
+                        <th>Date Requested</th>
+                        <th>Sign</th>
+                        <th>Username</th>
+                        <th>Timestamp</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Rows will be added here dynamically -->
+                </tbody>
+            </table>
+        
+            <table id="results-table" style="display: none;">
+                <thead>
+                    <tr>
+                        <th>Company Name</th>
+                        <th>Current Phone</th>
+                        <th>Date Requested</th>
+                        <th>Email</th>
+                        <th>Initial Phone</th>
+                        <th>New Phone</th>
+                        <th>Owner's Name</th>
+                        <th>Sign</th>
+                        <th>Timestamp</th>
+                        <th>Username</th>
+                        <th>VPN ID</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Search results will be inserted here -->
+                </tbody>    
+            </table>
+            <button type="button" id="back-btn">Back</button>
+        
+            <button type="button" id="add-btn">Add</button>
+            <button type="button" id="update-btn">Update</button>
+            <button type="button" id="delete-btn">Delete</button>
+        </section>        
+        
+
+    </body>
+</html>
