@@ -1,3 +1,5 @@
+// const _deploy_contracts = require("./migrations/2_deploy_contracts")
+
 module.exports = {
   networks: {
     development: {
@@ -120,3 +122,10 @@ module.exports = {
 //     }
 //   }
 // }
+
+
+// Tasks:
+// 1. list tasks in the smart _deploy_contracts
+// 2. list tasks in the console
+// 3. list tasks in the client side application
+// 4. list tasks in the test.
