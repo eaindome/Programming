@@ -16,6 +16,12 @@ contract TodoList {
     // declare a mapping that assocates a uint (task id) with a Task struct
     mapping(uint => Task) public tasks;
 
+    event TaskCreated(
+        uint id,
+        string content,
+        bool completed
+    );
+
     // constructor function that is executed once when the contract is deployed
     constructor() public {
         // automatically create an initial task when the contract is deployed
@@ -26,5 +32,6 @@ contract TodoList {
     function createTask(string memory _content) public {
         taskCount ++;                                           // increment the taskCount by 1
         tasks[taskCount] = Task(taskCount, _content, false);    // add the new task to the mapping with the new taskCount as the key
+        emit TaskCreated(taskCount, _content, false);
     }
 }
