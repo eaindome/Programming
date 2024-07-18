@@ -1,0 +1,221 @@
+What problem docker solves?
+Solves the problem of different devices and OS needing to install several packages to be able to run or develop an application
+
+Virtual Machine vs Docker
+OS layers:
+	1. OS Application layer
+	2. OS kernel -> (works on) -> HARDWARE [middleman between applications and hardware]
+
+Core Difference now comes in which part they visualize
+- Docker virtualizes the Application Layer 
+	* Uses the Kernel of the host
+- Virtual Machine comes with it's own OS application layer and Kernel
+	* Uses the only the hardware of the host
+
+What affects this difference?
+- Size
+  * Docker images are a couple of MB
+  * VM images, couple of GB
+
+- Speed
+  * Containers take seconds to start
+  * VMs take minutes to start
+
+- Compatibility
+  * Docker is only compatible with only Linux distros
+  * VM is compatible with all OS
+
+
+Docker Desktop
+- Docker Engine
+  * A server with a long-running daemon process "dockerd"
+  * Manages images and containers
+
+- Docker CLI-Client
+  * Command Line Interface ("docker") to interact with Docker Server
+  * Execute Docker commands to start/stop/.. containers
+
+
+Docker Images vs Docker Containers
+
+#NB: Docker:
+	-> Packages everything into an artifact
+	-> That package can be easily shared and moved
+
+That package/artefact we produce with Docker is termed as the Docker image
+Docker Image:
+* An executable application artifact.
+* Different from other application files like jar files in that it includes app source code, as well as the complete environment configuration.
+* Environment variables can be added to the docker image, in fact anything that you'll need to run or develop the application, you can create directories, files, etc.
+
+After developing or making the docker package, it has to be run somewhere right, you'd want to run it on a computer I guess.
+
+Docker Container
+* Thus a running instance of an image is a container.
+* From one image, you can run multiple containers
+
+
+Docker Registries
+- We run containers from images right...
+- But how do we get these images?🤔
+- That's where docker registries come in.
+
+* Docker Registries is a storage and distribution system for Docker images
+* There exists official images from companies which include applications like Redis, Mongo, Postgres etc.
+* These images are maintained by the software authors or in collaboration with the Docker community.
+* These images can be found on Docker Hub
+
+
+Pull an Image
+- Locate image
+  * Using a specific version is best practice in most cases.
+- Docker Hub registry (docker.io) is used by default to look for an image
+- Pulling an image:
+	* docker pull {resource}:{version} 
+	* docker pull {resource} -> pulls latest image
+	* docker images -> Check images in your docker repository
+
+Run an Image
+- Pick the image with the tag
+- Run an Image as a container:
+	* docker run nginx:1.23
+	* docker run -d nginx:1.23 -> detaches the running image from the terminal so it could be used again and instead runs the image in the background.
+	* docker logs {containerID} -> see the logs of the running image if you are in detached mode.
+- Docker generates a random name for the container automatically if you don't specify one
+
+The steps we've followed so far:
+- Docker pull
+- Docker run
+
+But we can easily ignore the docker pull and jump straight to running. Why?
+* Docker pulls images automatically if it doesn't find it locally.
+
+
+Port Binding
+How do we access the container which runs the image we've initiated? 
+
+Container Port vs Host Port
+-> Application inside container runs in an isolated Docker network.
+   This allows us to run the same app running on the same port multiple times.
+-> To access the container, we need to first expose it to our local network
+-> i.e. We need to expose the container port to the host (the machine the container runs on)
+-> To do this, we have to perform Port Binding.
+-> Port Binding is binding the container's port to the host's port to make the service available to the outside world.
+-> To perform Port Binding:
+	* docker run -d -p {(bind to) host port}:{container's port} {resource}:{version}
+	* e.g docker run -d -p 9000:80 nginx:1.23
+	* -p or --publish -> Publish a container's port to the host
+# Note:
+- Only 1 service can run on a specific port on the host.
+- It's standard to use the same port on your host as container is using.
+
+
+
+
+Start and Stop containers
+-> docker run
+   * creates a new container everytime
+   * doesn't re-use previous container	
+   * docker ps -a -> gives you all the containers you've created.
+   * docker start {containerID} -> start one or more stopped containers
+-> naming an image
+	* docker run --name {provide name} -d -p {host port}:{container port} {resource}:{version}
+	* e.g. docker run --name web_app -d -p 9000:80 nginx:1.23
+
+
+Dockerfile - Create own Images
+- Companies create custom images for their applications
+- How then can you create your own custom image?
+
+-> Dockerfile:
+   * A "definition" of how to build an image from our application.
+   * A dockerfile is a text document that contains commands to assemble an image.
+   * Docker then builds an image by reading those instructions.
+
+-> Structure of Dockerfile
+   * Dockerfiles start from a parent image or "base image"
+   * This base image is mostly a light-weight Linux OS image that has whatever tool you need installed on top of it
+
+   # FROM
+	* Dockerfiles must begin with a FROM instruction
+	* Build this image from the specified  image
+   * Every image consists of multiple image layers
+
+   # RUN
+	* Will execute any command in a shell inside the container environment.
+
+
+
+Build Image
+-> To build a Docker image:
+	* docker build -t {name of image}:{tag} {location/directory}
+	* e.g. docker build -t node-app:1.0 .(current directory)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

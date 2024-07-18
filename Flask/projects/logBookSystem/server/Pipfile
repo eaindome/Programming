@@ -12,8 +12,9 @@ psycopg2-binary = "*"
 flask-mail = "*"
 itsdangerous = "*"
 flask-cors = "*"
+flask-login = "*"
 
 [dev-packages]
 
 [requires]
-python_version = "3.12.0"
+python_version = "3.12.3"
