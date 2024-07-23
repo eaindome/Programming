@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Verify Transaction</title>
+</head>
+<body>
+    <h2>Verify transaction from <span id="username"></span></h2>
+    <button onclick="verifyTransaction()">Verify</button>
+    <button onclick="cancelTransaction()">Cancel</button>
+
+    <script>
+        const urlParams = window.location.pathname.split('/').slice(3); // Extract parameters from URL
+        const [fromUser, to, goodsId, private_key, username, data, to_user, transactionId] = urlParams;
+
+        
+        // console.log(`key: ${private_key}`);
+        // document.getElementById('fromUser').textContent = fromUser;
+
+        function verifyTransaction() {
+            // Perform action to trigger API endpoint for approval
+            fetch('http://localhost:8000/transaction/approve-transaction', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ 
+                    fromUser,
+                    to,
+                    goodsId,
+                    private_key,
+                    username,
+                    data,
+                    to_user,
+                    transactionId
+                }),
+            }).then(response => {
+                if (response.ok) {
+                    alert('Transaction approved!');
+                    // Optionally, redirect to a success page
+                } else {
+                    alert('Failed to approve transaction.');
+                }
+            }).catch(error => {
+                console.error('Error approving transaction:', error);
+                alert('Error approving transaction.');
+            });
+        }
+
+        function cancelTransaction() {
+            // Perform action for canceling transaction if needed
+            alert('Transaction canceled.');
+            // Optionally, redirect to a cancel page
+        }
+    </script>
+</body>
+</html>
+
