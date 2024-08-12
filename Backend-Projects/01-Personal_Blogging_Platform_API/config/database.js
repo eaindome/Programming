@@ -1,13 +1,17 @@
 const { Sequelize } = require('sequelize');
+const Article = require('../models/Articles');
+
+const database = process.env.NODE_ENV === 'test' ? 'blogging_platform_test' : 'blogging_platform';
 
 // initialize the sequelize instance
 const sequelize = new Sequelize(
-    'blogging_platform', 
+    database, 
     'blog_user', 
     'eaindome',
     {
         host: 'localhost',
-        dialect:'postgres',
+        dialect: 'postgres',
+        logging: console.log,
     }
 );
 
@@ -16,13 +20,15 @@ const connectDB = async () => {
     try {
         await sequelize.authenticate();
         console.log('Connection established with the database');
+
+        await sequelize.sync({
+            force: false,
+        });
+        console.log('Database synchronised...');
     } catch (err) {
         console.error('Unable to connect to the database:', err);
         process.exit(1);
     }
-}
+};
 
-module.exports = {
-    sequelize,
-    connectDB,
-}
+module.exports = { sequelize, connectDB};
