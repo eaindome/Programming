@@ -1,78 +1,78 @@
 const Article = require('../models/Articles');
 
 // get all articles
-const getAllArticles = async (req, res) => {
+const getAllArticles = async (req, reply) => {
     try {
         const articles = await Article.findAll();
-        res.status(200).json(articles);
+        reply.code(200).send(articles);
     } catch (error) {
-        res.status(500).json({ message: error.message });
+        reply.code(500).send({ message: error.message });
     }
 }
 
 // get an article by ID
-const getArticleById = async (req, res) => {
+const getArticleById = async (req, reply) => {
     const article = await Article.findByPk(req.params.id)
     if (article) {
-        res.status(200).json(article);
+        reply.code(200).send(article);
     } else {
-        res.status(404).json({ 
+        reply.code(404).send({ 
             message: `Article not found` 
         });
     }
 }
 
 // create a new article
-const createArticle = async (req, res) => {
+const createArticle = async (req, reply) => {
     try {
         const newArticle = await Article.create(req.body);
-        res.status(201).json(newArticle);
+        reply.code(201).send(newArticle);
     } catch (error) {
         if (error.name === 'SequelizeValidationError') {
             const errors = error.errors.map(err => err.message);
-            res.status(400).json({ errors });
+            reply.code(400).send({ errors });
         } else {
-            res.status(500).json({ message: error.message });
+            reply.code(500).send({ message: error.message });
         }
     }
 }
 
 // update an article by ID
-const updateArticle = async (req, res) => {
+const updateArticle = async (req, reply) => {
     try {
         const article = await Article.findByPk(req.params.id);
         if (article) {
             await article.update(req.body);
-            res.status(200).json(article);
+            reply.code(200).send(article);
         } else {
-            res.status(404).json({ 
+            reply.code(404).send({ 
                 message: `Article not found` 
             });
         }
     } catch (err) {
         if (err.name === 'SequelizeValidationError') {
             const errors = err.errors.map(error => error.message);
-            res.status(400).json({ errors });
+            reply.code(400).send({ errors });
         } else {
-            res.status(500).json({ message: err.message });
+            reply.code(500).send({ message: err.message });
         }
     }
 }
 
 // delete an article by ID
-const deleteArticle = async (req, res) => {
+const deleteArticle = async (req, reply) => {
     try {
         const article = await Article.findByPk(req.params.id);
         if (article) {
             await article.destroy();
-            res.status(204).json();
+            reply.code(204).send();
         } else {
-            res.status(404).json({
+            reply.code(404).send({
                 message: `Article not found`
             });
         }
     } catch (error) {
-        res.status(500).json({ message: error.message });
+        reply.code(500).send({ message: error.message });
     }
 }
 
