@@ -74,6 +74,7 @@ let x = 10;
 let y = 2;
 
 // 2. Arithmetic Operators
+/*
 console.log(x + y);
 console.log(x * y);
 console.log(x - y);
@@ -81,8 +82,10 @@ console.log(x / y);
 console.log(x % y);
 console.log(++x);
 console.log(--y);
+*/
 
 // 3. Comparison Operators
+/*
 console.log(x == y);
 console.log(x != y);
 console.log(x === y);
@@ -91,21 +94,22 @@ console.log(x > y);
 console.log(x >= y);
 console.log(x < y);
 console.log(x <= y);
+*/
 
 // 4. Logical Operators
 let isValidNumber;
 isValidNumber = x > 8 && 8 > y;
-console.log(`isValidNumber: ${isValidNumber}`);
+// console.log(`isValidNumber: ${isValidNumber}`);
 isValidNumber = x > 8 || 8 > y;
-console.log(`isValidNumber: ${isValidNumber}`);
+// console.log(`isValidNumber: ${isValidNumber}`);
 
-console.log(`{is New User ${!isNewUser}`);
-console.log(`is Primary Number: ${!isPrimaryNumber}`);
+// console.log(`{is New User ${!isNewUser}`);
+// console.log(`is Primary Number: ${!isPrimaryNumber}`);
 
 // 5. String Operators
 console.log('Bruce ' + 'Wayne');        // addition with numbers, concatenation with strings
 
 // 6. Other Operators
 const isEven = 10 % 2 === 0 ? true : false;     // tenary operators
-console.log(`is Even number: ${isEven}`);
+// console.log(`is Even number: ${isEven}`);
 
