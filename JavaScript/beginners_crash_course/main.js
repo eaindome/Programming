@@ -113,3 +113,56 @@ console.log('Bruce ' + 'Wayne');        // addition with numbers, concatenation 
 const isEven = 10 % 2 === 0 ? true : false;     // tenary operators
 // console.log(`is Even number: ${isEven}`);
 
+
+
+/**
+ * TYPE CONVERSIONS
+ * 1. Implicit Conversion
+ * 2. Explicit Conversion
+ */
+// implicit conversion
+/*
+console.log(2 + '3');
+console.log('4' - '2');
+console.log('3' * '2');
+console.log('Bruce' - 'Wayne'); // not a number (NaN)
+console.log('5' - false);       // true = 1, false = 0
+console.log('5' - null);        // null = 0
+console.log('5' + undefined);   // not a number (NaN)
+*/
+
+// explicit conversion
+/*
+console.log(Number('5'));       // convert string to number
+console.log(Number(false));     // 0
+console.log(parseInt('5'));
+console.log(parseFloat('3.14'));
+
+console.log(String(500));       // convert other data types to string
+console.log(String(undefined));
+console.log(String(null));
+console.log((500).toString());
+console.log(Boolean(10));       // null, undefined, 0, '', NaN -> false
+*/
+
+console.log(`null: ${Boolean(null)}\n
+undefined: ${Boolean(undefined)}\n
+NaN: ${Boolean(NaN)}\n`);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
