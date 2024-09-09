@@ -1,5 +1,5 @@
 // log a statement using console.log()
-console.log('Hello World!');
+// console.log('Hello World!');
 
 /**
  * VARIABLES
@@ -145,13 +145,21 @@ console.log((500).toString());
 console.log(Boolean(10));       // null, undefined, 0, '', NaN -> false
 */
 
-console.log(`null: ${Boolean(null)}\n
-undefined: ${Boolean(undefined)}\n
-NaN: ${Boolean(NaN)}\n`);
+// console.log(`null: ${Boolean(null)}\n
+// undefined: ${Boolean(undefined)}\n
+// NaN: ${Boolean(NaN)}\n`);
 
+/**
+ * EQUALITY
+ * 1. == - Allows coercion
+ * 2. === - Does not allow coercion
+ */
+const var1 = 10;
+const var2 = '10';
 
-
-
+console.log(`var1 == var2: ${var1 == var2}`);
+console.log(`var1 === var2: ${var1 === var2}`);
+// it's safe to use '===' for equality
 
 
 
