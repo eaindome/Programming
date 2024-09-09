@@ -107,7 +107,7 @@ isValidNumber = x > 8 || 8 > y;
 // console.log(`is Primary Number: ${!isPrimaryNumber}`);
 
 // 5. String Operators
-console.log('Bruce ' + 'Wayne');        // addition with numbers, concatenation with strings
+// console.log('Bruce ' + 'Wayne');        // addition with numbers, concatenation with strings
 
 // 6. Other Operators
 const isEven = 10 % 2 === 0 ? true : false;     // tenary operators
@@ -157,14 +157,42 @@ console.log(Boolean(10));       // null, undefined, 0, '', NaN -> false
 const var1 = 10;
 const var2 = '10';
 
-console.log(`var1 == var2: ${var1 == var2}`);
-console.log(`var1 === var2: ${var1 === var2}`);
+// console.log(`var1 == var2: ${var1 == var2}`);
+// console.log(`var1 === var2: ${var1 === var2}`);
 // it's safe to use '===' for equality
 
 
+/**
+ * CONDITIONAL STATEMENTS
+ * 1. if
+ * 2. else
+ * 3. else if
+ * 4. switch
+ */
 
+const num = 5;
+// if (num > 0) console.log(`${num} is positive.`)         // if
+// else if (num < 0) console.log(`${num} is negative.`)     // else if
+// else console.log(`${num} is zero.`)                     // else
 
+// if, else if, & else -> short number of alternatives
+// switch -> a lot of alternatives
 
+const color = 'red';
+
+// switch(color) {
+//     case 'red':
+//         console.log(`Color is ${color}`);
+//         break;
+//     case 'blue':
+//         console.log(`Color is ${color}`);
+//         break;
+//     case 'green':
+//         console.log(`Color is ${color}`);
+//         break;
+//     default:
+//         console.log(`Not a valid color`);
+// }
 
 
 
