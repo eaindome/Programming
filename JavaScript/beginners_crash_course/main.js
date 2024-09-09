@@ -289,7 +289,30 @@ const subArray = (a, b) => a - b;
 const addFive = (num) => num + 5;
 
 
+/**
+ * SCOPE
+ *   - accessibility or visibility of variables
+ * 1. Block Scope
+ * 2. Function Scope
+ * 3. Global Scope
+*/
 
+const myNum = 10;       // Global Scope
 
+// Block Scope - variables in curly braces can't be accessed outside them
+if (true) {
+    const myName = 'Ekow';
+    console.log(myName);
+    console.log(`myNum: ${myName}`);
+}
+// console.log(myName);
+
+// Function Scope - variables in a function are not accessible outside the function
+function testFn() {
+    const myName ='Batman';
+    console.log(myName);
+    console.log(`myNum: ${myName}`);
+}
+// console.log(myName);
 
 
