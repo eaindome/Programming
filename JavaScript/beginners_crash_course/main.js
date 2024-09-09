@@ -195,7 +195,68 @@ const color = 'red';
 // }
 
 
+/**
+ * LOOPING CODE
+ * 1. for loop
+ * 2. while loop
+ * 3. do...while loop
+ * 4. for...of loop
+ */
 
+/**
+ * For Loop
+ * Syntax:
+ *      for (initializer; condition; final-expression) {
+ *          // code to run
+ *      }
+ */
+let i;
+for (i = 0; i < 5; i++) console.log(`For Loop ${i}`);
+
+/**
+ * While Loop
+ * Syntax:
+ *      initializer
+ *      while (condition) {
+ *          // code to run
+ *          final-expression
+ *      }
+ */
+i =  1;
+while (i <= 5) {
+    console.log(`While Loop ${i}`);
+    i++;
+}
+
+/**
+ * Do While Loop
+ * Syntax:
+ *      initializer
+ *      do {
+ *          // code to run
+ *          final expression
+ *      } while (condition)
+ */
+
+i = 1;
+do {
+    console.log(`Do While Loop ${i}`);
+    i++;
+} while (i <= 5)
+
+
+/**
+ * For..of Loop
+ * Syntax:
+ *      for (const item of array) {
+ *          // code to run
+ *      }
+ */
+const numArray = [1, 2, 3, 4, 5];
+
+for (const num of numArray) {
+    console.log(`For..of ${num}`);
+}
 
 
 
