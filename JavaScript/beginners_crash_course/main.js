@@ -211,7 +211,7 @@ const color = 'red';
  *      }
  */
 let i;
-for (i = 0; i < 5; i++) console.log(`For Loop ${i}`);
+// for (i = 0; i < 5; i++) console.log(`For Loop ${i}`);
 
 /**
  * While Loop
@@ -223,10 +223,10 @@ for (i = 0; i < 5; i++) console.log(`For Loop ${i}`);
  *      }
  */
 i =  1;
-while (i <= 5) {
-    console.log(`While Loop ${i}`);
-    i++;
-}
+// while (i <= 5) {
+//     console.log(`While Loop ${i}`);
+//     i++;
+// }
 
 /**
  * Do While Loop
@@ -239,10 +239,10 @@ while (i <= 5) {
  */
 
 i = 1;
-do {
-    console.log(`Do While Loop ${i}`);
-    i++;
-} while (i <= 5)
+// do {
+//     console.log(`Do While Loop ${i}`);
+//     i++;
+// } while (i <= 5)
 
 
 /**
@@ -254,9 +254,39 @@ do {
  */
 const numArray = [1, 2, 3, 4, 5];
 
-for (const num of numArray) {
-    console.log(`For..of ${num}`);
+// for (const num of numArray) {
+//     console.log(`For..of ${num}`);
+// }
+
+
+/**
+ * FUNCTIONS
+ *  - a block of code designed to perform a particular task.
+ * Syntax:
+ *      function name(parameter1, parameter2, parameter3) {
+ *          // code to be executed
+ *      }
+ */
+function greet(username) {
+    console.log('Hello');
+    console.log(`Good morning ${username}`);
 }
+
+function add(a, b) {
+    return a + b;
+}
+
+// greet('Kay24');
+
+const sum = add(5, 10);
+// console.log(`Sum: ${sum}`);
+
+const sumArray = (a, b) => {
+    return a + b;
+}
+
+const subArray = (a, b) => a - b;
+const addFive = (num) => num + 5;
 
 
 
