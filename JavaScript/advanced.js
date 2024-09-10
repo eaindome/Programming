@@ -47,7 +47,7 @@
 function sum(a, b, c) {
     return a + b + c
 }
-console.log(`sum: ${sum(2, 3, 5)}`);
+// console.log(`sum: ${sum(2, 3, 5)}`);
 
 // sum(2, 3, 5) => sum(2)(3)(5)
 
@@ -62,19 +62,16 @@ function curry(func) {
 }
 
 const curriedSum = curry(sum)
-console.log(`curriedSum: ${curriedSum(2)(3)(5)}`);
+// console.log(`curriedSum: ${curriedSum(2)(3)(5)}`);
 
 const add2 = curriedSum(2);
 const add3 = add2(3);
 const add5 = add3(5);
-console.log(`
-    add2: ${add2}\n
-    add3: ${add3}\n
-    add5: ${add5}
-`);
-
-
-
+// console.log(`
+//     add2: ${add2}\n
+//     add3: ${add3}\n
+//     add5: ${add5}
+// `);
 
 
 /**
