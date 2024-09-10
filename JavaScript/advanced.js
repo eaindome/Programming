@@ -76,9 +76,60 @@ const add5 = add3(5);
 
 /**
  * THIS KEYWORD
+ *    - 'this' keyword is used in a fuction, refers to the object it belongs to
+ *    - makes functions reusable by letting you decide the object value
+ *    - value is determined entirely by how a function is called
+ * 
+ *    * How to determine 'this'?
+ *      - Implicit binding
+ *      - Explicit binding
+ *      - New binding
+ *      - Default binding
 */
+function sayMyName(name) {
+    console.log(`My name is ${name}`);
+}
+sayMyName('Heisenberg');
+
+// Implicit binding
+const person = {
+    name: 'Ekow',
+    sayName: function() {
+        console.log('Implicit binding:')
+        console.log(`My name is ${this.name}`);
+    }
+}
+person.sayName();           // this refers to the constructor 'person'
 
 
+// Explicit binding
+function mentionName() {
+    console.log(`My name is ${this.name}`);
+}
+mentionName.call(person);
+
+
+// New Binding
+function Person(name) {
+    // this = {}
+    this.name = name;
+}
+const p1 = new Person('Ekow');
+const p2 = new Person('Annan');
+const p3 = new Person('Indome');
+console.log(`My name is ${p1} ${p2} ${p3}`);
+
+
+// Default Binding
+globalThis.name = 'Paakow';
+mentionName();
+
+/** { Order of precedence
+ *      - New binding
+ *      - Explicit binding
+ *      - Implicit binding
+ *      - Default binding
+} */
 
 /**
  * PROTOTYPE
