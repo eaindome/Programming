@@ -87,7 +87,7 @@ const add5 = add3(5);
  *      - Default binding
 */
 function sayMyName(name) {
-    console.log(`My name is ${name}`);
+    // console.log(`My name is ${name}`);
 }
 sayMyName('Heisenberg');
 
@@ -95,18 +95,18 @@ sayMyName('Heisenberg');
 const person = {
     name: 'Ekow',
     sayName: function() {
-        console.log('Implicit binding:')
-        console.log(`My name is ${this.name}`);
+        // console.log('Implicit binding:')
+        // console.log(`My name is ${this.name}`);
     }
 }
-person.sayName();           // this refers to the constructor 'person'
+// person.sayName();           // this refers to the constructor 'person'
 
 
 // Explicit binding
 function mentionName() {
-    console.log(`My name is ${this.name}`);
+    // console.log(`My name is ${this.name}`);
 }
-mentionName.call(person);
+// mentionName.call(person);
 
 
 // New Binding
@@ -117,12 +117,12 @@ function Person(name) {
 const p1 = new Person('Ekow');
 const p2 = new Person('Annan');
 const p3 = new Person('Indome');
-console.log(`My name is ${p1} ${p2} ${p3}`);
+// console.log(`My name is ${p1} ${p2} ${p3}`);
 
 
 // Default Binding
 globalThis.name = 'Paakow';
-mentionName();
+// mentionName();
 
 /** { Order of precedence
  *      - New binding
