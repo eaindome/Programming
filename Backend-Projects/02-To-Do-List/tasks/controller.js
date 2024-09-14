@@ -1,6 +1,6 @@
 const Task = require('../models/Tasks');
 
-
+// create task endpoint
 const createTask = async (req, res) => {
     const {
         title,
@@ -33,6 +33,31 @@ const createTask = async (req, res) => {
     }
 };
 
+// get a list of task
+const getTasks = async (req, res) => {
+    try {
+        const tasks = await Task.findAll({
+            where: {
+                userId: req.user.userId,        // get the tasks for a particular user
+            },
+        });
+
+        if (tasks.length === 0) {
+            return res.status(404).send({
+                message: 'No tasks available.'
+            });
+        }
+
+        return res.status(200).send(tasks);
+    } catch (err) {
+        console.error(`Error: ${err}`);
+        return res.status(500).send({
+            message: 'Error, retrieving tasks.'
+        });
+    }
+};
+
 module.exports = {
     createTask,
+    getTasks,
 }
