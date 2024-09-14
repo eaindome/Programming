@@ -1,7 +1,8 @@
 const { DataTypes } = require('sequelize');
-const sequelize = require('../config/database');
+const { sequelize }= require('../config/database');
+const bcrypt = require('bcryptjs');
 
-const User =  sequelize.define('User', {
+const User = sequelize.define('User', {
     username: {
         type: DataTypes.STRING,
         allowNull: false,
@@ -11,6 +12,12 @@ const User =  sequelize.define('User', {
         type: DataTypes.STRING,
         allowNull: false,
     },
+}, {
+    tableName: 'User',
 });
+
+User.prototype.validPassword = async function (password) {
+    return await bcrypt.compare(password, this.password);
+};
 
 module.exports = User;
