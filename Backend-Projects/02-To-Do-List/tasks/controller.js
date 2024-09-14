@@ -23,7 +23,8 @@ const createTask = async (req, res) => {
         })
     
         return res.status(201).send({
-            message: 'Task successfully created.'
+            message: 'Task successfully created.',
+            task: newTask
         })
     } catch (err) {
         console.error(`Error creating task: ${err}`);
@@ -57,7 +58,48 @@ const getTasks = async (req, res) => {
     }
 };
 
+const updateTask = async (req, res) => {
+    const { id } = req.params;
+    const {
+        title,
+        description,
+        status
+    } = req.body;
+
+    try {
+        const task = await Task.findOne({
+            where: {
+                id,
+                userId: req.user.userId
+            }
+        });
+
+        if (!task) {
+            return res.status(404).send({
+                message: 'Task not found!'
+            });
+        }
+
+        task.title = title || task.title;
+        task.description = description || task.description;
+        task.status = status || task.status;
+
+        await task.save();
+
+        return res.status(200).send({
+            message: 'Task successfully updated!',
+            task: task
+        });
+    } catch (err) {
+        console.error(`Error: ${err}`);
+        return res.code(500).send({
+            message: 'Error updating task'
+        });
+    }
+};
+
 module.exports = {
     createTask,
     getTasks,
+    updateTask
 }
