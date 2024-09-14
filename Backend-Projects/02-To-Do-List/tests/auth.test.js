@@ -37,7 +37,7 @@ afterAll(async () => {
     console.log("After all...")
     await sequelize.close();
     await app.close();
-})
+});
 
 describe('Registration Process', () => {
     test(
