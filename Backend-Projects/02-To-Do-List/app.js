@@ -2,11 +2,15 @@ const fastify = require('fastify')({
     logger: true
 });
 const authRoutes = require('./auth/routes');
+const taskRoutes = require('./tasks/routes');
 
 const { connectDB } = require('./config/database');
 
 // register auth routes
 fastify.register(authRoutes);
+
+// register task routes
+fastify.register(taskRoutes);
 
 // start the server and connect to the database
 const start = async () => {
