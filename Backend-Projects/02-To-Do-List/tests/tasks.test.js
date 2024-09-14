@@ -370,3 +370,86 @@ describe('Task Deletion Process', () => {
         }
     );
 });
+
+describe('Getting a Particular Task Process', () => {
+    let token, taskId;
+
+    beforeAll(async () => {
+        console.log('UserCredentials...');
+        const userCredentials = {
+            username: 'GetOneUser',
+            password: 'update123password'
+        };
+
+        console.log('Register and login user...')
+        // register and login user
+        await request(app.server)
+            .post('/api/auth/register')
+            .send(userCredentials);
+
+        const loginResponse = await request(app.server)
+            .post('/api/auth/login')
+            .send(userCredentials);
+
+        console.log('Retrieve response...');
+        token = loginResponse.body.token;
+        console.log(`token: ${token}`);
+
+        // create a few tasks for test user
+        const tasks = {
+            title: 'test task 1',
+            description: 'This is a test task'
+        };
+
+        const taskResponse = await request(app.server)
+            .post('/api/task/create')
+            .set('Authorization', `Bearer ${token}`)
+            .send(tasks);
+
+        // console.log(`taskResponse: ${JSON.stringify(taskResponse.body.task.id)}`);
+        taskId = taskResponse.body.task.id;
+    });
+
+    test(
+        'GET /api/task/get/:id should retrieve a task successfully',
+        async () => {
+            // console.log(`token: ${token}; taskID: ${taskId}`);
+            const response = await request(app.server)
+                .get(`/api/task/get/${taskId}`)
+                .set('Authorization', `Bearer ${token}`);
+
+            // console.log(`response: ${JSON.stringify(response)}`);
+            expect(response.status).toBe(200);
+            expect(response.body.message).toBe('Task retrieved successfully');
+        }
+    );
+
+    test(
+        'GET /api/task/get/:id should return 404 if task does not exist',
+        async () => {
+            let task_id = 18;
+            // console.log(`token: ${token}; taskID: ${taskId}`);
+            const response = await request(app.server)
+                .get(`/api/task/get/${task_id}`)
+                .set('Authorization', `Bearer ${token}`);
+
+            // console.log(`response: ${JSON.stringify(response)}`);
+            expect(response.status).toBe(404);
+            expect(response.body.message).toBe('Task not found!');
+        }
+    );
+
+    test(
+        'GET /api/task/get/:id should fail if token is not received',
+        async () => {
+            // console.log(`token: ${token}; taskID: ${taskId}`);
+            const response = await request(app.server)
+                .get(`/api/task/get/${taskId}`);
+
+            // console.log(`response: ${JSON.stringify(response)}`);
+            expect(response.status).toBe(403);
+            expect(response.body.message).toBe('Forbidden Entry.');
+        }
+    );
+
+});
