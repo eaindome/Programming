@@ -58,6 +58,31 @@ const getTasks = async (req, res) => {
     }
 };
 
+// get task by Id
+const getTaskById = async (req, res) => {
+    const { id } = req.params;
+    console.log(`id: ${id}`);
+
+    try {
+        const task = await Task.findByPk(id);
+        console.log(`task: ${task}`);
+
+        if (!task) {
+            return res.status(404).send({
+                message: 'Task not found!'
+            });
+        }
+
+        return res.status(200).send({
+            message: 'Task retrieved successfully',
+            task: task
+        });
+    } catch (err) {
+        console.error(`Error: ${err}`);
+        return res.status(500).send('Error retrieving task.');
+    }
+};
+
 const updateTask = async (req, res) => {
     const { id } = req.params;
     const {
@@ -132,5 +157,6 @@ module.exports = {
     createTask,
     getTasks,
     updateTask,
-    deleteTask
+    deleteTask,
+    getTaskById
 }
