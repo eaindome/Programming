@@ -107,3 +107,100 @@ describe('Task Creation Process', () => {
         }
     );
 });
+
+describe('Getting Task Process', () => {
+    let token;
+
+    beforeAll(async () => {
+        const userCredentials = {
+            username: 'TestUser',
+            password: 'testpassword'
+        };
+
+        await request(app.server)
+            .post('/api/auth/register')
+            .send(userCredentials);
+
+        const loginResponse = await request(app.server)
+            .post('/api/auth/login')
+            .send(userCredentials);
+
+        token = loginResponse.body.token;
+
+        // create a few tasks for test user
+        const tasks = [
+            {
+                title: 'Task 1',
+                description: 'First Task'
+            }, 
+            {
+                title: 'Task 2',
+                description: 'Second Task'
+            }
+        ];
+        
+        for (let task of tasks) {
+            await request(app.server)
+                .post('/api/task/create')
+                .set('Authorization', `Bearer ${token}`)
+                .send(task);
+        }
+    });
+
+    test(
+        'GET /api/task/get should successfully retrieve tasks',
+        async () => {
+            const response = await request(app.server)
+                .get('/api/task/get')
+                .set('Authorization', `Bearer ${token}`);
+
+            // console.log(`Task: ${JSON.stringify(response.body)}`);
+            expect(response.status).toBe(200);
+            expect(response.body.length).toBe(3);   // expect 2 tasks
+            expect(response.body[0].title).toBe('Test Task');
+            expect(response.body[1].title).toBe('Task 1');
+            expect(response.body[2].title).toBe('Task 2');
+        }
+    );
+
+    test(
+        'GET /api/task/get should fail if no token is provided',
+        async () => {
+            const response = await request(app.server)
+                .get('/api/task/get');
+                
+            // console.log(`Task: ${JSON.stringify(response.body)}`);
+            expect(response.status).toBe(403);
+            expect(response.body.message).toBe('Forbidden Entry.');
+        }
+    );
+
+    test(
+        'GET /api/task/get should return a message when no task is available',
+        async () => {
+            const newUserCredentials = {
+                username: 'NoTaskUser',
+                password: 'password123',
+            };
+
+            // register and login the new user
+            await request(app.server)
+                .post('/api/auth/register')
+                .send(newUserCredentials);
+
+            const loginResponse = await request(app.server)
+                .post('/api/auth/login')
+                .send(newUserCredentials);
+
+            const newToken = loginResponse.body.token;
+
+            const response = await request(app.server)
+                .get('/api/task/get')
+                .set('Authorization', `Bearer ${newToken}`);
+                
+            // console.log(`Task: ${JSON.stringify(response.body)}`);
+            expect(response.status).toBe(404);
+            expect(response.body.message).toBe('No tasks available.');
+        }
+    );
+});
