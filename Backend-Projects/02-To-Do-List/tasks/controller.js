@@ -98,8 +98,39 @@ const updateTask = async (req, res) => {
     }
 };
 
+const deleteTask = async (req, res) => {
+    const { id } = req.params;
+
+    try {
+        const task = await Task.findOne({
+            where: { 
+                id,
+                userId: req.user.userId
+            }
+        });
+
+        if (!task) {
+            return res.status(404).send({
+                message: 'Task not found!'
+            });
+        }
+
+        await task.destroy();
+
+        return res.status(200).send({
+            message: 'Task successfully deleted!'
+        });
+    } catch (err) {
+        console.error(`Error: ${err}`);
+        return res.status(500).send({
+            message: 'Error deleting task.'
+        });
+    }
+}
+
 module.exports = {
     createTask,
     getTasks,
-    updateTask
+    updateTask,
+    deleteTask
 }
