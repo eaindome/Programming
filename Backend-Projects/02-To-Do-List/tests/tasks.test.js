@@ -204,3 +204,99 @@ describe('Getting Task Process', () => {
         }
     );
 });
+
+describe('Updating Task Process', () => {
+    let token, taskId;
+
+    beforeAll(async () => {
+        const userCredentials = {
+            username: 'UpdateUser',
+            password: 'update123password'
+        };
+
+        // register and login user
+        await request(app.server)
+            .post('/api/auth/register')
+            .send(userCredentials);
+
+        const loginResponse = await request(app.server)
+            .post('/api/auth/login')
+            .send(userCredentials);
+
+        token = loginResponse.body.token;
+
+        // create a task to update
+        const taskResponse =  await request(app.server)
+            .post('/api/task/create')
+            .set('Authorization', `Bearer ${token}`)
+            .send({
+                title: 'Original Title',
+                description: 'Original Description'
+            });
+        
+        // console.log(`tasks: ${JSON.stringify(taskResponse.body.task.id)}`);
+        taskId = taskResponse.body.task.id;
+    });
+
+    test(
+        'PUT /api/task/update/:id should successfully update an original task',
+        async () => {
+            const updatedTask = {
+                title: 'Updated Title',
+                description: 'Updated Description'
+            };
+
+            const response = await request(app.server)
+                .put(`/api/task/update/${taskId}`)
+                .set('Authorization', `Bearer ${token}`)
+                .send(updatedTask);
+
+            // console.log(`response: ${JSON.stringify(response.body)}`);
+
+            expect(response.status).toBe(200);
+            expect(response.body.message).toBe('Task successfully updated!');
+            expect(response.body.task.title).toBe('Updated Title');
+            expect(response.body.task.description).toBe('Updated Description');
+        }
+    );
+
+    test(
+        'PUT /api/task/update/:id should fail if no task does not exist',
+        async () => {
+            const updatedTask = {
+                title: 'Non-existent Title',
+                description: 'Non-existent Description'
+            };
+
+            let task_id = 18;
+            const response = await request(app.server)
+                .put(`/api/task/update/${task_id}`)
+                .set('Authorization', `Bearer ${token}`)
+                .send(updatedTask);
+
+            // console.log(`response: ${JSON.stringify(response.body)}`);
+
+            expect(response.status).toBe(404);
+            expect(response.body.message).toBe('Task not found!');
+        }
+    );
+
+    test(
+        'PUT /api/task/update/:id should fail if no token is sent',
+        async () => {
+            const updatedTask = {
+                title: 'Updated Title',
+                description: 'Updated Description'
+            };
+
+            const response = await request(app.server)
+                .put(`/api/task/update/${taskId}`)
+                .send(updatedTask);
+
+            // console.log(`response: ${JSON.stringify(response.body)}`);
+
+            expect(response.status).toBe(403);
+            expect(response.body.message).toBe('Forbidden Entry.');
+        }
+    );
+});
