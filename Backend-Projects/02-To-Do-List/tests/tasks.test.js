@@ -300,3 +300,73 @@ describe('Updating Task Process', () => {
         }
     );
 });
+
+describe('Task Deletion Process', () => {
+    let token, taskId;
+
+    beforeAll(async () => {
+        const userCredentials = {
+            username: 'DeleteUser',
+            password: 'delete123password'
+        };
+
+        // register and login user
+        await request(app.server)
+            .post('/api/auth/register')
+            .send(userCredentials);
+
+        const loginResponse = await request(app.server)
+            .post('/api/auth/login')
+            .send(userCredentials);
+
+        token = loginResponse.body.token;
+
+        // create a task to update
+        const taskResponse =  await request(app.server)
+            .post('/api/task/create')
+            .set('Authorization', `Bearer ${token}`)
+            .send({
+                title: 'Title to delete',
+                description: 'Task to delete'
+            });
+        
+        // console.log(`tasks: ${JSON.stringify(taskResponse.body.task.id)}`);
+        taskId = taskResponse.body.task.id;
+    });
+
+    test(
+        'DELETE /api/task/delete/:id should delete a task successfully',
+        async () => {
+            const response = await request(app.server)
+                .delete(`/api/task/delete/${taskId}`)
+                .set('Authorization', `Bearer ${token}`);
+
+            expect(response.status).toBe(200);
+            expect(response.body.message).toBe('Task successfully deleted!')
+        }
+    );
+
+    test(
+        'DELETE /api/task/delete/:id should fail if task doesn\'t exist',
+        async () => {
+            let task_id = 18;
+            const response = await request(app.server)
+                .delete(`/api/task/delete/${task_id}`)
+                .set('Authorization', `Bearer ${token}`);
+
+            expect(response.status).toBe(404);
+            expect(response.body.message).toBe('Task not found!')
+        }
+    );
+
+    test(
+        'DELETE /api/task/delete/:id should fail if token is not sent',
+        async () => {
+            const response = await request(app.server)
+                .delete(`/api/task/delete/${taskId}`);
+
+            expect(response.status).toBe(403);
+            expect(response.body.message).toBe('Forbidden Entry.')
+        }
+    );
+});
