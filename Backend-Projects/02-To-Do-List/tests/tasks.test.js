@@ -520,6 +520,27 @@ describe('Filtering Tasks by Status Process', () => {
     );
 
     test(
+        'POST /api/task?status=medium should update a task with a set status to completed' ,
+        async () => {
+            console.log("Unit test for updating status");
+            const updateTask = {
+                status: 'completed'
+            };
+
+            let taskId = 7;
+            const response = await request(app.server)
+                .put(`/api/task/update/${taskId}`)
+                .set('Authorization', `Bearer ${token}`)
+                .send(updateTask);
+
+            console.log(`response: ${JSON.stringify(response.body)}`);
+            expect(response.status).toBe(200);
+            expect(response.body.message).toBe('Task successfully updated!');
+            expect(response.body.task.status).toBe('completed');
+        }
+    );
+
+    test(
         'GET /api/task?status=pending should fail if no tasks available',
         async () => {
             const newUserTaskCredentials = {
