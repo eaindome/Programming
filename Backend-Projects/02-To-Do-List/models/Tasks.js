@@ -12,7 +12,7 @@ const Task = sequelize.define('Task', {
         allowNull: true,
     },
     status: {
-        type: DataTypes.STRING,
+        type: DataTypes.ENUM('pending', 'completed'),
         defaultValue: 'pending',
     },
     userId: {
