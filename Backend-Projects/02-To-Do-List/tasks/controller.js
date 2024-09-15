@@ -5,7 +5,8 @@ const createTask = async (req, res) => {
     const {
         title,
         description,
-        status
+        status,
+        priority
     } = req.body;
     const userId = req.user.userId;
     // console.log(`user id: ${userId}`);
@@ -21,6 +22,7 @@ const createTask = async (req, res) => {
             title,
             description,
             status: status || 'pending',
+            priority: priority || 'medium',
             userId,
         });
     
@@ -85,8 +87,8 @@ const getTaskById = async (req, res) => {
     }
 };
 
-const getTaskByStatus = async (req, res) => {
-    const { status } = req.query;
+const getTaskFeat = async (req, res) => {
+    const { status, priority } = req.query;
     const query = {
         where: {
             userId: req.user.userId
@@ -96,6 +98,10 @@ const getTaskByStatus = async (req, res) => {
     // console.log(`status: ${status}`);
     if (status) {
         query.where.status = status;
+    }
+
+    if (priority) {
+        query.where.priority = priority;
     }
 
     try {
@@ -124,7 +130,8 @@ const updateTask = async (req, res) => {
     const {
         title,
         description,
-        status
+        status,
+        priority
     } = req.body;
 
     try {
@@ -144,6 +151,7 @@ const updateTask = async (req, res) => {
         task.title = title || task.title;
         task.description = description || task.description;
         task.status = status || task.status;
+        task.priority = priority || task.priority;
 
         await task.save();
 
@@ -195,5 +203,5 @@ module.exports = {
     updateTask,
     deleteTask,
     getTaskById,
-    getTaskByStatus
+    getTaskFeat,
 }
