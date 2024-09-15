@@ -559,3 +559,117 @@ describe('Filtering Tasks by Status Process', () => {
         }
     );
 });
+
+describe('Task Priorities Process', () => {
+    let token, taskId;
+
+    beforeAll(async () => {
+        const userCredentials = {
+            username: 'PriorityTestUser',
+            password: 'Prioritytestpassword'
+        };
+
+        await request(app.server)
+            .post('/api/auth/register')
+            .send(userCredentials);
+
+        const loginResponse = await request(app.server)
+            .post('/api/auth/login')
+            .send(userCredentials);
+
+        token = loginResponse.body.token;
+
+        // create a few tasks for test user
+        const tasks = {
+            title: 'Priority Task',
+            description: 'This task has low priorities.',
+            priority: 'low'
+        };
+        
+        const taskResponse = await request(app.server)
+            .post('/api/task/create')
+            .set('Authorization', `Bearer ${token}`)
+            .send(tasks);
+
+        // console.log(`taskResponse: ${JSON.stringify(taskResponse.body.task.id)}`);
+        taskId = taskResponse.body.task.id;
+        console.log(`taskId: ${taskId}`);
+    });
+
+    test(
+        'POST /api/task?priority=medium should create a task with default priority as medium' ,
+        async () => {
+            const newTask = {
+                title: 'Default Priority task',
+                description: 'This task has the default priority setting.'
+            };
+
+            const response = await request(app.server)
+                .post('/api/task/create')
+                .set('Authorization', `Bearer ${token}`)
+                .send(newTask);
+
+            // console.log(`response: ${JSON.stringify(response.body)}`);
+            expect(response.status).toBe(201);
+            expect(response.body.task.priority).toBe('medium');
+        }
+    );
+
+    test(
+        'POST /api/task?priority=medium should create a task with a set priority to High' ,
+        async () => {
+            const newTask = {
+                title: 'Set Priority task',
+                description: 'This task has been set to a high priority setting.',
+                priority: 'high'
+            };
+
+            const response = await request(app.server)
+                .post('/api/task/create')
+                .set('Authorization', `Bearer ${token}`)
+                .send(newTask);
+
+            // console.log(`response: ${JSON.stringify(response.body)}`);
+            expect(response.status).toBe(201);
+            expect(response.body.task.priority).toBe('high');
+            expect(response.body.message).toBe('Task successfully created.');
+        }
+    );
+
+    test(
+        'POST /api/task?priority=medium should update a task with a set priority to medium' ,
+        async () => {
+            const updateTask = {
+                priority: 'medium'
+            };
+
+            const response = await request(app.server)
+                .put(`/api/task/update/${taskId}`)
+                .set('Authorization', `Bearer ${token}`)
+                .send(updateTask);
+
+            // console.log(`response: ${JSON.stringify(response.body)}`);
+            expect(response.status).toBe(200);
+            expect(response.body.message).toBe('Task successfully updated!');
+            expect(response.body.task.priority).toBe('medium');
+        }
+    );
+
+    test(
+        'POST /api/task?priority=medium should fail if token not provided' ,
+        async () => {
+            const newTask = {
+                title: 'Default Priority task',
+                description: 'This task has the default priority setting.'
+            };
+
+            const response = await request(app.server)
+                .post('/api/task/create')
+                .send(newTask);
+
+            // console.log(`response: ${JSON.stringify(response.body)}`);
+            expect(response.status).toBe(403);
+            expect(response.body.message).toBe('Forbidden Entry.');
+        }
+    );
+});
