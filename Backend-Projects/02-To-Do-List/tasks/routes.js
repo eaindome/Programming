@@ -1,4 +1,4 @@
-const { createTask, getTasks, updateTask, deleteTask, getTaskById } = require('./controller');
+const { createTask, getTasks, updateTask, deleteTask, getTaskById, getTaskByStatus } = require('./controller');
 const { verifyToken } = require('../middleware/authMiddleware');
 
 async function taskRoutes(fastify, options) {
@@ -7,6 +7,7 @@ async function taskRoutes(fastify, options) {
     fastify.get('/api/task/get/:id', { preHandler: [verifyToken] }, getTaskById);
     fastify.put('/api/task/update/:id', { preHandler: [verifyToken] }, updateTask);
     fastify.delete('/api/task/delete/:id', { preHandler: [verifyToken] }, deleteTask);
+    fastify.get("/api/task", { preHandler: [verifyToken] }, getTaskByStatus);
 }
 
 module.exports = taskRoutes;

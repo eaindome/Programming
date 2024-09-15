@@ -4,7 +4,8 @@ const Task = require('../models/Tasks');
 const createTask = async (req, res) => {
     const {
         title,
-        description
+        description,
+        status
     } = req.body;
     const userId = req.user.userId;
     // console.log(`user id: ${userId}`);
@@ -19,8 +20,9 @@ const createTask = async (req, res) => {
         const newTask = await Task.create({
             title,
             description,
+            status: status || 'pending',
             userId,
-        })
+        });
     
         return res.status(201).send({
             message: 'Task successfully created.',
@@ -80,6 +82,40 @@ const getTaskById = async (req, res) => {
     } catch (err) {
         console.error(`Error: ${err}`);
         return res.status(500).send('Error retrieving task.');
+    }
+};
+
+const getTaskByStatus = async (req, res) => {
+    const { status } = req.query;
+    const query = {
+        where: {
+            userId: req.user.userId
+        }
+    };
+
+    // console.log(`status: ${status}`);
+    if (status) {
+        query.where.status = status;
+    }
+
+    try {
+        const tasks = await Task.findAll(query);
+        // console.log(`tasks: ${tasks}`);
+        if (tasks.length === 0) {
+            return res.status(404).send({
+                message: 'No tasks available'
+            });
+        }
+
+        return res.status(200).send({
+            message: `Tasks retrieved successfully`,
+            task: tasks
+        });
+    } catch (err) {
+        console.error(`Error: ${err}`);
+        return res.status(500).send({
+            message: 'Error retrieving tasks.'
+        })
     }
 };
 
@@ -158,5 +194,6 @@ module.exports = {
     getTasks,
     updateTask,
     deleteTask,
-    getTaskById
+    getTaskById,
+    getTaskByStatus
 }
