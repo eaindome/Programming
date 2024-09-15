@@ -453,3 +453,109 @@ describe('Getting a Particular Task Process', () => {
     );
 
 });
+
+describe('Filtering Tasks by Status Process', () => {
+    let token;
+
+    beforeAll(async () => {
+        const userCredentials = {
+            username: 'FilterTestUser',
+            password: 'Filtertestpassword'
+        };
+
+        await request(app.server)
+            .post('/api/auth/register')
+            .send(userCredentials);
+
+        const loginResponse = await request(app.server)
+            .post('/api/auth/login')
+            .send(userCredentials);
+
+        token = loginResponse.body.token;
+
+        // create a few tasks for test user
+        const tasks = [
+            {
+                title: 'Pending Task',
+                description: 'This is a pending task.',
+                status: 'pending'
+            }, 
+            {
+                title: 'Completed Task',
+                description: 'This is a completed task.',
+                status: 'completed'
+            }
+        ];
+        
+        for (let task of tasks) {
+            await request(app.server)
+                .post('/api/task/create')
+                .set('Authorization', `Bearer ${token}`)
+                .send(task);
+        }
+    });
+
+    test(
+        'GET /api/task?status=pending should retrieve all pending tasks ',
+        async () => {
+            const response = await request(app.server)
+                .get('/api/task?status=pending')
+                .set('Authorization', `Bearer ${token}`);
+
+            expect(response.status).toBe(200);
+            expect(response.body.message).toBe('Tasks retrieved successfully');
+        }
+    );
+
+    test(
+        'GET /api/task?status=completed should retrieve all completed tasks ',
+        async () => {
+            const response = await request(app.server)
+                .get('/api/task?status=completed')
+                .set('Authorization', `Bearer ${token}`);
+            console.log(`response: ${JSON.stringify(response)}`)
+            expect(response.status).toBe(200);
+            expect(response.body.message).toBe('Tasks retrieved successfully');
+        }
+    );
+
+    test(
+        'GET /api/task?status=pending should fail if no tasks available',
+        async () => {
+            const newUserTaskCredentials = {
+                username: 'NoTaskUser',
+                password: 'password123',
+            };
+
+            // register and login the new user
+            await request(app.server)
+                .post('/api/auth/register')
+                .send(newUserTaskCredentials);
+
+            const loginResponse = await request(app.server)
+                .post('/api/auth/login')
+                .send(newUserTaskCredentials);
+
+            const newToken = loginResponse.body.token;
+
+            const response = await request(app.server)
+                .get('/api/task?status=pending')
+                .set('Authorization', `Bearer ${newToken}`);
+
+            expect(response.status).toBe(404);
+            expect(response.body.message).toBe('No tasks available');
+        }
+    );
+
+    test(
+        'GET /api/task?status=pending should fail if no token is provided',
+        async () => {
+            const response = await request(app.server)
+                .get('/api/task?status=pending');
+                
+            // console.log(`Task: ${JSON.stringify(response.body)}`);
+            expect(response.status).toBe(403);
+            expect(response.body.message).toBe('Forbidden Entry.');
+        }
+    );
+});
