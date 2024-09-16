@@ -153,3 +153,18 @@ describe('Login Process', () => {
     );
 });
 
+
+// describe('OAuth Authentication Proces', () => {
+//     test(
+//         'GET /api/auth/google should redirect to Google',
+//         async () => {
+//             console.log('Google Authentication test...');
+//             const response = await request(app.server)
+//                 .get('/api/auth/google');
+
+//             console.log(`response: ${JSON.stringify(response)}`);
+//             expect(response.status).toBe(302);
+//             expect(response.headers.location).toContain('accounts.google.com');
+//         }
+//     );
+// });
