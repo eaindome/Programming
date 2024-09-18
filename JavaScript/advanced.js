@@ -173,7 +173,33 @@ SuperHero.prototype.constructor = SuperHero;
  * CLASS 
 */
 
+class Personnel {
+    constructor(fName, lName) {
+        this.firstName = fName;
+        this.lastName = lName;
+    }
 
+    sayMyName() {
+        return this.firstName + ' ' + this.lastName;
+    }
+}
+
+const classP1 = new Personnel('Bruce', 'Wayne');
+// console.log(classP1.sayMyName());
+
+class SuperVillain extends Personnel {
+    constructor(fName, lName) {
+        super(fName, lName);
+        this.isSuperVillain = true;
+    }
+
+    fightCrime() {
+        console.log('Fighting crime.')
+    }
+}
+
+const owlman = new SuperVillain('Bruce', 'Wayne');
+// console.log(owlman.sayMyName());
 
 
 
@@ -181,19 +207,7 @@ SuperHero.prototype.constructor = SuperHero;
  * ITERABLES AND ITERATORS
 */
 
-// class Personnel {
-//     constructor(fName, lName) {
-//         this.firstName = fName;
-//         this.lastName = lName;
-//     }
 
-//     sayMyName() {
-//         return this.firstName + ' ' + this.lastName;
-//     }
-// }
-
-// const classP1 = new Personnel('Bruce', 'Wayne');
-// console.log(classP1.sayMyName());
 /**
  * GENERATORS
 */
