@@ -202,12 +202,59 @@ const owlman = new SuperVillain('Bruce', 'Wayne');
 // console.log(owlman.sayMyName());
 
 
-
 /**
  * ITERABLES AND ITERATORS
 */
 
+// normal iteration (string)
+const str = 'Batman';
+for (let i = 0; i < str.length; i++) {
+    console.log(str.charAt(i));
+}
 
+// (array)
+const arr = ['B', 'a', 't', 'm', 'a', 'n'];
+for (let i = 0; i < arr.length; i++) {
+    console.log(arr[i]);
+}
+
+// using iterables and iterators
+// Protocols - 'For..of' loop
+
+for (const char of str) {
+    console.log(char);
+}
+
+for (const item of arr) {
+    console.log(item); 
+}
+
+// creating our own iterable
+const obj = {
+    [Symbol.iterator]: function () {
+        let step = 0;
+        const iterator = {
+            next: function () {
+                step++;
+                if (step === 1) {
+                    return {
+                        value: 'Hello',
+                        done: false
+                    }
+                } else if (step === 2) {
+                    return {
+                        value: 'World',
+                        done: false
+                    }
+                }
+                return {
+                    value: undefined,
+                    done: true
+                }
+            },
+        }
+    }
+}
 /**
  * GENERATORS
 */
