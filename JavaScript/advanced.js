@@ -209,24 +209,24 @@ const owlman = new SuperVillain('Bruce', 'Wayne');
 // normal iteration (string)
 const str = 'Batman';
 for (let i = 0; i < str.length; i++) {
-    console.log(str.charAt(i));
+    // console.log(str.charAt(i));
 }
 
 // (array)
 const arr = ['B', 'a', 't', 'm', 'a', 'n'];
 for (let i = 0; i < arr.length; i++) {
-    console.log(arr[i]);
+    // console.log(arr[i]);
 }
 
 // using iterables and iterators
 // Protocols - 'For..of' loop
 
 for (const char of str) {
-    console.log(char);
+    // console.log(char);
 }
 
 for (const item of arr) {
-    console.log(item); 
+    // console.log(item); 
 }
 
 // creating our own iterable
@@ -255,6 +255,27 @@ const obj = {
         }
     }
 }
+
 /**
  * GENERATORS
 */
+// normal function
+function normalFunction() {
+    console.log('Hello');
+    console.log('World!');
+}
+
+// calling our normal functions
+// normalFunction():
+
+// generator functions
+function* generatorFunction() {
+    yield 'Hello';
+    yield 'World';
+}
+
+const generatorObject = generatorFunction();
+for (const word of generatorObject) {
+    console.log(word);
+}
+
