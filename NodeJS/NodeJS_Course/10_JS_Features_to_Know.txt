@@ -1,0 +1,284 @@
+1. let and const
+    - variales declared are block scoped
+    - all const declarations must be initialized
+    - let allows you to reassign a new value while with const you can't reassign a new value
+
+
+2. shorthand object assignment
+    * Example:
+
+    Old school way:
+        const name = 'liam';
+        const channel = 'grandlinereview';
+
+        const youtube = {
+            name: name,
+            channel: channel
+        }
+
+    Shorthand way:
+        const name = 'liam';
+        const channel = 'grandlinereview';
+
+        const youtube = {
+            name,
+            channel
+        }
+
+
+3. Destructuring assignment
+    - it is a feature that makes it possible to extract values from arrays or objects with ease
+    * Example:
+
+    Objects:
+        Old school way:
+            const name = {
+                first: 'Bruce',
+                last: 'Wayne'
+            }
+
+            const first = name.first;
+            const last = name.last;
+
+        Destructuring:
+            const name = {
+                first: 'Bruce',
+                last: 'Wayne'
+            }
+
+            const { first, last } = name;
+            // or
+            const { first:f, last:l } = name;
+
+
+    Arrays:
+        Old school way:
+            const name = ['Bruce', 'Wayne'];
+            const first = name[0];
+            const last = name[1];
+
+        Destructuring:
+            const name = ['Bruce', 'Wayne'];
+            const [first, last] = name;
+
+
+4. Spread Syntax
+    - it is represented by three dots and usually works on a collection of values or an iterable to be more precise
+
+    * Examples:
+
+    1. Array/Object copy
+        const arr = [1, 2, 3];
+        const arrCopy = [...arr];   // spread syntax
+
+        const obj = {
+            first: 'Bruce',
+            last: 'Wayne'
+        }
+        const objCopy = {...obj}    // spread syntax
+
+    2. Array Concatenation
+        let arr1 = [0, 1, 2];
+        let arr2 = [3, 4, 5];
+
+        arr1 = [...arr2, ...arr1];
+        // arr1 is now [3, 4, 5, 0, 1, 2];
+
+    3. Object Merge
+        let obj1 = {
+            foo: 'bar', x: 42
+        };
+
+        let obj2 = {
+            foo: 'baz', y: 13
+        };
+
+        let mergedObj = {
+            ...obj1, ...obj2
+        };
+
+
+5. Optional chaining
+    - Represented by ?. and provides a safe wayt to access nested object properties,
+    even if an intermediate property doesn't exist
+
+    * Examples:
+
+    1. Objects
+        const person = {
+            name: 'Bruce Wayne',
+            details: {
+                age: 28,
+                address:  {
+                    city: 'Gotham'
+                }
+            }
+        };
+
+        console.log(
+            person.details &&
+            person.details.address &&
+            person.details.address.city
+        );
+
+        // optional chaining
+        console.log(person?.details?.address?.city);
+
+    2. Array
+        const person = {
+            name: 'Bruce Wayne',
+            hobbies: [
+                {
+                    name: 'Crime Fighting'
+                }
+            ]
+        };
+
+        console.log(
+            person.hobbies &&
+            person.hobbies.length &&
+            person.hobbies[0] &&
+            person.hobbies[0].name
+        );
+
+        // optional chaining:
+        console.log(person?.hobbies?.[0]?.name);
+
+
+6. Nullish Coalescing Operator
+    - helps you fallback to a default value if a value is null or undefined
+
+    * Example:
+    Old school way -> Logical OR Operator (||)
+        const name = 'ekow';
+        const userName = name || 'Guest';
+        console.log(userName); // ekow
+
+    Problems with Old school way
+    1. null
+        const name = null;
+        const userName = name || 'Guest';
+        console.log(userName); // Guest
+
+    2. ''
+        const name = '';
+        const userName = name || 'Guest';
+        console.log(userName); // Guest instead of ''
+
+    3. value
+        const count = 0;
+        const userName = count || 'N/A';
+        console.log(userName); // N/A instead of 0
+
+
+    Nullish Coalescing Operator (??)
+        const name = '';
+        const userName = name ?? 'Guest';
+        console.log(userName); // ''
+
+        const count = 0;
+        const userName = count ?? 'N/A';
+        console.log(userName); // 0
+
+
+7. Ternary Operator
+    - for conditionally rendering within JSX
+
+    - syntax:
+        condition ? expressionIfTrue : expressionIfFalse
+
+    * Example
+        const loggedIn = true;
+        const name = loggedIn ? 'Ekow' : 'Guest';
+        console.log(name);  // Ekow
+
+
+8. Template Literals
+    - Before ES6
+        const greeting = 'Hello';
+        const name = 'Ekow';
+        const sport = 'Formula 1';
+
+        console.log(greeting + ' ' + name + '. Do you like ' + sport + '?');
+        // Hello Ekow. Do you like Formula 1?
+
+    - Template Literals
+        console.log(`${greeting} ${name}. Do you like ${sport}?`);
+
+
+9. Arrow Functions
+    - Traditional Functions
+        funtion greet() {
+            console.log('Hello');
+        }
+
+        function greet(name) {
+            console.log(`Hello ${name}`);
+        }
+
+        function getName() {
+            return 'Ekow';
+        }
+
+    - Arrow Functions
+        const greet = () => {
+            console.log('Hello');
+        }
+
+        const greet = name => {
+            console.log(`Hello ${name}`);
+        }
+
+        const getName = () => 'Ekow';
+
+
+10. Import and Export statements
+    - Named Exports
+        * file1.js
+            const firstname = 'Bruce';
+            const lastname = 'Wayne';
+
+            export {
+                firstname, lastname
+            };
+
+            // OR
+
+            export const fName = 'Bruce';
+            export const lName = 'Wayne';
+
+
+        * file2.js
+            import { firstname, lastname } from './file1.js';
+
+            console.log(firstname);     // Bruce
+            console.log(lastname);      // Wayne
+
+            // OR
+
+            import * as person from './file1.js';
+
+            console.log(person.firstname);      // Bruce
+            console.log(person.lastname);       // Wayne
+
+            // another way
+            import { firstname as username } from './file1.js';
+            
+            console.log(username);      // Bruce
+
+    - Default Exports
+        * file1.js
+            const name = 'Bruce Wayne';
+
+            export default name;
+
+        * file2.js
+            import name from './file1.js';
+
+            console.log(name);      // Bruce Wayne
+
+            // OR
+            import username from './file1.js';
+
+            console.log(username);      // Bruce Wayne
+
