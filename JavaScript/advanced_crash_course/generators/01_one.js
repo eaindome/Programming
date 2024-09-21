@@ -9,7 +9,7 @@
 //     }
 // }
 // const generateNums = generateNumbers(1, 5);
-
+// or const generateNums = generateNumbers(10, 15);
 // for (const num of generateNums) {
 //     console.log(num);  
 // }
