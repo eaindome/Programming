@@ -8,6 +8,11 @@
 //         yield i;
 //     }
 // }
+// const generateNums = generateNumbers(1, 5);
+
+// for (const num of generateNums) {
+//     console.log(num);  
+// }
 
 function* naturalNums() {
     yield 1;
