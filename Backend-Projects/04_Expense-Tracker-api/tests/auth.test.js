@@ -25,4 +25,29 @@ describe('Registration Process', () => {
             expect(response.body.message).toBe('User registered successfully.');
         }
     );
+
+    test(
+        'POST /api/auth/register should fail if username already exists',
+        async () => {
+            // create user to simulate existing user
+            await User.create({
+                username: 'ExistingUser',
+                password: 'test2@password'
+            });
+
+            const duplicateUser = {
+                username: 'ExistingUser',
+                password: 'test2@password'
+            };
+
+            const response = await request(app).post('/api/auth/register').send(newUser);
+            expect(response.status).toBe(400);
+            expect(response.body.message).toBe('User already exists.')
+        }
+    );
+
+    test(
+        'POST /api/auth/register should fail if username or password is empty',
+        async () => {}
+    );
 });
