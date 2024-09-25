@@ -40,7 +40,7 @@ describe('Registration Process', () => {
                 password: 'test2@password'
             };
 
-            const response = await request(app).post('/api/auth/register').send(newUser);
+            const response = await request(app).post('/api/auth/register').send(duplicateUser);
             expect(response.status).toBe(400);
             expect(response.body.message).toBe('User already exists.')
         }
@@ -48,6 +48,15 @@ describe('Registration Process', () => {
 
     test(
         'POST /api/auth/register should fail if username or password is empty',
-        async () => {}
+        async () => {
+            const incompleteUser = {
+                username: '',
+                password: ''
+            };
+
+            const response = await request(app).post('/api/auth/register').send(incompleteUser);
+            expect(response.status).toBe(400);
+            expect(response.body.message).toBe('Username and password required.');
+        }
     );
 });
