@@ -41,7 +41,7 @@ const registerUser = async (req, res) => {
         });
     } catch (err) {
         console.err(`Error: ${err}`);
-        res.status(500).json({
+        return res.status(500).json({
             message: `Server error: ${err}`
         });
     }
