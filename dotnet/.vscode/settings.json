@@ -1,0 +1,23 @@
+{
+  "dotnet.defaultSolution": "GameStore.sln",
+  "workbench.colorCustomizations": {
+    "activityBar.activeBackground": "#3390ce",
+    "activityBar.background": "#3390ce",
+    "activityBar.foreground": "#e7e7e7",
+    "activityBar.inactiveForeground": "#e7e7e799",
+    "activityBarBadge.background": "#9a256b",
+    "activityBarBadge.foreground": "#e7e7e7",
+    "commandCenter.border": "#e7e7e799",
+    "sash.hoverBorder": "#3390ce",
+    "statusBar.background": "#2874a6",
+    "statusBar.foreground": "#e7e7e7",
+    "statusBarItem.hoverBackground": "#3390ce",
+    "statusBarItem.remoteBackground": "#2874a6",
+    "statusBarItem.remoteForeground": "#e7e7e7",
+    "titleBar.activeBackground": "#2874a6",
+    "titleBar.activeForeground": "#e7e7e7",
+    "titleBar.inactiveBackground": "#2874a699",
+    "titleBar.inactiveForeground": "#e7e7e799"
+  },
+  "peacock.color": "#2874a6"
+}
