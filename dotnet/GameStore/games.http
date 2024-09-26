@@ -11,7 +11,8 @@ POST http://localhost:5030/games
 Content-Type: application/json
 
 {
-    "genre": "Kids and Family",
+    "name": "Scooby Doo, Mystery INC.",
+    "genreId": 5,
     "price": 9.99,
     "releaseDate": "2011-11-18"
 }
@@ -23,7 +24,7 @@ Content-Type: application/json
 
 {
     "name": "Street Fighter II Turbo",
-    "genre": "Fighting",
+    "genreId": 1,
     "price": 9.99,
     "releaseDate": "1992-07-15"
 }
