@@ -88,19 +88,19 @@ describe('Login Process', () => {
         }
     });
 
-    // test(
-    //     'POST /api/auth/login should login a user successfully',
-    //     async () => {
-    //         const loginDetails = {
-    //             username: 'LoginUser',
-    //             password: 'testLogin@password'
-    //         };
-    //         const response = await request(app.server).post('/api/auth/login').send(loginDetails);
-    //         expect(response.status).toBe(200);
-    //         expect(response.body.message).toBe('Login successful!');
-    //         expect(response.body.token).toBeDefined();
-    //     }
-    // );
+    test(
+        'POST /api/auth/login should login a user successfully',
+        async () => {
+            const loginDetails = {
+                username: 'LoginUser',
+                password: 'testLogin@password'
+            };
+            const response = await request(app.server).post('/api/auth/login').send(loginDetails);
+            expect(response.status).toBe(200);
+            expect(response.body.message).toBe('Login successful!');
+            expect(response.body.token).toBeDefined();
+        }
+    );
 
     // test(
     //     'POST /api/auth/login should fail with incorrect password',
