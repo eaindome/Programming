@@ -128,16 +128,16 @@ describe('Login Process', () => {
         }
     );
 
-    // test(
-    //     'POST /api/auth/login should fail with missing fields',
-    //     async () => {
-    //         const loginDetails = {
-    //             username: '',
-    //             password: ''
-    //         };
-    //         const response = await request(app.server).post('/api/auth/login').send(loginDetails);
-    //         expect(response.status).toBe(400);
-    //         expect(response.body.message).toBe('Username and password are required.');
-    //     }
-    // );
+    test(
+        'POST /api/auth/login should fail with missing fields',
+        async () => {
+            const loginDetails = {
+                username: '',
+                password: ''
+            };
+            const response = await request(app.server).post('/api/auth/login').send(loginDetails);
+            expect(response.status).toBe(400);
+            expect(response.body.message).toBe('Username and password are required.');
+        }
+    );
 });
