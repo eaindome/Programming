@@ -76,16 +76,16 @@ describe('Registration Process', () => {
 
 
 describe('Login Process', () => {
-    beforeEach(async () => {
-        try {
-            // create a user to test login
-            await User.create({
-                username: 'LoginUser',
-                password: await bcrypt.hash('testLogin@password', 10)
-            });
-        } catch (err) {
-            console.error(`Error creating user: ${err}`)
-        }
+    // beforeEach(async () => {
+    //     try {
+    //         // create a user to test login
+    //         await User.create({
+    //             username: 'LoginUser',
+    //             password: await bcrypt.hash('testLogin@password', 10)
+    //         });
+    //     } catch (err) {
+    //         console.error(`Error creating user: ${err}`)
+    //     }
     // });
 
     // test(
