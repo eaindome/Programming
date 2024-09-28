@@ -47,6 +47,56 @@ const registerUser = async (req, res) => {
     }
 };
 
+const loginUser = async (req, res) => {
+    const {username, password } = req.body;
+
+    if (!username || !password) {
+        return res.status(400).send({
+            message: 'Username and password are required.'
+        });
+    }
+
+    try {
+        const user = await User.findOne({ username });
+
+        if (!user) {
+            return res.status(401).send({
+                message: 'Invalid username and password.'
+            });
+        }
+
+        const isValid = await bcrypt.compare(password, user.password);
+
+        if (!isValid) {
+            return res.status(401).send({
+                message: 'Invalid username and password.'
+            });
+        }
+
+        const token = jwt.sign(
+            {
+                userId: user._id,
+                username: user.username
+            },
+            process.env.JWT_SECRET,
+            {
+                expiresIn: '7d'
+            }
+        );
+
+        return res.status(200).send({
+            message: 'Login successful!',
+            token
+        });
+    } catch (err) {
+        console.error(`Error: ${err}`);
+        return res.status(500).send({
+            message: `Server error: ${err}`
+        });
+    }
+};
+
 module.exports = {
     registerUser,
+    loginUser
 };
