@@ -86,7 +86,7 @@ describe('Login Process', () => {
         } catch (err) {
             console.error(`Error creating user: ${err}`)
         }
-    });
+    // });
 
     // test(
     //     'POST /api/auth/login should login a user successfully',
