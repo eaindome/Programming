@@ -115,18 +115,18 @@ describe('Login Process', () => {
         }
     );
 
-    // test(
-    //     'POST /api/auth/login should fail with non-existend user',
-    //     async () => {
-    //         const loginDetails = {
-    //             username: 'NonExistentUser',
-    //             password: 'test@password'
-    //         };
-    //         const response = await request(app.server).post('/api/auth/login').send(loginDetails);
-    //         expect(response.status).toBe(401);
-    //         expect(response.body.message).toBe("Invalid username or password.");
-    //     }
-    // );
+    test(
+        'POST /api/auth/login should fail with non-existend user',
+        async () => {
+            const loginDetails = {
+                username: 'NonExistentUser',
+                password: 'test@password'
+            };
+            const response = await request(app.server).post('/api/auth/login').send(loginDetails);
+            expect(response.status).toBe(401);
+            expect(response.body.message).toBe("Invalid username or password.");
+        }
+    );
 
     // test(
     //     'POST /api/auth/login should fail with missing fields',
