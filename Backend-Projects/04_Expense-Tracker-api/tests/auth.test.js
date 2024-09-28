@@ -102,18 +102,18 @@ describe('Login Process', () => {
         }
     );
 
-    // test(
-    //     'POST /api/auth/login should fail with incorrect password',
-    //     async () => {
-    //         const loginDetails = {
-    //             username: 'LoginUser',
-    //             password: 'wrongpassword'
-    //         };
-    //         const response = await request(app.server).post('/api/auth/login').send(loginDetails);
-    //         expect(response.status).toBe(401);
-    //         expect(response.body.message).toBe('Invalid username or password.');
-    //     }
-    // );
+    test(
+        'POST /api/auth/login should fail with incorrect password',
+        async () => {
+            const loginDetails = {
+                username: 'LoginUser',
+                password: 'wrongpassword'
+            };
+            const response = await request(app.server).post('/api/auth/login').send(loginDetails);
+            expect(response.status).toBe(401);
+            expect(response.body.message).toBe('Invalid username or password.');
+        }
+    );
 
     // test(
     //     'POST /api/auth/login should fail with non-existend user',
