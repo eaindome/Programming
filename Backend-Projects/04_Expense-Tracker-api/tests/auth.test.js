@@ -73,3 +73,71 @@ describe('Registration Process', () => {
         }
     );
 });
+
+
+describe('Login Process', () => {
+    beforeEach(async () => {
+        try {
+            // create a user to test login
+            await User.create({
+                username: 'LoginUser',
+                password: await bcrypt.hash('testLogin@password', 10)
+            });
+        } catch (err) {
+            console.error(`Error creating user: ${err}`)
+        }
+    });
+
+    // test(
+    //     'POST /api/auth/login should login a user successfully',
+    //     async () => {
+    //         const loginDetails = {
+    //             username: 'LoginUser',
+    //             password: 'testLogin@password'
+    //         };
+    //         const response = await request(app.server).post('/api/auth/login').send(loginDetails);
+    //         expect(response.status).toBe(200);
+    //         expect(response.body.message).toBe('Login successful!');
+    //         expect(response.body.token).toBeDefined();
+    //     }
+    // );
+
+    // test(
+    //     'POST /api/auth/login should fail with incorrect password',
+    //     async () => {
+    //         const loginDetails = {
+    //             username: 'LoginUser',
+    //             password: 'wrongpassword'
+    //         };
+    //         const response = await request(app.server).post('/api/auth/login').send(loginDetails);
+    //         expect(response.status).toBe(401);
+    //         expect(response.body.message).toBe('Invalid username or password.');
+    //     }
+    // );
+
+    // test(
+    //     'POST /api/auth/login should fail with non-existend user',
+    //     async () => {
+    //         const loginDetails = {
+    //             username: 'NonExistentUser',
+    //             password: 'test@password'
+    //         };
+    //         const response = await request(app.server).post('/api/auth/login').send(loginDetails);
+    //         expect(response.status).toBe(401);
+    //         expect(response.body.message).toBe("Invalid username or password.");
+    //     }
+    // );
+
+    // test(
+    //     'POST /api/auth/login should fail with missing fields',
+    //     async () => {
+    //         const loginDetails = {
+    //             username: '',
+    //             password: ''
+    //         };
+    //         const response = await request(app.server).post('/api/auth/login').send(loginDetails);
+    //         expect(response.status).toBe(400);
+    //         expect(response.body.message).toBe('Username and password are required.');
+    //     }
+    // );
+});
