@@ -1,6 +1,7 @@
 const express = require('express');
 const authRoutes = require('./services/auth/routes');
 const userRoute = require('./services/user/routes');
+const expenseRoute = require('./services/expense/routes');
 
 const app = express();
 
@@ -18,5 +19,8 @@ app.use('/api/auth', authRoutes);
 
 // user route
 app.use('/api/user', userRoute);
+
+// expense
+app.use('/api/expense', expenseRoute);
 
 module.exports = app;
