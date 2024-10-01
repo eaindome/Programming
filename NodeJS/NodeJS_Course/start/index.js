@@ -33,4 +33,7 @@
 
 const data = require('./data.json');    // recommend .json xtension 
 
-console.log(`Data: ${data}`);
+console.log(data);
+console.log(`Data: ${JSON.stringify(data)}`);
+
+// to run the js file in watch mode, enter: 'node --watch filename'
