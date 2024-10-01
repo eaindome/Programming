@@ -10,17 +10,21 @@
 // require('./batman');
 // require('./superman');
 
-const superHero = require('./superHero');
+// const superHero = require('./superHero');
 
-const batman = new superHero('Batman');
-console.log(batman.getName());
+// const batman = new superHero('Batman');
+// console.log(batman.getName());
 
-batman.setName('Bruce Wayne.');
-console.log(batman.getName());
+// batman.setName('Bruce Wayne.');
+// console.log(batman.getName());
 
 
-const superman = new superHero('Superman');
-console.log(superman.getName());
+// const superman = new superHero('Superman');
+// console.log(superman.getName());
 
-superman.setName('Clark Kent.');
-console.log(superman.getName());
+// superman.setName('Clark Kent.');
+// console.log(superman.getName());
+
+const add = require('./math');
+
+console.log(add(2, 3));
