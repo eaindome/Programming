@@ -42,26 +42,32 @@
 
 const path = require("node:path");
 
-console.log(__filename);
-console.log(__dirname);
-console.log('')
+// console.log(__filename);
+// console.log(__dirname);
+// console.log('')
 
-// basename
-console.log(path.basename(__filename));
-console.log(path.basename(__dirname));
-console.log('')
+// // basename
+// console.log(path.basename(__filename));
+// console.log(path.basename(__dirname));
+// console.log('')
 
-// extension
-console.log(path.extname(__filename));
-console.log(path.extname(__dirname));
-console.log('')
+// // extension
+// console.log(path.extname(__filename));
+// console.log(path.extname(__dirname));
+// console.log('')
 
-// info of file
-console.log(path.parse(__filename));
+// // info of file
+// console.log(path.parse(__filename));
 
-// original string
-console.log(path.format(path.parse(__filename)));
+// // original string
+// console.log(path.format(path.parse(__filename)));
 
-// is absolute path?
-console.log(path.isAbsolute(__filename));
-console.log(path.isAbsolute("./data.json"));
+// // is absolute path?
+// console.log(path.isAbsolute(__filename));
+// console.log(path.isAbsolute("./data.json"));
+
+console.log(path.join('folder1', 'folder2', 'index.html'));
+console.log(path.join('/folder1', 'folder2', 'index.html'));
+console.log(path.join('/folder1', '//folder2', 'index.html'));
+console.log(path.join('/folder1', '//folder2', '../index.html'));
+console.log(path.join(__dirname, 'data.json'));
