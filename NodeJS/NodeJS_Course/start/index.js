@@ -11,11 +11,16 @@
 // require('./superman');
 
 const superHero = require('./superHero');
-console.log(superHero.getName());
 
-superHero.setName('Superman');
-console.log(superHero.getName());
+const batman = new superHero('Batman');
+console.log(batman.getName());
+
+batman.setName('Bruce Wayne.');
+console.log(batman.getName());
 
 
-const newSuperHero = require('./superHero');
-console.log(newSuperHero.getName());
+const superman = new superHero('Superman');
+console.log(superman.getName());
+
+superman.setName('Clark Kent.');
+console.log(superman.getName());
