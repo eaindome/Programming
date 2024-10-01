@@ -31,9 +31,37 @@
 // console.log(add(2, 3));
 // console.log(subtract(2, 3));
 
-const data = require('./data.json');    // recommend .json xtension 
+// const data = require('./data.json');    // recommend .json xtension 
 
-console.log(data);
-console.log(`Data: ${JSON.stringify(data)}`);
+// console.log(data);
+// console.log(`Data: ${JSON.stringify(data)}`);
 
 // to run the js file in watch mode, enter: 'node --watch filename'
+
+
+
+const path = require("node:path");
+
+console.log(__filename);
+console.log(__dirname);
+console.log('')
+
+// basename
+console.log(path.basename(__filename));
+console.log(path.basename(__dirname));
+console.log('')
+
+// extension
+console.log(path.extname(__filename));
+console.log(path.extname(__dirname));
+console.log('')
+
+// info of file
+console.log(path.parse(__filename));
+
+// original string
+console.log(path.format(path.parse(__filename)));
+
+// is absolute path?
+console.log(path.isAbsolute(__filename));
+console.log(path.isAbsolute("./data.json"));
