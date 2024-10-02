@@ -128,4 +128,13 @@ const path = require("node:path");
  * Binary data - 0s and 1s that computers can understand
  * Character sets - Predefined lists of characters represented by numbers
  * Character encoding - Dictates how to represent a number in a character set as binary data
+ * Streams - a sequence of data that is being moved from one point to another over time
+ * Buffer - an intentionally small area that Node maintains in the runtime to process a stream of data
  */
+// const buffer = new Buffer.from("Kabukuor", 'utf-8');
+
+// buffer.write('Code');
+
+// console.log(buffer.toString());
+// console.log(buffer.toJSON());
+// console.log(buffer);
