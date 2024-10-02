@@ -173,7 +173,7 @@ const path = require("node:path");
 
 
 // fs promise module
-const fs = require('node:fs/promises');
+// const fs = require('node:fs/promises');
 
 // console.log('First\n');
 // fs.readFile('file.txt', 'utf-8')
@@ -193,3 +193,19 @@ const fs = require('node:fs/promises');
 // }
 
 // readFile();
+
+
+// Streams
+// const fs = require('node:fs');
+
+// const readableStream = fs.createReadStream('./file.txt', {
+//     encoding: 'utf-8',
+//     // highWaterMark: 2,
+// });
+
+// const writeableStream = fs.createWriteStream('./file2.txt');
+
+// readableStream.on('data', (chunk) => {
+//     console.log(`Chunk:\n${chunk}`);
+//     writeableStream.write(chunk);
+// });
