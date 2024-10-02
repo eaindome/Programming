@@ -78,15 +78,32 @@ const path = require("node:path");
 // console.log(path.resolve('/folder1', '//folder2', '../index.html'));
 // console.log(path.resolve(__dirname, 'data.json'));
 
-function greet(name) {
-    console.log(`Hello ${name}`);
-}
+// function greet(name) {
+//     console.log(`Hello ${name}`);
+// }
 
-function greetKay(greetFn) {
-    const name = 'Kabukuor';
-    greetFn(name);
-}
+// function greetKay(greetFn) {
+//     const name = 'Kabukuor';
+//     greetFn(name);
+// }
 
-greetKay(greet)
+// greetKay(greet)
 
 // a function passed to another function is called as a callback function
+
+
+// Events module
+const EventEmitter = require("node:events");
+
+const emitter = new EventEmitter();
+
+emitter.on('order-pizza', (size, topping) => {
+    console.log(`Order received! Baking a ${size} pizza with ${topping}.`)
+});
+
+emitter.on('order-pizza', (size) => {
+    if (size === 'large') console.log('Serving complimentary drink.');
+});
+
+emitter.emit('order-pizza', 'large', 'mushroom');
+
