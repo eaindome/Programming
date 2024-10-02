@@ -141,32 +141,32 @@ const path = require("node:path");
 
 
 // fs module
-const fs = require('node:fs');
+// const fs = require('node:fs');
 
-console.log('First');
-const fileContents = fs.readFileSync('./file.txt', 'utf-8');
-console.log(fileContents);
+// console.log('First');
+// const fileContents = fs.readFileSync('./file.txt', 'utf-8');
+// console.log(fileContents);
 
 
-console.log('Second');
-fs.readFile("./file.txt", (err, data) => {
-    if (err) {
-        console.error(`Error: ${err}`);
-        return '';
-    }
+// console.log('Second');
+// fs.readFile("./file.txt", (err, data) => {
+//     if (err) {
+//         console.error(`Error: ${err}`);
+//         return '';
+//     }
 
-    console.log(`Data:\n${data}\n`);
-});
+//     console.log(`Data:\n${data}\n`);
+// });
 
-console.log('Third\n');
+// console.log('Third\n');
 
-fs.writeFileSync('./greet.txt', 'Hello world!\n');
+// fs.writeFileSync('./greet.txt', 'Hello world!\n');
 
-fs.writeFile('./greet.txt', 'Hello Beautiful!', { flag: "a" }, (err) => {
-    if (err) {
-        console.error(`Error: ${err}`);
-        return '';
-    }
+// fs.writeFile('./greet.txt', 'Hello Beautiful!', { flag: "a" }, (err) => {
+//     if (err) {
+//         console.error(`Error: ${err}`);
+//         return '';
+//     }
 
-    console.log('Successfully written to file!')
-});
+//     console.log('Successfully written to file!')
+// });
