@@ -93,17 +93,33 @@ const path = require("node:path");
 
 
 // Events module
-const EventEmitter = require("node:events");
+// const EventEmitter = require("node:events");
 
-const emitter = new EventEmitter();
+// const emitter = new EventEmitter();
 
-emitter.on('order-pizza', (size, topping) => {
-    console.log(`Order received! Baking a ${size} pizza with ${topping}.`)
+// emitter.on('order-pizza', (size, topping) => {
+//     console.log(`Order received! Baking a ${size} pizza with ${topping}.`)
+// });
+
+// emitter.on('order-pizza', (size) => {
+//     if (size === 'large') console.log('Serving complimentary drink.');
+// });
+
+// emitter.emit('order-pizza', 'large', 'mushroom');
+
+
+// Extending from eventemitter
+const PizzaShop = require('./pizza_shop');
+const DrinkMachine = require('./drink_machine');
+
+const pizzaShop = new PizzaShop();
+const drinkMachine = new DrinkMachine()
+
+pizzaShop.on('order', (size, topping) => {
+    console.log(`Order received! Baking a ${size} pizza with ${topping}.`);
+    drinkMachine.serveDrink(size);
 });
 
-emitter.on('order-pizza', (size) => {
-    if (size === 'large') console.log('Serving complimentary drink.');
-});
-
-emitter.emit('order-pizza', 'large', 'mushroom');
+pizzaShop.order('large', 'pepperoni')
+pizzaShop.displayOrderNumber();
 
