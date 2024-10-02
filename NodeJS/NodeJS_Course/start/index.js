@@ -72,8 +72,21 @@ const path = require("node:path");
 // console.log(path.join('/folder1', '//folder2', '../index.html'));
 // console.log(path.join(__dirname, 'data.json'));
 
-console.log(path.resolve('folder1', 'folder2', 'index.html'));
-console.log(path.resolve('/folder1', 'folder2', 'index.html'));
-console.log(path.resolve('/folder1', '//folder2', 'index.html'));
-console.log(path.resolve('/folder1', '//folder2', '../index.html'));
-console.log(path.resolve(__dirname, 'data.json'));
+// console.log(path.resolve('folder1', 'folder2', 'index.html'));
+// console.log(path.resolve('/folder1', 'folder2', 'index.html'));
+// console.log(path.resolve('/folder1', '//folder2', 'index.html'));
+// console.log(path.resolve('/folder1', '//folder2', '../index.html'));
+// console.log(path.resolve(__dirname, 'data.json'));
+
+function greet(name) {
+    console.log(`Hello ${name}`);
+}
+
+function greetKay(greetFn) {
+    const name = 'Kabukuor';
+    greetFn(name);
+}
+
+greetKay(greet)
+
+// a function passed to another function is called as a callback function
