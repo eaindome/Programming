@@ -109,17 +109,23 @@ const path = require("node:path");
 
 
 // Extending from eventemitter
-const PizzaShop = require('./pizza_shop');
-const DrinkMachine = require('./drink_machine');
+// const PizzaShop = require('./pizza_shop');
+// const DrinkMachine = require('./drink_machine');
 
-const pizzaShop = new PizzaShop();
-const drinkMachine = new DrinkMachine()
+// const pizzaShop = new PizzaShop();
+// const drinkMachine = new DrinkMachine()
 
-pizzaShop.on('order', (size, topping) => {
-    console.log(`Order received! Baking a ${size} pizza with ${topping}.`);
-    drinkMachine.serveDrink(size);
-});
+// pizzaShop.on('order', (size, topping) => {
+//     console.log(`Order received! Baking a ${size} pizza with ${topping}.`);
+//     drinkMachine.serveDrink(size);
+// });
 
-pizzaShop.order('large', 'pepperoni')
-pizzaShop.displayOrderNumber();
+// pizzaShop.order('large', 'pepperoni')
+// pizzaShop.displayOrderNumber();
 
+
+/**
+ * Binary data - 0s and 1s that computers can understand
+ * Character sets - Predefined lists of characters represented by numbers
+ * Character encoding - Dictates how to represent a number in a character set as binary data
+ */
