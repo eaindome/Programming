@@ -138,3 +138,35 @@ const path = require("node:path");
 // console.log(buffer.toString());
 // console.log(buffer.toJSON());
 // console.log(buffer);
+
+
+// fs module
+const fs = require('node:fs');
+
+console.log('First');
+const fileContents = fs.readFileSync('./file.txt', 'utf-8');
+console.log(fileContents);
+
+
+console.log('Second');
+fs.readFile("./file.txt", (err, data) => {
+    if (err) {
+        console.error(`Error: ${err}`);
+        return '';
+    }
+
+    console.log(`Data:\n${data}\n`);
+});
+
+console.log('Third\n');
+
+fs.writeFileSync('./greet.txt', 'Hello world!\n');
+
+fs.writeFile('./greet.txt', 'Hello Beautiful!', { flag: "a" }, (err) => {
+    if (err) {
+        console.error(`Error: ${err}`);
+        return '';
+    }
+
+    console.log('Successfully written to file!')
+});
