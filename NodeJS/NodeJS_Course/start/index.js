@@ -246,3 +246,26 @@ const path = require("node:path");
 // server.listen(PORT, () => {
 //     console.log(`Server running on port: ${PORT}`);
 // });
+
+
+// JSON Response
+// const http = require("node:http");
+
+// const server = http.createServer((request, response) => {
+
+//     const superHero = {
+//         firstName: "Bruce",
+//         lastName: "Wayne"
+//     };
+
+    
+//     response.writeHead(200, {
+//         "Content-Type": "application/json"
+//     });
+//     response.end(JSON.stringify(superHero));
+// });
+
+// const PORT = 3000;
+// server.listen(PORT, () => {
+//     console.log(`Server running on port: ${PORT}`);
+// });
