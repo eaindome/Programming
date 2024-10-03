@@ -230,17 +230,19 @@ const path = require("node:path");
 
 // readableStream.pipe(writeableStream);
 
-const http = require("node:http");
 
-const server = http.createServer((request, response) => {
-    console.log(`Request: ${request}`);
-    response.writeHead(200, {
-        "Content-Type": "text/plain"
-    });
-    response.end("Hello world");
-});
+// Node server
+// const http = require("node:http");
 
-const PORT = 3000;
-server.listen(PORT, () => {
-    console.log(`Server running on port: ${PORT}`);
-});
+// const server = http.createServer((request, response) => {
+//     console.log(`Request: ${request}`);
+//     response.writeHead(200, {
+//         "Content-Type": "text/plain"
+//     });
+//     response.end("Hello world");
+// });
+
+// const PORT = 3000;
+// server.listen(PORT, () => {
+//     console.log(`Server running on port: ${PORT}`);
+// });
