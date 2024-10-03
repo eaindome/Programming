@@ -346,3 +346,25 @@ const path = require("node:path");
 // server.listen(PORT, () => {
 //     console.log(`Server running on port: ${PORT}`);
 // });
+
+
+
+// Thread Pool
+// const crypto = require('node:crypto');
+
+// const MAX_CALLS = 3;
+
+// const start = Date.now();
+// for (let i = 0; i < MAX_CALLS; i++) {
+//     crypto.pbkdf2('password', 'salt', 100000, 512, 'sha512', () => {
+//     console.log(`Hash: ${i + 1}`, Date.now() - start);
+//     });
+// }
+
+// sync
+// const start = Date.now();
+// crypto.pbkdf2Sync('password', 'salt', 100000, 512, 'sha512');
+// console.log('Hash: ', Date.now() - start);
+
+// every method in node.js that has the 'sync' suffix always runs on the
+// main thread and is blocking
