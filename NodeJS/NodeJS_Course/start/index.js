@@ -269,3 +269,22 @@ const path = require("node:path");
 // server.listen(PORT, () => {
 //     console.log(`Server running on port: ${PORT}`);
 // });
+
+
+// HTML Response
+// const http = require("node:http");
+// const fs = require("node:fs");
+
+// const server = http.createServer((request, response) => {
+//     response.writeHead(200, {
+//         "Content-Type": "text/html"
+//     });
+//     // const html = fs.readFileSync('index.html', 'utf-8');
+//     fs.createReadStream(__dirname + 'index.html').pipe(response);
+//     // response.end(html);
+// });
+
+// const PORT = 3000;
+// server.listen(PORT, () => {
+//     console.log(`Server running on port: ${PORT}`);
+// });
