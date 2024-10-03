@@ -229,3 +229,18 @@ const path = require("node:path");
 // const writeableStream = fs.createWriteStream('./file2.txt');
 
 // readableStream.pipe(writeableStream);
+
+const http = require("node:http");
+
+const server = http.createServer((request, response) => {
+    console.log(`Request: ${request}`);
+    response.writeHead(200, {
+        "Content-Type": "text/plain"
+    });
+    response.end("Hello world");
+});
+
+const PORT = 3000;
+server.listen(PORT, () => {
+    console.log(`Server running on port: ${PORT}`);
+});
