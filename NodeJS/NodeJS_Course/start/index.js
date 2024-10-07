@@ -560,4 +560,39 @@ const path = require("node:path");
  * */
 
 
+// I/O Polling
 
+/**
+ * To queue a callback function into the chck queue, we can use a function called setImmediate
+ * Syntax:
+ *  setImmediate(() => {
+ *      console.log("this is setImmediate 1");
+ *  });
+ */
+
+// const fs = require("fs");
+
+// fs.readFile(__filename, () => {
+//     console.log("this is readFile 1");
+// });
+
+// process.nextTick(() => {
+//     console.log("this is process.next tick 1");
+// });
+// Promise.resolve().then(() => {
+//     console.log("this is Promise.resolve 1");
+// });
+
+// setTimeout(() => {
+//     console.log("this is setTimeout 1");
+// }, 0);
+// setImmediate(() => {
+//     console.log("this is setImmediate 1");
+// });
+
+// for (let i = 0; i < 2000000000; i++) {}
+
+/**
+ * I/O events are polled and callback functions are 
+ * added to the I/O queue only after the I/O is complete
+ */
