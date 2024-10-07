@@ -410,3 +410,12 @@ const path = require("node:path");
 // //     console.log(`Hash: ${i + 1}`, Date.now() - start);
 // //     });
 // }
+
+
+
+// Event Loops
+/**
+ * A design pattern that orchestrates or co-ordinates the execution 
+ * of synchronous and asynchronous code in Node.js
+ */
+
