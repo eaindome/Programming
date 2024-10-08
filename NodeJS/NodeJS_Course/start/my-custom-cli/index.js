@@ -2,8 +2,10 @@
 
 // console.log("indomie pokedex");
 
-const yargs = require('yargs');
-const { argv } = yargs(process.argv);
+// const yargs = require('yargs');
+// const { argv } = yargs(process.argv);
+
+const inquirer = require('inquirer');
 
 const printFiveMoves = async (pokemonName) => {
     const response = await fetch(`https://pokeapi.co/api/v2/pokemon/${pokemonName}`);
@@ -14,4 +16,12 @@ const printFiveMoves = async (pokemonName) => {
     console.log(fiveMoves);
 };
 
-printFiveMoves(argv.pokemon);
+const prompt = inquirer.createPromptModule();
+prompt([{
+    type: "input",
+    name: "pokemon",
+    message: "Enter a pokemon name to view its first five moves:\n"
+}]).then((answers) => {
+    const pokemon = answers.pokemon;
+    printFiveMoves(pokemon);
+});
