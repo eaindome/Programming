@@ -1,0 +1,10 @@
+{
+  "version": 2,
+  "dgSpecHash": "SRWf+GTOMfnPUoHDowCGoJ7fZEASFbrW3VNBmLecbfeH7Xl8+tIHPNw8hS2SfxVduuQCHNg1N11M/JxY3EW86g==",
+  "success": true,
+  "projectFilePath": "/home/ekow/Desktop/Programming/C#/start/HellowWorld/HellowWorld.csproj",
+  "expectedPackageFiles": [
+    "/home/ekow/.nuget/packages/microsoft.aspnetcore.app.ref/8.0.8/microsoft.aspnetcore.app.ref.8.0.8.nupkg.sha512"
+  ],
+  "logs": []
+}

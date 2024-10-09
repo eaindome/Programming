@@ -1,0 +1,15 @@
+/home/ekow/Desktop/Programming/C#/start/HellowWorld/bin/Debug/net8.0/HellowWorld
+/home/ekow/Desktop/Programming/C#/start/HellowWorld/bin/Debug/net8.0/HellowWorld.deps.json
+/home/ekow/Desktop/Programming/C#/start/HellowWorld/bin/Debug/net8.0/HellowWorld.runtimeconfig.json
+/home/ekow/Desktop/Programming/C#/start/HellowWorld/bin/Debug/net8.0/HellowWorld.dll
+/home/ekow/Desktop/Programming/C#/start/HellowWorld/bin/Debug/net8.0/HellowWorld.pdb
+/home/ekow/Desktop/Programming/C#/start/HellowWorld/obj/Debug/net8.0/HellowWorld.GeneratedMSBuildEditorConfig.editorconfig
+/home/ekow/Desktop/Programming/C#/start/HellowWorld/obj/Debug/net8.0/HellowWorld.AssemblyInfoInputs.cache
+/home/ekow/Desktop/Programming/C#/start/HellowWorld/obj/Debug/net8.0/HellowWorld.AssemblyInfo.cs
+/home/ekow/Desktop/Programming/C#/start/HellowWorld/obj/Debug/net8.0/HellowWorld.csproj.CoreCompileInputs.cache
+/home/ekow/Desktop/Programming/C#/start/HellowWorld/obj/Debug/net8.0/HellowWorld.sourcelink.json
+/home/ekow/Desktop/Programming/C#/start/HellowWorld/obj/Debug/net8.0/HellowWorld.dll
+/home/ekow/Desktop/Programming/C#/start/HellowWorld/obj/Debug/net8.0/refint/HellowWorld.dll
+/home/ekow/Desktop/Programming/C#/start/HellowWorld/obj/Debug/net8.0/HellowWorld.pdb
+/home/ekow/Desktop/Programming/C#/start/HellowWorld/obj/Debug/net8.0/HellowWorld.genruntimeconfig.cache
+/home/ekow/Desktop/Programming/C#/start/HellowWorld/obj/Debug/net8.0/ref/HellowWorld.dll
