@@ -2,6 +2,7 @@ const User = require('../../models/userModel');
 
 const getUserProfile = async (req, res) => {
     try {
+        console.log(`User Id: ${JSON.stringify(req.user.userId)}`);
         const user = await User.findById(req.user.userId).select('-password');
         if (!user) return res.status(404).send({
             message: 'User not found.'

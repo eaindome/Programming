@@ -1,6 +1,7 @@
 const request = require('supertest');
 const dotenv = require('dotenv');
 const mongoose = require('mongoose');
+const bcrypt = require('bcryptjs');
 
 const User = require('../models/userModel');
 const app = require('../app');
@@ -52,7 +53,7 @@ describe('Registration Process', () => {
             };
 
             const response = await request(app).post('/api/auth/register').send(duplicateUser);
-            // console.log(`Response: ${response}`);
+            // console.log(`Response: ${JSON.stringify(response)}`);
             expect(response.status).toBe(400);
             expect(response.body.message).toBe('User already exists.')
         }
@@ -95,7 +96,7 @@ describe('Login Process', () => {
                 username: 'LoginUser',
                 password: 'testLogin@password'
             };
-            const response = await request(app.server).post('/api/auth/login').send(loginDetails);
+            const response = await request(app).post('/api/auth/login').send(loginDetails);
             expect(response.status).toBe(200);
             expect(response.body.message).toBe('Login successful!');
             expect(response.body.token).toBeDefined();
@@ -109,9 +110,9 @@ describe('Login Process', () => {
                 username: 'LoginUser',
                 password: 'wrongpassword'
             };
-            const response = await request(app.server).post('/api/auth/login').send(loginDetails);
+            const response = await request(app).post('/api/auth/login').send(loginDetails);
             expect(response.status).toBe(401);
-            expect(response.body.message).toBe('Invalid username or password.');
+            expect(response.body.message).toBe('Invalid username and password.');
         }
     );
 
@@ -122,9 +123,9 @@ describe('Login Process', () => {
                 username: 'NonExistentUser',
                 password: 'test@password'
             };
-            const response = await request(app.server).post('/api/auth/login').send(loginDetails);
+            const response = await request(app).post('/api/auth/login').send(loginDetails);
             expect(response.status).toBe(401);
-            expect(response.body.message).toBe("Invalid username or password.");
+            expect(response.body.message).toBe("Invalid username and password.");
         }
     );
 
@@ -135,7 +136,7 @@ describe('Login Process', () => {
                 username: '',
                 password: ''
             };
-            const response = await request(app.server).post('/api/auth/login').send(loginDetails);
+            const response = await request(app).post('/api/auth/login').send(loginDetails);
             expect(response.status).toBe(400);
             expect(response.body.message).toBe('Username and password are required.');
         }

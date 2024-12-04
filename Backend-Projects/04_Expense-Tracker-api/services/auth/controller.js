@@ -37,7 +37,8 @@ const registerUser = async (req, res) => {
 
         // return success response
         return res.status(201).json({
-            message: 'User registered successfully.'
+            message: 'User registered successfully.',
+            newUser
         });
     } catch (err) {
         console.err(`Error: ${err}`);
