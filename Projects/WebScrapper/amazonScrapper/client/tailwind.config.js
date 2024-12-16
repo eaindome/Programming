@@ -8,14 +8,17 @@ export default {
     extend: {
       colors: {
         blue: {
-          200: '#acd4f7'
+          200: '#aacbff',
+          300: '#64a5fe',
+          600: '#007cff',
+          800: '#0062d1'
         },
         red: {
           400: '#ff745c',
           600: '#ff5e43'
         },
         gray: {
-          800: '#001f40'
+          800: '#1b2e35'
         }
       }
     },
