@@ -7,11 +7,14 @@ const api = request(app);
 describe('Authentication Endpoints', () => {
     beforeAll(async () => {
         // clean up user table before running tests
+        await prisma.recipe.deleteMany();
         await prisma.user.deleteMany();
     });
 
     afterAll(async () => {
         // disconnect prisma after tests
+        await prisma.recipe.deleteMany();
+        await prisma.user.deleteMany();
         await prisma.$disconnect();
     });
 
