@@ -7,13 +7,14 @@ declare module 'express' {
     }
 }
 
-export const protect = (req: Request, res: Response, next: NextFunction) => {
+export const authMiddleware = (req: Request, res: Response, next: NextFunction): void => {
     const token = req.headers.authorization?.split(' ')[1];   // bearer token
 
     if (!token) {
-        return res.status(401).json({
+        res.status(401).json({
             message: 'Not authorized, no token'
         });
+        return;
     }
 
     try {
@@ -24,5 +25,6 @@ export const protect = (req: Request, res: Response, next: NextFunction) => {
         res.status(401).json({
             message: 'Not authorized, token failed'
         });
+        return;
     }
 };
