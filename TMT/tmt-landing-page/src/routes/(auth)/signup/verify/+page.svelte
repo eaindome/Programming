@@ -62,7 +62,7 @@
         await new Promise(resolve => setTimeout(resolve, 1000));
         
         // If successful
-        goto('/forgot-password/reset');
+        goto('/login');
       } catch (err) {
         error = 'Invalid verification code. Please try again.';
       } finally {
