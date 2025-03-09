@@ -1,4 +1,6 @@
 <script>
+    // @ts-ignore
+    import { goto } from '$app/navigation';
     import { onMount, afterUpdate } from 'svelte';
     import { fade, slide, fly } from 'svelte/transition';
     
@@ -39,6 +41,10 @@
         window.removeEventListener('scroll', handleScroll);
       };
     });
+
+    const navigateToSignup = () => {
+      goto('/signup');
+    };
 </script>
   
 <nav class="fixed w-full z-50 transition-all duration-300 {isScrolled ? 'bg-[#1A5F7A] shadow-lg' : 'bg-transparent'}" 
@@ -78,7 +84,10 @@
         
         <!-- Get Started Button -->
         <div class="hidden md:block">
-          <button class="bg-[#56C271] hover:bg-[#4aad61] text-white font-medium py-2 px-4 rounded-lg transition-all duration-300 transform hover:scale-105 hover:shadow-lg">
+          <button
+            on:click={navigateToSignup} 
+            class="bg-[#56C271] hover:bg-[#4aad61] text-white font-medium py-2 px-4 rounded-lg transition-all duration-300 transform hover:scale-105 hover:shadow-lg"
+          >
             Get Started
           </button>
         </div>
