@@ -1,4 +1,6 @@
 <script lang="ts">
+    // @ts-ignore
+    import { goto } from '$app/navigation';
     import { onMount } from 'svelte';
     import { fade, fly } from 'svelte/transition';
     import Button from '$lib/components/ui/Button.svelte';
@@ -11,6 +13,10 @@
         visible = true;
       }, 300);
     });
+
+    const navigateToSignup = () => {
+      goto('/signup');
+    };
 </script>
   
 <section class="bg-gradient-to-br from-[#1A5F7A] to-[#164e65] text-white relative overflow-hidden">
@@ -44,7 +50,7 @@
             </p>
           </div>
           <div class="flex flex-col sm:flex-row gap-4" in:fly={{ y: 30, duration: 800, delay: 700 }}>
-            <Button primary={true} size="lg">Get Started</Button>
+            <Button primary={true} size="lg" on:click={navigateToSignup}>Get Started</Button>
             <Button primary={false} size="lg">Learn More</Button>
           </div>
         </div>
