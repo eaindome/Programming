@@ -3,6 +3,7 @@ using System.Linq;
 using System.Collections;
 using System.Collections.Generic;
 
+
 namespace Sample
 {
     class Program 
@@ -59,10 +60,10 @@ namespace Sample
 
             // create an instance of the OOP class
             OOP oop = new OOP();
-            oop.display();
+            oop.Display();
 
             // call the addNumber method
-            int summation  = OOP.addNumbers(5, 10);
+            int summation  = OOP.AddNumbers(5, 10);
             Console.WriteLine($"Summation: {summation}");
 
             // accessing public field
@@ -76,6 +77,19 @@ namespace Sample
 
             // accessing internal field
             Console.WriteLine($"Artist: {oop.artist}");
+
+
+            // Employee
+            Console.WriteLine("Employee Class");
+
+            // create employee instance
+            Employee e1 = new Employee();
+            
+            Console.WriteLine("Employee 1");
+            e1.name = "Topboy";
+            Console.WriteLine($"Name: {e1.name}");
+
+            e1.work("Software Developer");
         }
     }
 
@@ -490,31 +504,4 @@ namespace Sample
         }
     }
 
-    class OOP
-    {
-        public void display() 
-        {
-            Console.WriteLine("Hello from the OOP class!");
-        }
-
-        public static int addNumbers (int a, int b)
-        {
-            int sum = a+b;
-            return sum;
-        }
-
-        // studying access modifiers
-        // public access modifier
-        public string name = "Sheeran";
-
-        // private access modifier
-        private string writer = "Shakespare";
-
-        // protected access modifier
-        protected string music = "Sh-Boom";
-
-        // internal access modifier
-        internal string artist = "Beyonce";
-
-    }
 }
