@@ -31,7 +31,10 @@ namespace NotificationSystem.Controllers
 
             if (!string.IsNullOrEmpty(userId))
             {
-                query = query.Where(n => n.UserId == userId);
+                if (int.TryParse(userId, out int parsedUserId))
+                {
+                    query = query.Where(n => n.UserId == parsedUserId);
+                }
             }
 
             var totalCount = await query.CountAsync();
@@ -71,9 +74,9 @@ namespace NotificationSystem.Controllers
                 try
                 {
                     // send real time notification using signalr
-                    if (!string.IsNullOrEmpty(notification.UserId)) 
+                    if (notification.UserId != 0) 
                     {
-                        await _hubContext.Clients.User(notification.UserId).SendAsync("ReceiveNotification", notification);
+                        await _hubContext.Clients.User(notification.UserId.ToString()).SendAsync("ReceiveNotification", notification);
                     } 
                     else 
                     {
@@ -147,7 +150,10 @@ namespace NotificationSystem.Controllers
 
             if (!string.IsNullOrEmpty(userId))
             {
-                query = query.Where(n => n.UserId == userId);
+                if (int.TryParse(userId, out int parsedUserId))
+                {
+                    query = query.Where(n => n.UserId == parsedUserId);
+                }
             }
 
             await query.ExecuteUpdateAsync(s => s.SetProperty(n => n.IsRead, true));
@@ -161,9 +167,9 @@ namespace NotificationSystem.Controllers
         {
             var query = _context.Notifications.Where(n => !n.IsRead);
 
-            if (!string.IsNullOrEmpty(userId))
+            if (int.TryParse(userId, out int parsedUserId))
             {
-                query = query.Where(n => n.UserId == userId);
+                query = query.Where(n => n.UserId == parsedUserId);
             }
 
             var totalCount = await query.CountAsync();
@@ -184,9 +190,9 @@ namespace NotificationSystem.Controllers
         {
             var query = _context.Notifications.Where(n => n.Type == type);
 
-            if (!string.IsNullOrEmpty(userId))
+            if (int.TryParse(userId, out int parsedUserId))
             {
-                query = query.Where(n => n.UserId == userId);
+                query = query.Where(n => n.UserId == parsedUserId);
             }
 
             var totalCount = await query.CountAsync();

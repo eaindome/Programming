@@ -7,7 +7,7 @@ namespace NotificationSystem.Models
     public class Notification
     {
         public int Id { get; set; }
-        public string? UserId { get; set; } // User identifier (could be email, username, or ID)
+        public int UserId { get; set; } // Foreign key
         
         [Required]
         [MaxLength(500)]

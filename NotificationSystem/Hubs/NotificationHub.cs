@@ -13,9 +13,9 @@ namespace NotificationSystem.Hubs
 
         public async Task SendNotificationObject(Notification notification)
         {
-            if (!string.IsNullOrEmpty(notification.UserId))
+            if (!string.IsNullOrEmpty(notification.UserId.ToString()))
             {
-                await Clients.User(notification.UserId).SendAsync("ReceiveNotification", notification);
+                await Clients.User(notification.UserId.ToString()).SendAsync("ReceiveNotification", notification);
             }
             else
             {

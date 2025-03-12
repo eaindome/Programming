@@ -123,3 +123,15 @@
 /home/ekow/Desktop/Programming/NotificationSystem/obj/Debug/net9.0/NotificationSystem.pdb
 /home/ekow/Desktop/Programming/NotificationSystem/obj/Debug/net9.0/NotificationSystem.genruntimeconfig.cache
 /home/ekow/Desktop/Programming/NotificationSystem/obj/Debug/net9.0/ref/NotificationSystem.dll
+/home/ekow/Desktop/Programming/NotificationSystem/bin/Debug/net9.0/NotificationSystem.staticwebassets.runtime.json
+/home/ekow/Desktop/Programming/NotificationSystem/bin/Debug/net9.0/Microsoft.AspNetCore.Authentication.JwtBearer.dll
+/home/ekow/Desktop/Programming/NotificationSystem/bin/Debug/net9.0/Microsoft.IdentityModel.Abstractions.dll
+/home/ekow/Desktop/Programming/NotificationSystem/bin/Debug/net9.0/Microsoft.IdentityModel.JsonWebTokens.dll
+/home/ekow/Desktop/Programming/NotificationSystem/bin/Debug/net9.0/Microsoft.IdentityModel.Logging.dll
+/home/ekow/Desktop/Programming/NotificationSystem/bin/Debug/net9.0/Microsoft.IdentityModel.Protocols.dll
+/home/ekow/Desktop/Programming/NotificationSystem/bin/Debug/net9.0/Microsoft.IdentityModel.Protocols.OpenIdConnect.dll
+/home/ekow/Desktop/Programming/NotificationSystem/bin/Debug/net9.0/Microsoft.IdentityModel.Tokens.dll
+/home/ekow/Desktop/Programming/NotificationSystem/bin/Debug/net9.0/Newtonsoft.Json.dll
+/home/ekow/Desktop/Programming/NotificationSystem/bin/Debug/net9.0/System.IdentityModel.Tokens.Jwt.dll
+/home/ekow/Desktop/Programming/NotificationSystem/bin/Debug/net9.0/System.Net.WebSockets.WebSocketProtocol.dll
+/home/ekow/Desktop/Programming/NotificationSystem/obj/Debug/net9.0/compressed/8e4faxv003-tm1w8zt6r0.gz
