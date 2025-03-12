@@ -1,0 +1,15 @@
+/home/ekow/Desktop/Programming/C#/New/obj/Debug/net9.0/New.GeneratedMSBuildEditorConfig.editorconfig
+/home/ekow/Desktop/Programming/C#/New/obj/Debug/net9.0/New.AssemblyInfoInputs.cache
+/home/ekow/Desktop/Programming/C#/New/obj/Debug/net9.0/New.AssemblyInfo.cs
+/home/ekow/Desktop/Programming/C#/New/obj/Debug/net9.0/New.csproj.CoreCompileInputs.cache
+/home/ekow/Desktop/Programming/C#/New/obj/Debug/net9.0/New.sourcelink.json
+/home/ekow/Desktop/Programming/C#/New/bin/Debug/net9.0/New
+/home/ekow/Desktop/Programming/C#/New/bin/Debug/net9.0/New.deps.json
+/home/ekow/Desktop/Programming/C#/New/bin/Debug/net9.0/New.runtimeconfig.json
+/home/ekow/Desktop/Programming/C#/New/bin/Debug/net9.0/New.dll
+/home/ekow/Desktop/Programming/C#/New/bin/Debug/net9.0/New.pdb
+/home/ekow/Desktop/Programming/C#/New/obj/Debug/net9.0/New.dll
+/home/ekow/Desktop/Programming/C#/New/obj/Debug/net9.0/refint/New.dll
+/home/ekow/Desktop/Programming/C#/New/obj/Debug/net9.0/New.pdb
+/home/ekow/Desktop/Programming/C#/New/obj/Debug/net9.0/New.genruntimeconfig.cache
+/home/ekow/Desktop/Programming/C#/New/obj/Debug/net9.0/ref/New.dll

@@ -1,0 +1,10 @@
+{
+  "version": 2,
+  "dgSpecHash": "NarYEyXyFME=",
+  "success": true,
+  "projectFilePath": "/home/ekow/Desktop/Programming/C#/New/New.csproj",
+  "expectedPackageFiles": [
+    "/home/ekow/.nuget/packages/microsoft.aspnetcore.app.ref/9.0.2/microsoft.aspnetcore.app.ref.9.0.2.nupkg.sha512"
+  ],
+  "logs": []
+}
