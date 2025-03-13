@@ -1,3 +1,4 @@
+using System.Collections.Immutable;
 using Microsoft.AspNetCore.Mvc;
 
 namespace MyFirstApi.Controllers
@@ -14,6 +15,11 @@ namespace MyFirstApi.Controllers
         public class LanguageRequest
         {
             public string? Language { get; set; }
+        }
+
+        public class UpdatedLanguageRequest
+        {
+            public string? NewLanguage { get; set; }
         }
 
         [HttpGet]
@@ -63,5 +69,26 @@ namespace MyFirstApi.Controllers
 
             return Ok(newLanguages);
         }
+
+        [HttpPut("{oldLanguage}")]
+        public ActionResult UpdateLanguage(string oldLanguage, [FromBody] UpdatedLanguageRequest request)
+        {
+            if (string.IsNullOrWhiteSpace(oldLanguage) || string.IsNullOrWhiteSpace(request.NewLanguage))
+            {
+                return BadRequest("Both old and new language names are required");
+            }
+
+            var newLanguages = Languages.ToList();
+            int index = newLanguages.FindIndex(l => l.Equals(oldLanguage, StringComparison.OrdinalIgnoreCase));
+
+            if (index == -1)
+            {
+                return NotFound($"Language '{oldLanguage}' not found.");
+            }
+
+            newLanguages[index] = request.NewLanguage;
+            return Ok(newLanguages);
+        }
+        
     }
 }
