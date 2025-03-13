@@ -11,6 +11,11 @@ namespace MyFirstApi.Controllers
             "C#", "JavaScript", "Python", "Java", "Go", "Rust", "Swift"
         };
 
+        public class LanguageRequest
+        {
+            public string? Language { get; set; }
+        }
+
         [HttpGet]
         public IEnumerable<string> Get()
         {
@@ -25,6 +30,21 @@ namespace MyFirstApi.Controllers
                 return NotFound("Language not found");
             }
             return Ok(Languages[id]);
+        }
+
+        [HttpPost]
+        public ActionResult AddLanguage([FromBody] LanguageRequest request)
+        {
+            if (string.IsNullOrWhiteSpace(request.Language))
+            {
+                return BadRequest("Language cannot be empty");
+            }
+
+            // simulate adding by creating a new list.
+            var newLanguages = Languages.ToList();
+            newLanguages.Add(request.Language);
+
+            return Ok(newLanguages);
         }
     }
 }
