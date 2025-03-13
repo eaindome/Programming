@@ -46,5 +46,22 @@ namespace MyFirstApi.Controllers
 
             return Ok(newLanguages);
         }
+
+        [HttpDelete("{language}")]
+        public ActionResult DeleteLanguage(string language)
+        {
+            if (string.IsNullOrWhiteSpace(language))
+            {
+                return BadRequest("Language name is required");
+            }
+
+            var newLanguages = Languages.ToList();
+            if (!newLanguages.Remove(language))
+            {
+                return NotFound($"Language '{language}' not found.");
+            }
+
+            return Ok(newLanguages);
+        }
     }
 }
