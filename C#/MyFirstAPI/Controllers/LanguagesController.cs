@@ -7,10 +7,7 @@ namespace MyFirstApi.Controllers
     [Route("api/languages")]
     public class LanguagesController : ControllerBase
     {
-        private static readonly string[] Languages = new[]
-        {
-            "C#", "JavaScript", "Python", "Java", "Go", "Rust", "Swift"
-        };
+        private readonly LanguageService _languageService;
 
         public class LanguageRequest
         {
@@ -22,72 +19,54 @@ namespace MyFirstApi.Controllers
             public string? NewLanguage { get; set; }
         }
 
-        [HttpGet]
-        public IEnumerable<string> Get()
+        public LanguagesController(LanguageService languageService)
         {
-            return Languages;
+            _languageService = languageService;
+        }
+
+        [HttpGet]
+        public ActionResult<IEnumerable<string>> GetLanguages()
+        {
+            return Ok(_languageService.GetAllLanguages());
         }
 
         [HttpGet("{id}")]
         public ActionResult<string> GetLanguageById(int id)
         {
-            if (id < 0 || id >= Languages.Length)
-            {
-                return NotFound("Language not found");
-            }
-            return Ok(Languages[id]);
+            var language = _languageService.GetLanguageById(id);
+            if (language == null) return NotFound($"Language with id {id} not found");
+
+            return Ok(language);
         }
 
         [HttpPost]
-        public ActionResult AddLanguage([FromBody] LanguageRequest request)
+        public ActionResult AddLanguage([FromBody] string language)
         {
-            if (string.IsNullOrWhiteSpace(request.Language))
-            {
-                return BadRequest("Language cannot be empty");
-            }
+           if (string.IsNullOrWhiteSpace(language)) return BadRequest("Language name is required");
 
-            // simulate adding by creating a new list.
-            var newLanguages = Languages.ToList();
-            newLanguages.Add(request.Language);
-
-            return Ok(newLanguages);
+           bool added = _languageService.AddLanguage(language);
+           
+           return added ? Ok("Language added successfully.") : Conflict("Language already exists.");
         }
 
         [HttpDelete("{language}")]
         public ActionResult DeleteLanguage(string language)
         {
-            if (string.IsNullOrWhiteSpace(language))
-            {
-                return BadRequest("Language name is required");
-            }
+            if (string.IsNullOrWhiteSpace(language)) return BadRequest("Language name is required");
 
-            var newLanguages = Languages.ToList();
-            if (!newLanguages.Remove(language))
-            {
-                return NotFound($"Language '{language}' not found.");
-            }
+            bool deleted = _languageService.DeleteLanguage(language);
 
-            return Ok(newLanguages);
+            return deleted ? Ok("Language deleted successfully") : NotFound("Language not found");
         }
 
         [HttpPut("{oldLanguage}")]
         public ActionResult UpdateLanguage(string oldLanguage, [FromBody] UpdatedLanguageRequest request)
         {
-            if (string.IsNullOrWhiteSpace(oldLanguage) || string.IsNullOrWhiteSpace(request.NewLanguage))
-            {
-                return BadRequest("Both old and new language names are required");
-            }
+            if (string.IsNullOrWhiteSpace(oldLanguage) || string.IsNullOrWhiteSpace(request.NewLanguage)) return BadRequest("Both old and new language names are required");
 
-            var newLanguages = Languages.ToList();
-            int index = newLanguages.FindIndex(l => l.Equals(oldLanguage, StringComparison.OrdinalIgnoreCase));
-
-            if (index == -1)
-            {
-                return NotFound($"Language '{oldLanguage}' not found.");
-            }
-
-            newLanguages[index] = request.NewLanguage;
-            return Ok(newLanguages);
+            bool updated = _languageService.UpdateLanguage(oldLanguage, request.NewLanguage);
+            
+            return updated ? Ok("Language updated successfully") : NotFound("Language not found");
         }
         
     }
