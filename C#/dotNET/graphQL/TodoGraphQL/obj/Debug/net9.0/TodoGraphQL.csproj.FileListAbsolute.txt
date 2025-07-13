@@ -1,0 +1,8 @@
+/home/ekow/Desktop/Programming/C#/dotNET/graphQL/TodoGraphQL/obj/Debug/net9.0/TodoGraphQL.csproj.AssemblyReference.cache
+/home/ekow/Desktop/Programming/C#/dotNET/graphQL/TodoGraphQL/obj/Debug/net9.0/TodoGraphQL.GeneratedMSBuildEditorConfig.editorconfig
+/home/ekow/Desktop/Programming/C#/dotNET/graphQL/TodoGraphQL/obj/Debug/net9.0/TodoGraphQL.AssemblyInfoInputs.cache
+/home/ekow/Desktop/Programming/C#/dotNET/graphQL/TodoGraphQL/obj/Debug/net9.0/TodoGraphQL.AssemblyInfo.cs
+/home/ekow/Desktop/Programming/C#/dotNET/graphQL/TodoGraphQL/obj/Debug/net9.0/TodoGraphQL.csproj.CoreCompileInputs.cache
+/home/ekow/Desktop/Programming/C#/dotNET/graphQL/TodoGraphQL/obj/Debug/net9.0/TodoGraphQL.MvcApplicationPartsAssemblyInfo.cs
+/home/ekow/Desktop/Programming/C#/dotNET/graphQL/TodoGraphQL/obj/Debug/net9.0/TodoGraphQL.MvcApplicationPartsAssemblyInfo.cache
+/home/ekow/Desktop/Programming/C#/dotNET/graphQL/TodoGraphQL/obj/Debug/net9.0/TodoGraphQL.sourcelink.json

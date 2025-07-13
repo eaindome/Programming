@@ -1,0 +1,171 @@
+# version: "3.7"
+
+services:
+  seq:
+    image: datalust/seq:2024.3
+    container_name: seq
+    environment:
+      - ACCEPT_EULA=Y
+    volumes:
+      - ./store/seq/storage:/data
+    ports:
+      - "5341:80"
+    restart: unless-stopped
+    networks:
+      - observability
+
+  nats-0:
+    image: nats:2.10.20-alpine
+    container_name: nats
+    ports:
+      - "4222:4222"
+      - "8222:8222"
+      - "6222:6222"
+      - "8080:8080"  # WebSocket port
+    volumes:
+      - ./nats.conf:/nats.conf
+      - ./store/nats/storage/n-0:/data
+    command: ["--name", "nats-0", "-sd", "/data", "-c", "/nats.conf", "-DV"]
+    networks:
+      - observability
+
+  # Grafana
+  grafana:
+    image: grafana/grafana:latest
+    container_name: grafana
+    environment:
+      - GF_SECURITY_ADMIN_PASSWORD=admin # Set admin password
+    ports:
+      - "3000:3000" # Expose Grafana on port 3000
+    volumes:
+      - ./store/grafana/storage:/var/lib/grafana
+    depends_on:
+      - loki
+      - tempo
+      - prometheus
+      - otel-collector
+    networks:
+      - observability
+
+  # Prometheus
+  prometheus:
+    image: quay.io/prometheus/prometheus:v2.55.1
+    container_name: prometheus
+    command:
+      - --web.console.templates=/etc/prometheus/consoles
+      - --web.console.libraries=/etc/prometheus/console_libraries
+      - --storage.tsdb.retention.time=1h
+      - --config.file=/etc/prometheus/prometheus-config.yaml
+      - --storage.tsdb.path=/prometheus
+      - --web.enable-lifecycle
+      - --web.route-prefix=/
+      - --web.enable-remote-write-receiver
+      - --enable-feature=exemplar-storage
+      - --enable-feature=otlp-write-receiver
+    volumes:
+      - ./prometheus-config.yaml:/etc/prometheus/prometheus-config.yaml
+      - ./store/prometheus/storage:/etc/prometheus
+    deploy:
+      resources:
+        limits:
+          memory: 300M
+    restart: unless-stopped
+    ports:
+      - "9090:9090"
+    networks:
+      - observability
+
+  # Tempo (Distributed Tracing)
+  init:
+    image: &tempoImage grafana/tempo:latest
+    user: root
+    entrypoint:
+      - "chown"
+      - "10001:10001"
+      - "/var/tempo"
+    volumes:
+      - ./store/tempo/storage:/var/tempo
+
+  memcached:
+    image: memcached:1.6.29
+    container_name: memcached
+    ports:
+      - "11211:11211"
+    environment:
+      - MEMCACHED_MAX_MEMORY=64m # Set the maximum memory usage
+      - MEMCACHED_THREADS=4 # Number of threads to use
+    networks:
+      - observability
+
+  tempo:
+    image: *tempoImage
+    container_name: tempo
+    command: ["-config.file=/etc/tempo.yaml"]
+    volumes:
+      - ./tempo.yaml:/etc/tempo.yaml
+      - ./store/tempo/data:/var/tempo
+    ports:
+      - "14268:14268" # jaeger ingest
+      - "3200:3200" # tempo
+      - "9095:9095" # tempo grpc
+      # - "431:4318" # otlp grpc
+      # - "4318:4318" # otlp http
+      - "9411:9411" # zipkin
+    depends_on:
+      - init
+      - memcached
+    networks:
+      - observability
+
+  # Loki (Log Aggregation)
+  loki:
+    image: grafana/loki:latest
+    container_name: loki
+    environment:
+      - LOKI_HTTP_PORT=3100
+    ports:
+      - "3100:3100" # Loki query port
+    networks:
+      - observability
+
+  # OpenTelemetry Collector (otel-collector)
+  otel-collector:
+    image: otel/opentelemetry-collector-contrib:0.113.0
+    container_name: otel-collector
+    command: ["--config=/etc/otel-collector-config.yaml"]
+    volumes:
+      - ./otel-collector-config.yaml:/etc/otel-collector-config.yaml
+    ports:
+      - "55680:55680" # OpenTelemetry receiver port
+      - "4317:4317" # OpenTelemetry gRPC port
+      - "4318:4318" # OpenTelemetry http port
+      - "8888:8888" # for prometheus ?
+    environment:
+      - ENVOY_PORT
+      - HOST_FILESYSTEM
+      - OTEL_COLLECTOR_HOST
+      - OTEL_COLLECTOR_PORT_GRPC
+      - OTEL_COLLECTOR_PORT_HTTP
+    depends_on:
+      - seq
+    networks:
+      - observability
+
+  ### DBs
+  postgres:
+    image: postgres:latest
+    container_name: postgres_container
+    environment:
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: pass
+      POSTGRES_DB: db
+    ports:
+      - "5432:5432"
+    volumes:
+      - ./store/postgres1/storage:/var/lib/postgresql/data
+
+
+# Networks
+networks:
+  observability:
+    driver: bridge
