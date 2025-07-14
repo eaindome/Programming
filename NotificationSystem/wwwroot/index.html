@@ -377,11 +377,11 @@
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             // Base API URL - change this to match your backend
-            const apiUrl = 'https://localhost:5001/api/notifications';
+            const apiUrl = 'http://localhost:5006/api/notifications';
             
             // SignalR connection setup
             const connection = new signalR.HubConnectionBuilder()
-                .withUrl('/notificationHub') 
+                .withUrl('http://localhost:5006/notificationHub') 
                 .withAutomaticReconnect()
                 .build();
             
@@ -407,12 +407,12 @@
                 });
             
             // Handle receiving notifications
-            connection.on('ReceiveNotification', (message) => {
+            connection.on('ReceiveNotification', (notification) => {
                 if (typeof notification === 'string') {
-                    addNotificationToFeed(message);
+                    addNotificationToFeed({ message: notification, timestamp: new Date() });
                     showToast(message, 'info');
                 } else {
-                    addNotificationToFeed(notification.message);
+                    addNotificationToFeed(notification);
                     showToast(notification.message, notification.type || 'info');
                 }
             });
@@ -532,7 +532,7 @@
             });
             
             // Helper function to add notification to the feed
-            function addNotificationToFeed(message) {
+            function addNotificationToFeed(notification) {
                 if (notificationsList.querySelector('.empty-message')) {
                     notificationsList.innerHTML = '';
                 }
@@ -541,7 +541,7 @@
                 const formattedTime = formatTimestamp(notification.timestamp || notification.createdAt);
                 el.className = 'notification-item notification-feed-item';
                 el.innerHTML = `
-                    <p class="notification-text">${message}</p>
+                    <p class="notification-text">${notification.message}</p>
                     <p class="notification-time">${formattedTime}</p>
                 `;
                 notificationsList.insertBefore(el, notificationsList.firstChild);
@@ -643,7 +643,7 @@
             // mark a notification as read
             function markNotificationAsRead(id, element) {
                 fetch(`${apiUrl}/${id}/read`, {
-                    method: 'PATHC'
+                    method: 'PATCH'
                 })
                 .then(response => {
                     if (!response.ok) {
@@ -676,7 +676,7 @@
                 }
             })
 
-            function loadUnreadNotifictions() {
+            function loadUnreadNotifications() {  // Fixed function name spelling
                 existingNotifications.innerHTML = '<div class="loading-message"><div class="spinner"></div>Loading...</div>';
 
                 fetch(`${apiUrl}/unread`)
@@ -686,7 +686,7 @@
                         }
                         return response.json();
                     })
-                    .then(dat => {
+                    .then(data => {  // Fixed variable name from 'dat' to 'data'
                         if (data.length === 0) {
                             existingNotifications.innerHTML = '<div class="empty-message">No unread notifications</div>';
                             return;
@@ -694,14 +694,35 @@
 
                         existingNotifications.innerHTML = '';
                         data.forEach(notification => {
-                            const date = new Date(notification.timestamp || new Date()).toLocaleString();
+                            const date = new Date(notification.timestamp || notification.createdAt).toLocaleString();
                             const el = document.createElement('div');
-                            el.className = 'notification';
+                            el.className = 'notification-item notification-manage-item unread';
                             el.innerHTML = `
-                                <p>${notification.message}</p>
-                                <p>${date}</p>
+                                <div>
+                                    <p class="notification-text">${notification.message}</p>
+                                    <p class="notification-time">${date}</p>
+                                    <button class="mark-read-btn" data-id="${notification.id}">Mark as read</button>
+                                </div>
+                                <div class="notification-actions">
+                                    <button class="btn-text edit-btn" data-id="${notification.id}">Edit</button>
+                                    <button class="btn-text delete-btn" data-id="${notification.id}">Delete</button>
+                                </div>
                             `;
                             existingNotifications.appendChild(el);
+                            
+                            // Add click handler for mark as read button
+                            el.querySelector('.mark-read-btn').addEventListener('click', function() {
+                                markNotificationAsRead(notification.id, el);
+                            });
+                            
+                            // Add event listeners for edit and delete buttons
+                            el.querySelector('.delete-btn').addEventListener('click', function() {
+                                deleteNotification(notification.id);
+                            });
+                            
+                            el.querySelector('.edit-btn').addEventListener('click', function() {
+                                editNotification(notification);
+                            });
                         });
                     })
                     .catch(error => {

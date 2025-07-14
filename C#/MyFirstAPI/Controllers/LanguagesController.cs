@@ -40,11 +40,11 @@ namespace MyFirstApi.Controllers
         }
 
         [HttpPost]
-        public ActionResult AddLanguage([FromBody] string language)
+        public async Task<ActionResult> AddLanguage([FromBody] string language)
         {
            if (string.IsNullOrWhiteSpace(language)) return BadRequest("Language name is required");
 
-           bool added = _languageService.AddLanguage(language);
+           bool added = await _languageService.AddLanguage(language);
            
            return added ? Ok("Language added successfully.") : Conflict("Language already exists.");
         }

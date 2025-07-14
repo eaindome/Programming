@@ -1,6 +1,6 @@
 <script lang="ts">
     export let type: 'button' | 'submit' | 'reset' = 'button';
-    export let variant: 'primary' | 'secondary' | 'outline' | 'danger' = 'primary';
+    export let variant: 'primary' | 'secondary' | 'outline' | 'danger' | 'ghost' = 'primary';
     export let size: 'sm' | 'md' | 'lg' = 'md';
     export let disabled: boolean = false;
     export let fullWidth: boolean = false;
@@ -11,7 +11,8 @@
       primary: 'bg-[#1A5F7A] hover:bg-[#154a5e] text-white',
       secondary: 'bg-[#56C271] hover:bg-[#4aad62] text-white',
       outline: 'bg-white border border-[#1A5F7A] text-[#1A5F7A] hover:bg-[#1A5F7A]/5',
-      danger: 'bg-red-600 hover:bg-red-700 text-white'
+      danger: 'bg-red-600 hover:bg-red-700 text-white',
+      ghost: 'bg-transparent text-gray-600 hover:bg-gray-100'
     };
     
     const sizeClasses = {

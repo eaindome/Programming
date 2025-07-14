@@ -1,46 +1,61 @@
 using System;
 using System.Linq;
 using System.Collections.Generic;
+using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 
 public class LanguageService
 {
-    private readonly List<string> _languages = new()
+    private readonly AppDbContext _context;
+
+    public LanguageService(AppDbContext context)
     {
-        "C#", "JavaScript", "Python", "Java", "Go", "Rust", "Swift"
-    };
+        _context = context;
+    }
 
     // service to get all the languages
-    public IEnumerable<string> GetAllLanguages()
+    public async Task<IEnumerable<Language>> GetAllLanguages()
     {
-        return _languages;
+        return await _context.Languages.ToListAsync();
     }
 
     // service to get a language by id
-    public string? GetLanguageById(int id)
+    public async Task<Language?> GetLanguageById(int id)
     {
-        if (id < 0 || id >= _languages.Count) return null;
-
-        return _languages[id];
+        return await _context.Languages.FindAsync(id);
     }
 
     // service to add a language
-    public bool AddLanguage(string language)
+    public async Task<bool> AddLanguage(string language)
     {
-       _languages.Add(language);
+        if (string.IsNullOrWhiteSpace(language)) return false;
+        
+        bool exists = await _context.Languages.AnyAsync(I => I.Name == language);
+        if (exists) return false;
+
+        var newLanguage = new Language { Name = language };
+        _context.Languages.Add(newLanguage);
+        await _context.SaveChangesAsync();
         return true;
     }
 
     // service to delete a language
-    public bool DeleteLanguage(string language)
+    public async Task<bool> DeleteLanguage(string language)
     {
-        _languages.Remove(language);
+        if (string.IsNullOrWhiteSpace(language)) return false;
+
+        var languageEntity = await _context.Languages.FirstOrDefaultAsync(I => I.Name == language);
+        if (languageEntity == null) return false;
+
+        _context.Languages.Remove(languageEntity);
+        await _context.SaveChangesAsync();
         return true;
     }
 
     // service to update a language
     public bool UpdateLanguage(string oldLanguage, string newLanguage)
     {
-        _languages[_languages.IndexOf(oldLanguage)] = newLanguage;
+        
         return true;
     }
 }

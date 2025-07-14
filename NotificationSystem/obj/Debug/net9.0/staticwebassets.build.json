@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "Xd9xHY/T4gfmSNhIRNDVZpgv+0yWWZAA5K2X5xkElJs=",
+  "Hash": "zaZNF8KWPMdlcJ3Q7UmdtaXWRrVXxuMXEt1mRij4V74=",
   "Source": "NotificationSystem",
   "BasePath": "_content/NotificationSystem",
   "Mode": "Default",
@@ -17,12 +17,12 @@
   ],
   "Assets": [
     {
-      "Identity": "/home/ekow/Desktop/Programming/NotificationSystem/obj/Debug/net9.0/compressed/8e4faxv003-tm1w8zt6r0.gz",
+      "Identity": "/home/ekow/Desktop/Programming/NotificationSystem/obj/Debug/net9.0/compressed/8e4faxv003-5pwn89400o.gz",
       "SourceId": "NotificationSystem",
       "SourceType": "Discovered",
       "ContentRoot": "/home/ekow/Desktop/Programming/NotificationSystem/obj/Debug/net9.0/compressed/",
       "BasePath": "_content/NotificationSystem",
-      "RelativePath": "index#[.{fingerprint=tm1w8zt6r0}]?.html.gz",
+      "RelativePath": "index#[.{fingerprint=5pwn89400o}]?.html.gz",
       "AssetKind": "All",
       "AssetMode": "All",
       "AssetRole": "Alternative",
@@ -31,8 +31,8 @@
       "RelatedAsset": "/home/ekow/Desktop/Programming/NotificationSystem/wwwroot/index.html",
       "AssetTraitName": "Content-Encoding",
       "AssetTraitValue": "gzip",
-      "Fingerprint": "5kpzyvps1n",
-      "Integrity": "JTqPUIyfJbwtKarmWO/lcElXDDIb8uhpbBvc5fRK9wA=",
+      "Fingerprint": "kczbzj2cyp",
+      "Integrity": "tNaiaQAHl1BgfPXyxbP03VmuVHgHospkIBv/cwDN5qg=",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "/home/ekow/Desktop/Programming/NotificationSystem/wwwroot/index.html"
@@ -52,8 +52,8 @@
       "RelatedAsset": "",
       "AssetTraitName": "",
       "AssetTraitValue": "",
-      "Fingerprint": "tm1w8zt6r0",
-      "Integrity": "RZSdHtEJmdsN3+jk5V0zrxYZZoAbMjaKNCoo8mxqONA=",
+      "Fingerprint": "5pwn89400o",
+      "Integrity": "t+51LQN3RIjjbCDjX/R0+bQLBL5s9TcDH5ZOU4YsmCI=",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot/index.html"
@@ -61,13 +61,13 @@
   ],
   "Endpoints": [
     {
-      "Route": "index.html",
-      "AssetFile": "/home/ekow/Desktop/Programming/NotificationSystem/obj/Debug/net9.0/compressed/8e4faxv003-tm1w8zt6r0.gz",
+      "Route": "index.5pwn89400o.html",
+      "AssetFile": "/home/ekow/Desktop/Programming/NotificationSystem/obj/Debug/net9.0/compressed/8e4faxv003-5pwn89400o.gz",
       "Selectors": [
         {
           "Name": "Content-Encoding",
           "Value": "gzip",
-          "Quality": "0.000207468880"
+          "Quality": "0.000202429150"
         }
       ],
       "ResponseHeaders": [
@@ -77,19 +77,19 @@
         },
         {
           "Name": "Content-Length",
-          "Value": "4819"
+          "Value": "4939"
         },
         {
           "Name": "ETag",
-          "Value": "\"JTqPUIyfJbwtKarmWO/lcElXDDIb8uhpbBvc5fRK9wA=\""
+          "Value": "\"tNaiaQAHl1BgfPXyxbP03VmuVHgHospkIBv/cwDN5qg=\""
         },
         {
           "Name": "Last-Modified",
-          "Value": "Tue, 11 Mar 2025 23:07:52 GMT"
+          "Value": "Tue, 18 Mar 2025 10:28:02 GMT"
         },
         {
           "Name": "Cache-Control",
-          "Value": "no-cache"
+          "Value": "max-age=31536000, immutable"
         },
         {
           "Name": "Content-Encoding",
@@ -105,18 +105,26 @@
         },
         {
           "Name": "ETag",
-          "Value": "W/\"RZSdHtEJmdsN3+jk5V0zrxYZZoAbMjaKNCoo8mxqONA=\""
+          "Value": "W/\"t+51LQN3RIjjbCDjX/R0+bQLBL5s9TcDH5ZOU4YsmCI=\""
         }
       ],
       "EndpointProperties": [
         {
+          "Name": "fingerprint",
+          "Value": "5pwn89400o"
+        },
+        {
+          "Name": "label",
+          "Value": "index.html"
+        },
+        {
           "Name": "integrity",
-          "Value": "sha256-RZSdHtEJmdsN3+jk5V0zrxYZZoAbMjaKNCoo8mxqONA="
+          "Value": "sha256-t+51LQN3RIjjbCDjX/R0+bQLBL5s9TcDH5ZOU4YsmCI="
         }
       ]
     },
     {
-      "Route": "index.html",
+      "Route": "index.5pwn89400o.html",
       "AssetFile": "/home/ekow/Desktop/Programming/NotificationSystem/wwwroot/index.html",
       "Selectors": [],
       "ResponseHeaders": [
@@ -126,7 +134,7 @@
         },
         {
           "Name": "Content-Length",
-          "Value": "25857"
+          "Value": "27495"
         },
         {
           "Name": "Content-Type",
@@ -134,121 +142,21 @@
         },
         {
           "Name": "ETag",
-          "Value": "\"RZSdHtEJmdsN3+jk5V0zrxYZZoAbMjaKNCoo8mxqONA=\""
+          "Value": "\"t+51LQN3RIjjbCDjX/R0+bQLBL5s9TcDH5ZOU4YsmCI=\""
         },
         {
           "Name": "Last-Modified",
-          "Value": "Tue, 11 Mar 2025 23:07:52 GMT"
-        },
-        {
-          "Name": "Cache-Control",
-          "Value": "no-cache"
-        }
-      ],
-      "EndpointProperties": [
-        {
-          "Name": "integrity",
-          "Value": "sha256-RZSdHtEJmdsN3+jk5V0zrxYZZoAbMjaKNCoo8mxqONA="
-        }
-      ]
-    },
-    {
-      "Route": "index.html.gz",
-      "AssetFile": "/home/ekow/Desktop/Programming/NotificationSystem/obj/Debug/net9.0/compressed/8e4faxv003-tm1w8zt6r0.gz",
-      "Selectors": [],
-      "ResponseHeaders": [
-        {
-          "Name": "Accept-Ranges",
-          "Value": "bytes"
-        },
-        {
-          "Name": "Content-Length",
-          "Value": "4819"
-        },
-        {
-          "Name": "Content-Type",
-          "Value": "text/html"
-        },
-        {
-          "Name": "ETag",
-          "Value": "\"JTqPUIyfJbwtKarmWO/lcElXDDIb8uhpbBvc5fRK9wA=\""
-        },
-        {
-          "Name": "Last-Modified",
-          "Value": "Tue, 11 Mar 2025 23:07:52 GMT"
-        },
-        {
-          "Name": "Cache-Control",
-          "Value": "no-cache"
-        },
-        {
-          "Name": "Content-Encoding",
-          "Value": "gzip"
-        },
-        {
-          "Name": "Vary",
-          "Value": "Content-Encoding"
-        }
-      ],
-      "EndpointProperties": [
-        {
-          "Name": "integrity",
-          "Value": "sha256-JTqPUIyfJbwtKarmWO/lcElXDDIb8uhpbBvc5fRK9wA="
-        }
-      ]
-    },
-    {
-      "Route": "index.tm1w8zt6r0.html",
-      "AssetFile": "/home/ekow/Desktop/Programming/NotificationSystem/obj/Debug/net9.0/compressed/8e4faxv003-tm1w8zt6r0.gz",
-      "Selectors": [
-        {
-          "Name": "Content-Encoding",
-          "Value": "gzip",
-          "Quality": "0.000207468880"
-        }
-      ],
-      "ResponseHeaders": [
-        {
-          "Name": "Accept-Ranges",
-          "Value": "bytes"
-        },
-        {
-          "Name": "Content-Length",
-          "Value": "4819"
-        },
-        {
-          "Name": "ETag",
-          "Value": "\"JTqPUIyfJbwtKarmWO/lcElXDDIb8uhpbBvc5fRK9wA=\""
-        },
-        {
-          "Name": "Last-Modified",
-          "Value": "Tue, 11 Mar 2025 23:07:52 GMT"
+          "Value": "Tue, 18 Mar 2025 10:28:02 GMT"
         },
         {
           "Name": "Cache-Control",
           "Value": "max-age=31536000, immutable"
-        },
-        {
-          "Name": "Content-Encoding",
-          "Value": "gzip"
-        },
-        {
-          "Name": "Vary",
-          "Value": "Content-Encoding"
-        },
-        {
-          "Name": "Content-Type",
-          "Value": "text/html"
-        },
-        {
-          "Name": "ETag",
-          "Value": "W/\"RZSdHtEJmdsN3+jk5V0zrxYZZoAbMjaKNCoo8mxqONA=\""
         }
       ],
       "EndpointProperties": [
         {
           "Name": "fingerprint",
-          "Value": "tm1w8zt6r0"
+          "Value": "5pwn89400o"
         },
         {
           "Name": "label",
@@ -256,13 +164,13 @@
         },
         {
           "Name": "integrity",
-          "Value": "sha256-RZSdHtEJmdsN3+jk5V0zrxYZZoAbMjaKNCoo8mxqONA="
+          "Value": "sha256-t+51LQN3RIjjbCDjX/R0+bQLBL5s9TcDH5ZOU4YsmCI="
         }
       ]
     },
     {
-      "Route": "index.tm1w8zt6r0.html",
-      "AssetFile": "/home/ekow/Desktop/Programming/NotificationSystem/wwwroot/index.html",
+      "Route": "index.5pwn89400o.html.gz",
+      "AssetFile": "/home/ekow/Desktop/Programming/NotificationSystem/obj/Debug/net9.0/compressed/8e4faxv003-5pwn89400o.gz",
       "Selectors": [],
       "ResponseHeaders": [
         {
@@ -271,7 +179,7 @@
         },
         {
           "Name": "Content-Length",
-          "Value": "25857"
+          "Value": "4939"
         },
         {
           "Name": "Content-Type",
@@ -279,56 +187,11 @@
         },
         {
           "Name": "ETag",
-          "Value": "\"RZSdHtEJmdsN3+jk5V0zrxYZZoAbMjaKNCoo8mxqONA=\""
+          "Value": "\"tNaiaQAHl1BgfPXyxbP03VmuVHgHospkIBv/cwDN5qg=\""
         },
         {
           "Name": "Last-Modified",
-          "Value": "Tue, 11 Mar 2025 23:07:52 GMT"
-        },
-        {
-          "Name": "Cache-Control",
-          "Value": "max-age=31536000, immutable"
-        }
-      ],
-      "EndpointProperties": [
-        {
-          "Name": "fingerprint",
-          "Value": "tm1w8zt6r0"
-        },
-        {
-          "Name": "label",
-          "Value": "index.html"
-        },
-        {
-          "Name": "integrity",
-          "Value": "sha256-RZSdHtEJmdsN3+jk5V0zrxYZZoAbMjaKNCoo8mxqONA="
-        }
-      ]
-    },
-    {
-      "Route": "index.tm1w8zt6r0.html.gz",
-      "AssetFile": "/home/ekow/Desktop/Programming/NotificationSystem/obj/Debug/net9.0/compressed/8e4faxv003-tm1w8zt6r0.gz",
-      "Selectors": [],
-      "ResponseHeaders": [
-        {
-          "Name": "Accept-Ranges",
-          "Value": "bytes"
-        },
-        {
-          "Name": "Content-Length",
-          "Value": "4819"
-        },
-        {
-          "Name": "Content-Type",
-          "Value": "text/html"
-        },
-        {
-          "Name": "ETag",
-          "Value": "\"JTqPUIyfJbwtKarmWO/lcElXDDIb8uhpbBvc5fRK9wA=\""
-        },
-        {
-          "Name": "Last-Modified",
-          "Value": "Tue, 11 Mar 2025 23:07:52 GMT"
+          "Value": "Tue, 18 Mar 2025 10:28:02 GMT"
         },
         {
           "Name": "Cache-Control",
@@ -346,7 +209,7 @@
       "EndpointProperties": [
         {
           "Name": "fingerprint",
-          "Value": "tm1w8zt6r0"
+          "Value": "5pwn89400o"
         },
         {
           "Name": "label",
@@ -354,7 +217,144 @@
         },
         {
           "Name": "integrity",
-          "Value": "sha256-JTqPUIyfJbwtKarmWO/lcElXDDIb8uhpbBvc5fRK9wA="
+          "Value": "sha256-tNaiaQAHl1BgfPXyxbP03VmuVHgHospkIBv/cwDN5qg="
+        }
+      ]
+    },
+    {
+      "Route": "index.html",
+      "AssetFile": "/home/ekow/Desktop/Programming/NotificationSystem/obj/Debug/net9.0/compressed/8e4faxv003-5pwn89400o.gz",
+      "Selectors": [
+        {
+          "Name": "Content-Encoding",
+          "Value": "gzip",
+          "Quality": "0.000202429150"
+        }
+      ],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "4939"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"tNaiaQAHl1BgfPXyxbP03VmuVHgHospkIBv/cwDN5qg=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Tue, 18 Mar 2025 10:28:02 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "no-cache"
+        },
+        {
+          "Name": "Content-Encoding",
+          "Value": "gzip"
+        },
+        {
+          "Name": "Vary",
+          "Value": "Content-Encoding"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/html"
+        },
+        {
+          "Name": "ETag",
+          "Value": "W/\"t+51LQN3RIjjbCDjX/R0+bQLBL5s9TcDH5ZOU4YsmCI=\""
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-t+51LQN3RIjjbCDjX/R0+bQLBL5s9TcDH5ZOU4YsmCI="
+        }
+      ]
+    },
+    {
+      "Route": "index.html",
+      "AssetFile": "/home/ekow/Desktop/Programming/NotificationSystem/wwwroot/index.html",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "27495"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/html"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"t+51LQN3RIjjbCDjX/R0+bQLBL5s9TcDH5ZOU4YsmCI=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Tue, 18 Mar 2025 10:28:02 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "no-cache"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-t+51LQN3RIjjbCDjX/R0+bQLBL5s9TcDH5ZOU4YsmCI="
+        }
+      ]
+    },
+    {
+      "Route": "index.html.gz",
+      "AssetFile": "/home/ekow/Desktop/Programming/NotificationSystem/obj/Debug/net9.0/compressed/8e4faxv003-5pwn89400o.gz",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "4939"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/html"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"tNaiaQAHl1BgfPXyxbP03VmuVHgHospkIBv/cwDN5qg=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Tue, 18 Mar 2025 10:28:02 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "no-cache"
+        },
+        {
+          "Name": "Content-Encoding",
+          "Value": "gzip"
+        },
+        {
+          "Name": "Vary",
+          "Value": "Content-Encoding"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-tNaiaQAHl1BgfPXyxbP03VmuVHgHospkIBv/cwDN5qg="
         }
       ]
     }

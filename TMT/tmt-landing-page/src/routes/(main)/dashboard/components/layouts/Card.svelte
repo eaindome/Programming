@@ -65,7 +65,7 @@
 {#if isVisible}
 <!-- svelte-ignore a11y_no_static_element_interactions -->
 <div 
-class="rounded-lg shadow-sm overflow-hidden transition-all duration-300 ease-in-out {variantStyles[variant].card} border hover:shadow-md {isHovered ? 'translate-y-[-2px]' : ''}"
+class="rounded-lg shadow-sm overflow-hidden transition-all duration-300 ease-in-out mb-6 {variantStyles[variant].card} border hover:shadow-md {isHovered ? 'translate-y-[-2px]' : ''}"
 in:fly={{ y: 20, duration: 300 }}
 bind:this={cardElement}
 on:mouseenter={() => isHovered = true}

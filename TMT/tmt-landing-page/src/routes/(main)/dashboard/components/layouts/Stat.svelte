@@ -14,6 +14,7 @@
     yellow: 'text-amber-600 bg-amber-50 border-amber-100',
     purple: 'text-violet-600 bg-violet-50 border-violet-100',
     indigo: 'text-indigo-600 bg-indigo-50 border-indigo-100',
+    orange: 'text-orange-600 bg-orange-50 border-orange-100',
   };
 
   // Animation values for the change indicator

@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("TodoGraphQL")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+8b9e591d5cb72738c1fd2a2f9a67168e22d98b4d")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+292bf4811d4713213cba0c242e3cdf864f7ba4c2")]
 [assembly: System.Reflection.AssemblyProductAttribute("TodoGraphQL")]
 [assembly: System.Reflection.AssemblyTitleAttribute("TodoGraphQL")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
